@@ -1,0 +1,36 @@
+// common-for-specific-screen
+@media only screen and (max-width: 1300px) {
+  .col-md-6 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-md-2 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+// common-for-specific-screen
+
+/* styles.css */
+.modal-backdrop.show+.modal-backdrop {
+  z-index: 1050;
+  /* Adjust the z-index for the second backdrop */
+}
+
+#secondModal {
+  z-index: 1060;
+  /* Adjust the z-index for the second modal */
+}
+
+.custom {
+  margin-top: -0.6rem;
+  font-weight: bolder;
+}

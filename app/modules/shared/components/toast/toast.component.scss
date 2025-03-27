@@ -1,0 +1,13 @@
+::ng-deep .ngb-toasts {
+    margin: 0 !important;
+    position: fixed;
+    top: 0;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 1200;
+}
+
+.toast {
+    margin: 16px;
+}

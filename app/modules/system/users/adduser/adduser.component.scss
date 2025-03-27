@@ -1,0 +1,50 @@
+.toggle input[type="checkbox"]+label {
+  position: static !important;
+  top: 0;
+  left: 0;
+  padding-left: 1rem !important;
+  color: #58555e;
+}
+
+
+.card-title {
+  font-size: 18px !important;
+  color: #000;
+  font-weight: 480 !important;
+  background: #f5f5f5;
+  padding: 5px 20px !important;
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 1px solid #10a504;
+}
+
+.vertical-scroll {
+  height: 20.7rem;
+  overflow-y: scroll;
+}
+
+.right-card-adjustment {
+  margin-top: -29.5rem !important;
+} 
+
+@media screen and (max-width: 1700px) {
+  .right-card-adjustment {
+    margin-top: -26.5rem !important;
+  }
+
+  .vertical-scroll {
+    height: 17rem;
+    overflow-y: scroll;
+  }
+}
+
+// @media screen and (max-width: 1500px){
+//   .right-card-adjustment{
+//     margin-top:-28.5rem !important;
+//   }
+// }
+
+img {
+  max-width: 10rem;
+  height: auto;
+}

@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space">
+    </div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="addapTestDefinition" data-tab-target="tab-content-1"
+            (click)="goToApTestDefinition('addapTestDefinition')"
+            [class.is-active]="selected === 'addapTestDefinition'">
+            Data Entry
+          </button>
+          <button data-tab-target="tab-content-2" id="apTestDefinitionList"
+            (click)="goToApTestDefinition('apTestDefinitionList')"
+            [class.is-active]="selected === 'apTestDefinitionList'">List</button>
+          <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Anatomic Pathology Orders</h6>
+
+        </nav>
+        <app-default></app-default>
+
+      </div>
+    </section>
+  </div>
+</div>

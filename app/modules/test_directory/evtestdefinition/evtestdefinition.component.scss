@@ -1,0 +1,22 @@
+/* Custom class for SweetAlert2 dialog size */
+.swal2-popup {
+    width: 400px !important;
+    /* Adjust width as needed */
+    max-width: 90%;
+    /* Ensures responsiveness */
+    padding: 1.5rem;
+    font-size: 1rem;
+    border:1px solid red;
+}
+
+.swal2-title {
+    font-size: 1.2rem;
+    /* Adjust title font size */
+    border:1px solid red;
+}
+
+.swal2-html-container {
+    font-size: 1rem;
+    /* Adjust text font size */
+    border:1px solid red;
+}

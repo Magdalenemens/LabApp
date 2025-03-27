@@ -1,0 +1,136 @@
+<div class="tab-target mt-1" id="tab-content-2">
+  <div class="d-flex">
+    <!-- First Section -->
+
+    <div class="col-md-2 no-padding-left">
+      <div class="card mt-5">
+        <div class="d-flex flex-wrap">
+          <div class="col-md-12 col-lg-12 col-12">
+            <div class="input-group">
+              <label for="inputField1" class="input-group-text side-input-dia">Code:</label>
+              <input class="form-control" placeholder="Enter Code" type="text" id="inputField1"   required [(ngModel)]="testTd" value="{{testTd}}" 
+              placeholder="Enter Code" (keyup)="loadTestTD($event)"/>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-wrap">
+          <div class="col-md-12 col-lg-12 col-12">
+            <div class="input-group">
+              <label for="inputField1" class="input-group-text side-input-dia">Div:</label>
+              <select id="dropdown1" class="form-control" [(ngModel)]="div" value="{{div}}" (change)="GetSect($event)">
+                <option value="0" selected>Select</option>
+                <option *ngFor="let dv of dvModel" value="{{dv.div}}">{{dv.div}}-{{dv.divdesc}}</option> 
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-12">
+            <div class="input-group">
+              <label for="inputField1" class="input-group-text side-input-dia">Sect:</label>
+              <select id="dropdown1" class="form-control"  [(ngModel)]="sect" value="{{sect}}"  (change)="GetBySect($event)">
+                <option value="0" selected>Select</option>
+                <option *ngFor="let sec of sectModel" value="{{sec.sect}}">{{sec.sect}}-{{sec.sectdesc}}</option> 
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="table-veritical">
+              <table class="table table-bordered data mt-2 pl-2">
+                <thead>
+                  <tr>
+                    <th style="width: 2.5rem">Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let td of tdModel; let i = index">
+                     <td  class="tooltip-cell" appTooltip="{{td.fulL_NAME}}"><button (click)="GetReferenceRange(td.tcode,td.dec,td.rstp)" class="buttonhyperlink"><span > {{ td.tcode }}</span></button>
+                      <input type="hidden" [(ngModel)]="td.dec" value="{{td.dec}}" >
+                    </td>
+                   </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- First Section -->
+    <!-- right content -->
+    <div class="col-md-10 no-padding-left no-padding-right">
+        <div class="d-flex justify-content-end pb-2 pt-1">
+          <button type="button" class="btn btn-outline-success btn-rounded"  (click)="saveReferenceRange()"><i class="ri-save-line pr-2"></i>Save</button>
+          <button type="button" class="btn btn-outline-success btn-rounded"  (click)="cleareReferenceRange()"><i class="ri-save-line pr-2"></i>Clear</button>
+      </div>
+      <div class="card">
+        <div class="table-veritical-sm">
+        <!-- result-type-table -->
+        <table class="table table-bordered data mt-2">
+            <thead class="table-head-fix">
+              <tr>
+                <th style="width: 14%">Code</th>
+                <th style="width: 8%">Gender</th>
+                <th style="width: 5%">Age F</th>
+                <th style="width: 10%">F</th>
+                <th style="width: 5%">Age T</th>
+                <th style="width: 10%">F</th>
+                <th style="width: 5%">LHF</th>
+                <th style="width: 8%">Ref.L</th>
+                <th style="width: 8%">Ref.H</th>
+                <th style="width: 5%">Critical L</th>
+                <th style="width: 5%">Critical H</th>
+                <th style="width: 9%">Days F </th>
+                <th style="width: 9%">Days T </th>
+                <th style="width: 5%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rr of selRRModel;let i = index">
+                <td>{{rr.tcode}}</td>
+                <td>
+                  <select class="form-control" [(ngModel)]="rr.sex" value="{{rr.sex}}" (change)="getDatCal(i)">
+                  <option value="M">M</option>-
+                  <option value="F">F</option> 
+                  <option value="U">U</option> 
+                </select> 
+               </td>
+                <td><input type="text" class="form-control" id="{{rr.agE_F}}"  [(ngModel)]="rr.agE_F" value="{{rr.agE_F}}"  /></td>
+                <td>
+                  <select class="form-control" [(ngModel)]="rr.aff" value="{{rr.aff}}">
+                    <option value="D">D</option>
+                    <option value="M">M</option> 
+                    <option value="Y">Y</option> 
+                  </select> 
+                </td>
+                <td><input type="text" class="form-control" id="{{rr.agE_T}}"  [(ngModel)]="rr.agE_T" value="{{rr.agE_T}}" (blur)="getDayCal(rr, $event,i)"/></td>
+                <td>
+                  <select class="form-control" [(ngModel)]="rr.atf" value="{{rr.atf}}">
+                    <option value="D">D</option>
+                    <option value="M">M</option> 
+                    <option value="Y">Y</option> 
+                  </select> 
+                </td>
+                <td><input type="text" class="form-control" id="{{rr.lhf}}"  [(ngModel)]="rr.lhf" value="{{rr.lhf}}" (keyup)="onRangeValue($event,i)"/><input type="hidden" [(ngModel)]="rr.dec" value="{{rr.dec}}" ></td>
+                <td><input type="text" class="form-control" id="{{rr.reF_LOW}}"  [(ngModel)]="rr.reF_LOW" value="{{rr.reF_LOW}}" (blur)="getdecimal($event,rr.dec,i,'LC')"/><input type="hidden" [(ngModel)]="rr.reF_LC" value="{{rr.reF_LC}}" ></td>
+                <td><input type="text" class="form-control" id="{{rr.reF_HIGH}}"  [(ngModel)]="rr.reF_HIGH" value="{{rr.reF_HIGH}}"  (blur)="getdecimal($event,rr.dec,i,'HC')"/><input type="hidden" [(ngModel)]="rr.reF_HC" value="{{rr.reF_HC}}"><input type="hidden" [(ngModel)]="rr.reF_RANGE" value="{{rr.reF_RANGE}}"></td>
+                <td><input type="text" class="form-control" id="{{rr.crtcL_LOW}}"  [(ngModel)]="rr.crtcL_LOW" value="{{rr.crtcL_LOW}}"  (blur)="getdecimal($event,rr.dec,i,'CLL')" style="color: red;font-weight:bold;"/></td>
+                <td><input type="text" class="form-control" id="{{rr.crtcL_HIGH}}"  [(ngModel)]="rr.crtcL_HIGH" value="{{rr.crtcL_HIGH}}" (blur)="getdecimal($event,rr.dec,i,'CLH');addRow(rr.tcode,$event,i);" style="color: red;font-weight:bold;"/></td>
+                <td><input type="text" class="form-control" id="{{rr.agE_FROM}}"  [(ngModel)]="rr.agE_FROM" value="{{rr.agE_FROM}}" readonly/> </td>
+                <td><input type="text" class="form-control" id="{{rr.agE_TO}}"  [(ngModel)]="rr.agE_TO" value="{{rr.agE_TO}}" readonly/></td>
+                <td>
+                  <!-- <button (click) = "deleteRow(rr)" class="delete" style="width: 2.5rem;"><i class="ri-delete-bin-line" ></i></button>  -->
+                  <button class="btn btn-danger btn-sm" (click) = "deleteRow(rr)">
+                    <i class="ri-delete-bin-line"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <!-- result-type-table -->
+      </div>
+      </div>
+     
+    </div>
+    <!-- right content -->
+  </div>
+</div>
+
+<!-- Add Reference range -->

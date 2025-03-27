@@ -1,0 +1,377 @@
+<div class="tab-target is-active mt-2" id="tab-content-1">
+
+  <div class="card pb-1">
+    <div class="row g3">
+      <div class="w-auto">
+        <div class="input-group">
+          <label for="validationCustom01" class="input-group-text side-input-dia head-search ">Pending Since:</label>
+          <input style="width:5rem !important" type="number" placeholder="" class="form-control head-search"
+            [(ngModel)]="pendingDays">
+          <label class="input-group-text side-input-dia head-search "
+            style="border-right:1px solid #ced4da;border-radius:4px">days</label>
+          <div class="d-flex mx-4 mt-1">
+            <input type="checkbox" [checked]="isPending" [(ngModel)]="isPending" />
+            <h6 style="font-weight:400">Pending only</h6>
+          </div>
+          <button class="btn btn-outline-dark mx-0" syle="height: 1.95rem !important;" (click)="reFreshbtn()"><i
+              class="ri-refresh-line pr-2"></i>Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-2">
+    <div class="table-veritical" style="position: relative;">
+      <table class="table table-bordered data" id="mbListTable">
+        <thead class="table-head-fix">
+          <tr>
+            <th (click)="sortData('samplE_ID')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('samplE_ID')">{{ getSortIcon('samplE_ID')}}</i>Sample Id
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('sampleId')"></i>
+            </th>
+            <th (click)="sortData('samplE_NAME')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('samplE_NAME')">{{ getSortIcon('samplE_NAME')}}</i>Description
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('sampleName')"></i>
+            </th>
+            <th (click)="sortData('cn')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('cn')">{{
+                getSortIcon('cn')}}</i>Client No
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('cn')"></i>
+            </th>
+            <th (click)="sortData('client')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('client')">{{ getSortIcon('client')}}</i>Client name
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('client')"></i>
+            </th>
+            <th (click)="sortData('reQ_CODE')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('reQ_CODE')">{{ getSortIcon('reQ_CODE')}}</i>Req Code
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('reqCode')"></i>
+            </th>
+            <th (click)="sortData('vC_NO')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('vC_NO')">{{ getSortIcon('vC_NO')}}</i>VC No
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('vc')"></i>
+            </th>
+            <th (click)="sortData('orD_TYPE')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('orD_TYPE')">{{ getSortIcon('orD_TYPE')}}</i>Order Type
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('ordertype')"></i>
+            </th>
+            <th (click)="sortData('ordeR_DTM')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('ordeR_DTM')">{{ getSortIcon('ordeR_DTM')}}</i>Order Date
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('orderDtm')"></i>
+            </th>
+            <th (click)="sortData('reF_DATE')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('reF_DATE')">{{ getSortIcon('reF_DATE')}}</i>Ref Date
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('refDate')"></i>
+            </th>
+            <th (click)="sortData('pending')"><i class="material-icons sort-icon pr-2"
+                [ngClass]="getSortIconClass('pending')">{{ getSortIcon('pending')}}</i>Pending
+              <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('pending')"></i>
+
+            </th>
+            <th (click)="sortData('')" style="width:5rem">Actions </th>
+          </tr>
+          <tr *ngIf="isFilterVisible()" class="custom-filter-row">
+            <td>
+              <input *ngIf="filterVisibility.sampleId" type="text" class="form-control" placeholder="Filter sample Id"
+                [(ngModel)]="sampleIdFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.sampleName" type="text" class="form-control"
+                placeholder="Filter Description" [(ngModel)]="sampleNameFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.cn" type="text" class="form-control" placeholder="Filter client No"
+                [(ngModel)]="cnFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.client" type="text" class="form-control" placeholder="Filter client Name"
+                [(ngModel)]="clientFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.reqCode" type="text" class="form-control" placeholder="Filter req code "
+                [(ngModel)]="reqCodeFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.vc" type="text" class="form-control" placeholder="Filter vc Number "
+                [(ngModel)]="reqCodeFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.ordertype" type="text" class="form-control" placeholder="Filter order type"
+                [(ngModel)]="reqCodeFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.orderDtm" type="text" class="form-control" placeholder="Filter order dtm"
+                [(ngModel)]="orderDtmFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.refDate" type="text" class="form-control" placeholder="Filter ref Date"
+                [(ngModel)]="refDateFilter" (input)="applyFilters()" />
+            </td>
+            <td>
+              <input *ngIf="filterVisibility.pending" type="text" class="form-control" placeholder="Filter pending"
+                [(ngModel)]="pendingFilter" (input)="applyFilters()" />
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of evOrderList">
+            <td>{{ item.samplE_ID }}</td>
+            <td class="tooltip-cell" style="max-width: 15rem; cursor: pointer" appTooltip="{{ item.samplE_NAME }}">{{
+              item.samplE_NAME }}</td>
+            <td>{{ item.cn }}</td>
+            <td class="tooltip-cell" style="max-width: 10rem; cursor: pointer" appTooltip="{{ item.client }}">{{
+              item.client }} </td>
+            <td>{{ item.reQ_CODE }} </td>
+            <td>{{ item.vC_NO }} </td>
+            <td>{{ item.orD_TYPE }} </td>
+            <!-- <td>{{ item.fulL_NAME }} </td> -->
+            <td>{{ item.ordeR_DTM }} </td>
+            <td>{{ item.reF_DATE }} </td>
+            <td [class]="orderPendingColor(item.pending)">{{ item.pending }} </td>
+            <td>
+
+              <button class="add save btn-rounded" (click)="viewEVOrder(item.samplE_ID)"><i
+                  class="View"></i>VIEW</button>
+              <button class="add edit btn-rounded" data-toggle="modal" data-target="#myModal"
+                (click)="showEVOrder(item)"><i class="View"></i>DETAILS</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination Component -->
+      <!-- <app-pagination [totalItems]="evOrderList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"> 
+    </app-pagination>  -->
+    </div>
+  </div>
+
+  <div class="card mt-2">
+    <div class="dataTables_info d-flex justify-content-start" style="font-size: 14px !important;">
+      Total Records: {{ evOrderList.length }}
+    </div>
+  </div>
+
+  <div class="modal fade modal-alert rounded-3 mt-3" id="patientModal" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div class="bg-primary modal-header" style="color:white;">
+          Sample Information
+        </div>
+
+        <div class="modal-body p-4 text-left" *ngIf="patientData">
+          <div class="col-md-12">
+            <div>
+              <div>
+                <h6>Details:</h6>
+              </div>
+              <div class="card">
+
+                <div class="d-flex flex-wrap">
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Sample Id / Name:</label>
+                      <label class="form-control highligter" readonly="true" type="text"
+                        id="inputField1"><b>{{patientData.paT_ID}}</b></label>
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-lg-7 col-12">
+                    <div class="input-group">
+                      <label class="form-control highligter" readonly="true" type="text"
+                        id="inputField1"><b>{{patientData.paT_NAME}}</b></label>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Accession No:</label>
+                      <label class="form-control highligter" (input)="(patientData.accn)" type="text" id="inputField1"
+                        readonly="true"> <b>{{patientData.accn}}</b></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Status:</label>
+                      <label class="form-control highligter" (input)="(patientData.accn)" type="text" id="inputField1"
+                        readonly="true"> <b>{{patientData.r_STS}}</b></label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Ref No:</label>
+                      <label class="form-control" type="text" id="inputField1" readonly="true"></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-lg-2 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Client No</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.cn}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-10 col-lg-10 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Client Name:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.client}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Test Code / Name:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.tcode}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-lg-7 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.fulL_NAME}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Order Date/Time.... :</label>
+                      <label class="form-control" readonly="true" type="number" id="inputField1">
+                        {{patientData.ordeR_DTTM }} </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Collection Date/Time:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.coL_DTTM}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Result Date/Time...:</label>
+                      <label class="form-control" readonly="true" type="number" id="inputField1">
+                        {{patientData.reS_DTTM }} </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Verify Date/Time.... :</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.veR_DTTM}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Validate Date/Time....:</label>
+                      <label class="form-control" readonly="true" type="number" id="inputField1">
+                        {{patientData.vldT_DTTM }} </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Release Date/Time:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.vldT_DTTM}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Ordered By:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.o_ID}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.ordereD_BY}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Resulted By:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.r_ID}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.resultD_BY}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Verified By:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.v_ID}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.verifieD_BY}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Validated By:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.v_ID}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.validateD_BY}}</label>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <!-- <div class="col-md-7 col-12"> -->
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Instrument:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{patientData.shdR_NAME}}</label>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-md-3 col-lg-3 col-12">
+                <div class="input-group">
+                  <label class="form-control" readonly="true" type="text"
+                    id="inputField1">{{patientData.validateD_BY}}</label>
+                </div>
+              </div> -->
+                </div>
+
+              </div>
+
+
+              <div class="col-md-6 no-padding-left no-padding-right" style="display: none;">
+                <div class="card mt-2 ">
+                  <label>Remarks:</label>
+                  <textarea class="form-control" id="textareaInput" rows="2" cols="50"
+                    placeholder="Enter text"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

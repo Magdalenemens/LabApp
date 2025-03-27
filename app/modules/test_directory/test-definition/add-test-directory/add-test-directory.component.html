@@ -1,0 +1,1728 @@
+<main>
+  <form [formGroup]="form">
+    <section>
+      <div class="tab-target is-active mt-1" id="tab-content-1">
+
+        <!-- add-section -->
+        <div class="add-content">
+          <div class="d-flex mt-0">
+            <!-- First Section -->
+            <div class="d-flex flex-column">
+              <div class="custom-input" style="width: 11rem">
+                <div class="card d-flex flex-column vertical-center">
+                  <button data-toggle="modal" data-target="#copy-from-clients" [disabled]="isAddBtnActive"
+                    (click)="onAddRecord()" class="btn btn-outline-dark add-section mb-2">
+                    <i class="ri-add-line pr-1"></i>Add Record
+                  </button>
+                  <button class="btn btn-outline-dark add-section mb-2" [disabled]="isSaveBtnActive"
+                    (click)="onSubmit()">
+                    <i [class]="
+                        isEditing
+                          ? 'ri-bookmark-line pr-2'
+                          : 'ri-save-line pr-2'
+                      "></i>Save
+                  </button>
+                  <!-- <button class="btn btn-outline-dark add-section" [disabled]="isSaveBtnActive" (click)="onSubmit()">
+            <i class="ri-save-line pr-2"></i>Save
+          </button> -->
+                  <button data-toggle="modal" data-target="#rename" class="btn btn-outline-dark mb-2" id="copyMtoF">
+                    Rename
+                  </button>
+
+                  <button class="btn btn-outline-dark order-section mb-2" [disabled]="isEditBtnActive"
+                    (click)="onEditRecord()">
+                    <i [class]="
+                        isEditing
+                          ? 'ri-edit-2-line pr-2'
+                          : 'ri-pencil-line pr-2'
+                      "></i>Edit
+                  </button>
+                  <!-- <button class="btn btn-outline-dark order-section" [disabled]="isEditBtnActive" (click)="onEditRecord()">
+            <i class="ri-pencil-line pr-2"></i>Edit</button> -->
+
+                  <button class="btn btn-outline-dark cancelation mb-2" [disabled]="isCancelBtnActive"
+                    (click)="onCancelRecord(testDirectoryData.tD_ID)">
+                    <i class="ri-close-line pr-1"></i>Cancel
+                  </button>
+                  <!-- <button class="btn btn-outline-dark add-section cancelation" [disabled]="isCancelBtnActive"
+            (click)="onCancelRecord(testDirectoryData.tD_ID)">
+            <i class="ri-close-line pr-1"></i>Cancel
+          </button> -->
+                  <button class="btn btn-outline-dark cancelation mb-2"
+                    (click)="onDeleteRecord(testDirectoryData.tD_ID)">
+                    <i class="ri-delete-bin-6-line pr-2"></i>Delete
+                  </button>
+                  <button data-bs-toggle="modal" href="#exampleModalToggle" class="btn btn-outline-dark mb-0">
+                    <i class="ri-file-list-3-line pr-1"></i>Test Assign
+                  </button>
+                </div>
+                <div class="card mt-1">
+                  <div style="
+                      border: 1px solid #bff5bb;
+                      border-radius: 0.25rem;
+                      padding: 0.25rem 0.25rem;
+                    ">
+                    <div class="d-flex flex-wrap justify-content-between navigation">
+                      <button class="btn page-btn btn-outline-paginate px-1" id="first" [disabled]="isNavigationActive"
+                        (click)="getRecord('first', testDirectoryData.sno)" tooltip="First">
+                        <i class="ri-skip-left-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="previous"
+                        [disabled]="isNavigationActive" (click)="getRecord('prev', testDirectoryData.sno)"
+                        tooltip="previous">
+                        <i class="ri-arrow-left-double-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="next" [disabled]="isNavigationActive"
+                        (click)="getRecord('next', testDirectoryData.sno)" tooltip="next">
+                        <i class="ri-arrow-right-double-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="last" [disabled]="isNavigationActive"
+                        (click)="getRecord('last', testDirectoryData.sno)" tooltip="last">
+                        <i class="ri-skip-right-line"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-center">
+                    {{ calculateCurrentIndex(testDirectoryData.sno) }} /
+                    {{ tdAllData.length }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="flex: 1 1 auto">
+              <div class="row mt-0">
+                <!-- First Section -->
+
+                <div class="col-md-6 col-lg-6 col-12 no-padding-left">
+
+                  <div class="d-flex justify-content-start">
+                    <div class="input-group justify-content-start">
+                      <div style="width: 22rem">
+                        <div class="input-group">
+                          <label style="height: 33px2" class="input-group-text side-input-dia">Code:</label>
+                          <ng-select #testSelect style="flex: 1 1 auto" [items]="matchedTests$ | async"
+                            bindLabel="combinedLabel" class="" [searchFn]="customSearch" [searchable]="true"
+                            (search)="onTestSearch($event)" (change)="onTestSelection($event, testSelect)"
+                            placeholder="search">
+                            <!-- Template for no search results -->
+                            <ng-template #noResults>
+                              <div>No results found</div>
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                      <!-- <button (click)="findTestDefinitionName('')" class="btn btn-outline-secondary" data-toggle="modal"
+                        data-target="#myModal" type="button"
+                        style="height: 33px;padding: inherit;border-top-left-radius: 0;border-bottom-left-radius: 0;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border:1px solid #656565 !important">
+                        <i class="ri-search-line"></i>
+                      </button> -->
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="d-flex flex-wrap">
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputFieldCode" class="input-group-text side-input-dia">Code:</label>
+                          <input formControlName="txtCode" [(ngModel)]="testDirectoryData.tcode" id="tcode"
+                            value="{{ testDirectoryData.tcode }}" maxlength="10" [readOnly]="istCodeReadonly"
+                            class="form-control" placeholder="Enter Code" [ngClass]="{
+                              'is-invalid': submitted && f['txtCode'].errors
+                            }" (change)="testCodeChange()" type="text" required />
+                          <div *ngIf="submitted && f['txtCode'].errors" class="invalid-feedback">
+                            <div *ngIf="f['txtCode'].errors['required']"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputFieldNumber" class="input-group-text side-input-dia">Number:</label>
+                          <input formControlName="txtdtNumber" value="{{ testDirectoryData.tesT_ID }}" [readonly]="true"
+                            [(ngModel)]="testDirectoryData.tesT_ID" class="form-control" maxlength="4"
+                            placeholder="Enter Number" type="text" id="Number" required />
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputFieldName" class="input-group-text side-input-dia">Name:</label>
+                          <input formControlName="txtFullName" maxlength="50" value="{{ testDirectoryData.full_Name }}"
+                            [(ngModel)]="testDirectoryData.full_Name" class="form-control" placeholder="Enter Name"
+                            type="text" id="Name" required />
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-4 col-lg-4 col-12" style="direction:rtl;float:right;text-align: right;margin-top:-4px">
+                <div class="input-group-ar">
+                <label for="inputField1" class="input-group-text-ar side-input-dia">اسم العميل:</label>
+                <input formControlName="txtFullNameArabic" maxlength="40" value="{{testDirectoryData.aFull_Name}}"  [(ngModel)]="testDirectoryData.aFull_Name" class="form-control" placeholder="أدخل اسم العميل" type="text" id="inputField1"
+                  required />
+                </div>
+              </div> -->
+                      <!-- </div>
+              <div class="d-flex flex-wrap" > -->
+                      <div class="col-md-4 col-lg-4 col-12">
+                        <div class="input-group">
+                          <label for="inputFieldComments" class="input-group-text side-input-dia">Label
+                            Comments:</label>
+                          <input formControlName="txtSynm" value="{{ testDirectoryData.synm }}" maxlength="20"
+                            [(ngModel)]="testDirectoryData.synm" class="form-control" placeholder="Enter Label Comments"
+                            type="text" id="inputField1" />
+                        </div>
+                      </div>
+                      <div class="col-md-5 col-lg-5 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia" for="inputField1">Specimen Type:</label>
+                          <ng-select formControlName="cmbSpecimenstypes" value="{{ testDirectoryData.s_TYPE }}"
+                            (change)="onChange($event)" [(ngModel)]="testDirectoryData.s_TYPE"
+                            placeholder="Select Specimen" class="form-select" id="cmbSpecimenstypes" aria-label="">
+                            <ng-option selected="">Select Specimen Type
+                            </ng-option>
+                            <ng-option *ngFor="let obj of specimenstypes" [value]="obj.sP_CODE" [ngValue]="obj">{{
+                              obj.sP_CODE }}</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Units:</label>
+                          <input formControlName="txtUnits" maxlength="8" value="{{ testDirectoryData.units }}"
+                            [(ngModel)]="testDirectoryData.units" class="form-control" placeholder="Enter Units"
+                            type="text" id="Units" />
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Priority:</label>
+                          <select id="dropdown1" formControlName="cmbPriority" [(ngModel)]="testDirectoryData.prty"
+                            class="form-control" value="{{ testDirectoryData.prty }}">
+                            <option value="0">Select</option>
+                            <option value="RT">RT</option>
+                            <option value="ST">ST</option>
+                            <option value="SO">SO</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="Status" class="input-group-text side-input-dia">Status:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbStatus"
+                            value="{{ testDirectoryData.status }}" [(ngModel)]="testDirectoryData.status">
+                            <option value="0">Select</option>
+                            <option value="A">A</option>
+                            <option value="I">I</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="Orderable" class="input-group-text side-input-dia">Orderable:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbOrderable"
+                            value="{{ testDirectoryData.ordable }}" [(ngModel)]="testDirectoryData.ordable">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="Print" class="input-group-text side-input-dia">Print Result:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbPrintResult"
+                            value="{{ testDirectoryData.pr }}" [(ngModel)]="testDirectoryData.pr">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-6 col-lg-6 col-12">
+                    <div class="input-group">
+                      <label for="inputField1" class="input-group-text side-input-dia">Billing Code:</label>
+                      <input class="form-control" formControlName="txtBillingCode" placeholder="Enter Billing Code"
+                        value="{{testDirectoryData.bilL_NAME}}" [(ngModel)]="testDirectoryData.bilL_NAME" type="text"
+                        maxlength="44" id="inputField1" />
+                    </div>
+                  </div> -->
+                    </div>
+                  </div>
+                </div>
+                <!-- First Section -->
+                <!-- right content -->
+                <div class="col-md-6 col-lg-6 col-12 no-padding-left no-padding-right">
+                  <div class="card" style="margin-top:2.7rem">
+                    <div class="d-flex flex-wrap">
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Division" class="input-group-text side-input-dia">Division:</label>
+                          <ng-select required formControlName="cmblabDivision" value="{{ testDirectoryData.div }}"
+                            [(ngModel)]="testDirectoryData.div" (change)="onComboSelected($event, 'Division')"
+                            placeholder="Select Division" class="form-select" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmblabDivision'].errors
+                            }" id="cmblabDivision" aria-label="">
+                            <ng-option *ngFor="let obj of ArrayLabDivision" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmblabDivision'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmblabDivision'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Section" class="input-group-text side-input-dia">Section:</label>
+                          <ng-select formControlName="cmbSection" value="{{ testDirectoryData.sect }}"
+                            [(ngModel)]="testDirectoryData.sect" (change)="onComboSelected($event, 'Section')"
+                            placeholder="Select Section" [ngClass]="{
+                              'is-invalid': submitted && f['cmbSection'].errors
+                            }" required class="form-select" id="cmbSection" aria-label="">
+                            <ng-option *ngFor="let obj of ArrayLabSection" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbSection'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbSection'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Primary" class="input-group-text side-input-dia">PrimaryWorkCenter:</label>
+                          <ng-select formControlName="cmbWorkCenter" value="{{ testDirectoryData.wc }}"
+                            (change)="onComboSelected($event, 'WorkCenter')" placeholder="Select Work Center" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbWorkCenter'].errors
+                            }" required class="form-select" id="cmbWorkCenter" aria-label=""
+                            [(ngModel)]="testDirectoryData.wc">
+                            <ng-option *ngFor="let obj of ArrayWorkCenter" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbWorkCenter'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbSection'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Primary Test Sites" class="input-group-text side-input-dia">Primary Test
+                            Sites:</label>
+
+                          <ng-select formControlName="cmbTestSite" value="{{ testDirectoryData.ts }}"
+                            (change)="onComboSelected($event, 'TestSite')" placeholder="Select TestSite"
+                            class="form-select" id="cmbTestSite" aria-label="" [(ngModel)]="testDirectoryData.ts"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['cmbTestSite'].errors
+                            }" required>
+                            <ng-option *ngFor="let obj of ArrayTestSite" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbTestSite'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbTestSite'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Main" class="input-group-text side-input-dia">Main Header:</label>
+                          <ng-select formControlName="cmbMainHeader" value="{{ testDirectoryData.mhn }}"
+                            (change)="onComboSelected($event, 'MainHeader')" placeholder="Select MainHeader" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbMainHeader'].errors
+                            }" required class="form-select" id="cmbMainHeader" aria-label=""
+                            [(ngModel)]="testDirectoryData.mhn">
+                            <ng-option *ngFor="let obj of ArrayMainHeader" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbMainHeader'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbMainHeader'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="Sub" class="input-group-text side-input-dia">Sub Header:</label>
+                          <ng-select formControlName="cmbSubHeader" value="{{ testDirectoryData.shn }}"
+                            [(ngModel)]="testDirectoryData.shn" (change)="onComboSelected($event, 'SubHeader')"
+                            placeholder="Select SubHeader" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbSubHeader'].errors
+                            }" required class="form-select" id="cmbSubHeader" aria-label="">
+                            <ng-option *ngFor="let obj of ArraySubHeader" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbSubHeader'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbSubHeader'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- right content -->
+              </div>
+
+              <!-- Module-card -->
+              <div class="card mt-2">
+                <div class="d-flex flex-wrap">
+                  <div style="width: 16rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="Lab" class="input-group-text side-input-dia">Lab Module:</label>
+                      <ng-select formControlName="cmblabModule" value="{{ testDirectoryData.mdl }}"
+                        [(ngModel)]="testDirectoryData.mdl" (change)="onComboSelected($event, 'LabModule')"
+                        placeholder="Select labModule" [ngClass]="{
+                          'is-invalid': submitted && f['cmblabModule'].errors
+                        }" required class="form-select" id="cmblabModule" aria-label="">
+                        <ng-option *ngFor="let obj of ArrayLabModule" [value]="obj.code">{{ obj.description
+                          }}</ng-option>
+                      </ng-select>
+                      <div *ngIf="submitted && f['cmblabModule'].errors" class="invalid-feedback">
+                        <div *ngIf="f['cmblabModule'].errors['required']" class="custom">
+                          *
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="width: 18rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="Accn" class="input-group-text side-input-dia">Accn. Prefix:</label>
+                      <ng-select formControlName="cmbAccnPrefix" value="{{ testDirectoryData.prfx }}"
+                        (change)="onComboSelected($event, 'AccnPrefix')" placeholder="Select AccnPrefix" [ngClass]="{
+                          'is-invalid': submitted && f['cmbAccnPrefix'].errors
+                        }" required class="form-select" id="cmbAccnPrefix" aria-label=""
+                        [(ngModel)]="testDirectoryData.prfx">
+                        <ng-option *ngFor="let obj of ArrayAccnPrefix" [value]="obj.code">{{ obj.code }} {{
+                          obj.description }}</ng-option>
+                      </ng-select>
+                      <div *ngIf="submitted && f['cmbAccnPrefix'].errors" class="invalid-feedback">
+                        <div *ngIf="f['cmbAccnPrefix'].errors['required']" class="custom">
+                          *
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label for="Result" class="input-group-text side-input-dia">Result Type:</label>
+                      <ng-select formControlName="cmbResultType" value="{{ testDirectoryData.rstp }}"
+                        [(ngModel)]="testDirectoryData.rstp" (change)="onComboSelected($event, 'ResultType')"
+                        placeholder="Select Result Type" [ngClass]="{
+                          'is-invalid': submitted && f['cmbResultType'].errors
+                        }" required class="form-select" id="cmbResultType" aria-label="" style="min-width: 45%">
+                        <ng-option *ngFor="let obj of ArrayResultType" [value]="obj.code">{{ obj.description
+                          }}</ng-option>
+                      </ng-select>
+                      <div *ngIf="submitted && f['cmbResultType'].errors" class="invalid-feedback">
+                        <div *ngIf="f['cmbResultType'].errors['required']" class="custom">
+                          *
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="width: 12rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="No" class="input-group-text side-input-dia">No of Decimals:</label>
+                      <input class="form-control" formControlName="txtnoofDecimals" id="txtnoofDecimals"
+                        value="{{ testDirectoryData.dec }}" min="1" max="9" maxlength="1" placeholder="Enter Decimals"
+                        [(ngModel)]="testDirectoryData.dec" type="number"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        (keypress)="numberOnly($event)" id="No of Decimals" />
+                    </div>
+                  </div>
+                  <div style="width: 12rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="Test" class="input-group-text side-input-dia">Test Sequence:</label>
+                      <input class="form-control" value="{{ testDirectoryData.seq }}"
+                        [(ngModel)]="testDirectoryData.seq" placeholder="Enter Test Sequence" maxlength="4"
+                        formControlName="txtTestSequence" type="text" id="Test Sequence" />
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-lg-2 col-12">
+                    <div class="input-group">
+                      <label for="Default" class="input-group-text side-input-dia">Default Result:</label>
+                      <input class="form-control" formControlName="txtDefResult" value="{{ testDirectoryData.result }}"
+                        [(ngModel)]="testDirectoryData.result" maxlength="20" placeholder="Enter Result" type="text"
+                        id="Default Result" />
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label for="Test Templ" class="input-group-text side-input-dia">Test Templ:</label>
+                      <ng-select formControlName="cmbTestTemplate" value="{{ testDirectoryData.tno }}"
+                        (change)="onComboSelected($event, 'TestTemplate')" placeholder="Select TestTemplate"
+                        class="form-select" id="cmbTestTemplate" aria-label="" [(ngModel)]="testDirectoryData.tno">
+                        <ng-option *ngFor="let obj of ArrayTestTemplate" [value]="obj.code">{{ obj.code }} {{
+                          obj.description }}</ng-option>
+                      </ng-select>
+                    </div>
+                  </div>
+                  <div style="width: 14rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="Average" class="input-group-text side-input-dia">Average TAT(Mins):</label>
+                      <input class="form-control" (keypress)="numberOnly($event)" value="{{ testDirectoryData.tat }}"
+                        [(ngModel)]="testDirectoryData.tat" placeholder="Enter TAT" formControlName="txtAvgTAT"
+                        maxlength="3" type="text" id="Average TAT" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end flex-grow-1">
+                    <button data-toggle="modal" id="btncopy" data-target="#Result-Conversion"
+                      class="btn btn-outline-dark">
+                      <i class="ri-file-copy-line pr-2"></i>Result Conversion
+                    </button>
+                    <button data-toggle="modal" id="btncopy" data-target="#Delta-Check" class="btn btn-outline-dark">
+                      <i class="ri-file-copy-line pr-2"></i>Delta Check
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- Module-card -->
+
+              <!-- copy-section -->
+              <div class="card mt-2">
+                <div class="d-flex">
+                  <div class="col-md-10">
+                    <div class="input-group">
+                      <label for="maleTextarea" style="font-size: 16px" class="input-group-text"
+                        style="margin-bottom: 5px; height: 36px; width: 4.1rem">Male:</label>
+                      <textarea class="form-control" id="maleTextarea" rows="2" cols="50" maxlength="700"
+                        value="{{ testDirectoryData.mnotes }}" formControlName="txtAreaMale"
+                        [(ngModel)]="testDirectoryData.mnotes" placeholder="Enter text"
+                        [(ngModel)]="maleText"></textarea>
+                    </div>
+                  </div>
+                  <div style="margin-top: 0.2rem">
+                    <button style="font-size: 15px" class="btn btn-outline-dark mt-2 float-right w-100"
+                      (click)="copyMtoF()">
+                      Copy M to F
+                    </button>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <div class="col-md-10">
+                    <div class="input-group">
+                      <label for="femaleTextarea" style="font-size: 16px" class="input-group-text"
+                        style="margin-bottom: 5px; height: 36px">Female:</label>
+                      <textarea class="form-control" id="femaleTextarea" rows="2" cols="50" maxlength="700"
+                        value="{{ testDirectoryData.fnotes }}" formControlName="txtAreaFeMale" placeholder="Enter text"
+                        [(ngModel)]="testDirectoryData.fnotes"></textarea>
+                    </div>
+                  </div>
+                  <div style="margin-top: 0.2rem">
+                    <button style="font-size: 15px" class="btn btn-outline-dark mt-2 float-right w-100"
+                      (click)="copyFtoM()">
+                      Copy F to M
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- copy-section -->
+              <!-- test-info & collection -->
+              <div class="card mt-2">
+                <div class="d-flex">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inputField1" class="input-group-text side-input-dia">Test Information & Collection
+                        Conditions:</label>
+                      <textarea class="form-control" formControlName="txtAreaTestInfo" maxlength="1000
+      " id="textareaInput" rows="2" cols="50" [(ngModel)]="testDirectoryData.tesT_INF"
+                        value="{{ testDirectoryData.tesT_INF }}" placeholder="Enter text"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- test-info & collection -->
+              <!-- add-section -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</main>
+
+<!-- Add Reference range -->
+<!-- Modal -->
+<div class="modal fade" [ngClass]="{ show: isAddModal }" [style.display]="isAddModal ? 'block' : 'none'" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="bg-primary modal-header" style="color: white">
+        Add Reference Range
+      </div>
+      <div class="modal-body p-4 text-left">
+        <div class="d-flex flex-wrap">
+          <div class="col-md-6 col-lg-6 col-12">
+            <div class="input-group">
+              <label for="inputField1" class="input-group-text side-input-dia">Division:</label>
+              <select id="dropdown1" class="form-control">
+                <option value="option1">Select</option>
+                <option value="option2">Option-biology</option>
+                <option value="option3">Option-biology</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-12">
+            <div class="input-group">
+              <label for="inputField1" class="input-group-text side-input-dia">Section:</label>
+              <select id="dropdown1" class="form-control">
+                <option value="option1">Select</option>
+                <option value="option2">Option-biology</option>
+                <option value="option3">Option-biology</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="input-group">
+            <input style="height: 36px !important" type="text" class="form-control" id="searchAxis"
+              placeholder="Enter Test Name / Description" />
+
+            <label style="height: 36px !important" class="form-label input-group-text-ar side-input-dia"
+              for="abc3">Enter T Axis or Description</label>
+
+            <!-- <div>
+                <p>No matching records found.</p>
+              </div> -->
+          </div>
+        </div>
+        <table class="table table-bordered data mt-2">
+          <thead>
+            <tr>
+              <th style="width: 9rem">Code</th>
+              <th style="width: 10.9rem">Rstp</th>
+              <th>Test Name</th>
+              <th style="width: 11.5rem">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>PDW</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PDW</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PLT</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PLT</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+            <!-- <tr>
+                    <td>PLT</td>
+                    <td class="section-number">
+                      <span class="editable-content">N</span>
+                      <input type="text" class="editable-input" style="display: none;" value="1" />
+                      <select class="editable-dropdown" style="display: none;">
+                        <option value="1">Y</option>
+                        <option value="2">N</option>
+                      </select>
+                    </td>
+                    <td class="text-left">PLT</td>
+                  </tr>
+                  <tr>
+                    <td>PLT</td>
+                    <td class="section-number">
+                      <span class="editable-content">N</span>
+                      <input type="text" class="editable-input" style="display: none;" value="1" />
+                      <select class="editable-dropdown" style="display: none;">
+                        <option value="1">Y</option>
+                        <option value="2">N</option>
+                      </select>
+                    </td>
+                    <td class="text-left">PLT</td>
+                  </tr> -->
+            <tr>
+              <td>PLT</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PLT</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PLT</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PLT</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PLT</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PLT</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>PLT</td>
+              <td class="section-number">
+                <span class="editable-content">N</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td class="text-left">PLT</td>
+              <td>
+                <button class="btn-outline-primary btn-icon btn-rounded">
+                  <i class="ri-pencil-line pr-1"></i>Edit Reference Ranges
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- result-type-table -->
+        <table class="table table-bordered data mt-2">
+          <thead>
+            <tr>
+              <th style="width: 7.2rem">Code</th>
+              <th style="width: 2.5rem">Gender</th>
+              <th style="width: 2.5rem">Age From</th>
+              <th style="width: 2.5rem">F</th>
+              <th style="width: 2.5rem">Age To</th>
+              <th style="width: 2.5rem">F</th>
+              <th style="width: 2.5rem">LHF</th>
+              <th style="width: 2.5rem">Ref.Low</th>
+              <th style="width: 2.5rem">Ref.High</th>
+              <th style="width: 2.5rem">Critical L</th>
+              <th style="width: 2.5rem">Critical H</th>
+              <th style="width: 2.5rem">Days From</th>
+              <th style="width: 2.5rem">Days To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="section-number">
+                <span class="editable-content">M</span>
+                <input type="text" class="editable-input" style="display: none" value="1" />
+                <select class="editable-dropdown" style="display: none">
+                  <option value="1">Y</option>
+                  <option value="2">N</option>
+                </select>
+              </td>
+              <td>0</td>
+              <td>D</td>
+              <td>7</td>
+              <td>D</td>
+              <td></td>
+              <td>4.000</td>
+              <td>6.500</td>
+              <td></td>
+              <td></td>
+              <td>0</td>
+              <td>7</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- result-type-table -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark cancelation btn-rounded" (click)="closeModal()"
+          data-bs-dismiss="modal">
+          <i class="ri-close-line pr-1"></i>Close
+        </button>
+        <button type="button" class="btn btn-outline-success btn-rounded">
+          <i class="ri-save-line pr-2"></i>Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- toggling-modal -->
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+  tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="bg-primary modal-header">
+        <h5 class="modal-title text-white" id="exampleModalToggleLabel">
+          Modal 1
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ri-close-line pr-1"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-12 col-xl-12">
+            <!-- back-link -->
+
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-wrap w-75">
+                <button data-toggle="modal" data-target="#copy-from-clients" class="btn btn-outline-dark add-section">
+                  <i class="ri-refresh-line pr-1"></i>Refersh
+                </button>
+                <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"
+                  class="btn btn-outline-dark order-section">
+                  <i class="ri-download-2-line pr-1"></i>Import
+                </button>
+                <button class="btn btn-outline-dark">
+                  <i class="ri-file-copy-line pr-1"></i>Copy to
+                </button>
+                <button class="btn btn-outline-dark add-section">
+                  <i class="ri-logout-box-line pr-1"></i>Exit
+                </button>
+              </div>
+            </div>
+            <div class="mt-2">
+              <h6>Test For:</h6>
+            </div>
+            <div class="card">
+              <div class="d-flex flex-wrap">
+                <div class="mt-1 col-md-3 col-lg-3 col-3">
+                  <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                  <label for="defaultSpecimen" style="font-size: 0.8rem">
+                    Display All site tests
+                  </label>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Site:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Work Center:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--table -->
+            <div class="card mt-2">
+              <table class="table table-bordered data mt-2">
+                <thead>
+                  <tr>
+                    <th style="width: 3rem">WC</th>
+                    <th style="width: 3rem">TS</th>
+                    <th style="width: 7rem">Test Code</th>
+                    <th style="width: 3rem">Test No</th>
+                    <th>Full Name</th>
+                    <th style="width: 9rem">Tst_id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>1213</td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--table -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"
+          class="btn btn-outline-dark order-section">
+          <i class="ri-download-2-line pr-1"></i>Import
+        </button>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+          <i class="ri-close-line pr-1"></i>Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- imports -->
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+  tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="bg-primary modal-header">
+        <h5 class="modal-title text-white" id="exampleModalToggleLabel2">
+          Modal 2
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ri-close-line pr-1"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-12 col-xl-12">
+            <!-- back-link -->
+
+            <div>
+              <h6>Export to Site:</h6>
+            </div>
+            <div class="card">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Site:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Work Center:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- second-card -->
+            <div class="d-flex justify-content-between mt-3">
+              <div>
+                <h6>Assign to:</h6>
+              </div>
+              <!-- <div> -->
+              <div class="d-flex flex-wrap justify-content-end w-75">
+                <button data-toggle="modal" data-target="#copy-from-clients" class="btn btn-outline-dark add-section">
+                  <i class="ri-file-list-3-line pr-1"></i>Display Data
+                </button>
+                <button class="btn btn-outline-dark">
+                  <i class="ri-arrow-go-back-line pr-1"></i>Abort Sections
+                </button>
+              </div>
+              <!-- </div> -->
+            </div>
+            <div class="card mt-2">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Work Center:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- second-card -->
+            <!--table -->
+            <div class="card mt-2">
+              <table class="table table-bordered data mt-2">
+                <thead>
+                  <tr>
+                    <th style="width: 3rem">WC</th>
+                    <th style="width: 3rem">TS</th>
+                    <th style="width: 7rem">Test Code</th>
+                    <th style="width: 3rem">S</th>
+                    <th>Test Name</th>
+                    <th style="width: 9rem">Tst_id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--table -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal"
+          class="btn btn-outline-dark order-section">
+          <i class="ri-save-line pr-1"></i>Submit Selections
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- imports -->
+
+<!-- toggling-modal -->
+
+<!-- search-modal.component.html -->
+<div class="modal fade" id="secondModal" tabindex="-1" aria-labelledby="secondModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="secondModalLabel">
+          Second Modal
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="ri-close-line pr-1"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-lg-12 col-xl-12">
+            <!-- back-link -->
+
+            <div>
+              <h6>Export to Site:</h6>
+            </div>
+            <div class="card">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Site:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Work Center:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- second-card -->
+            <div class="d-flex justify-content-between mt-3">
+              <div>
+                <h6>Assign to:</h6>
+              </div>
+              <!-- <div> -->
+              <div class="d-flex flex-wrap justify-content-end w-75">
+                <button data-toggle="modal" data-target="#copy-from-clients" class="btn btn-outline-dark add-section">
+                  <i class="ri-file-list-3-line pr-1"></i>Display Data
+                </button>
+                <button class="btn btn-outline-dark order-section">
+                  <i class="ri-save-line pr-1"></i>Submit Selections
+                </button>
+                <button class="btn btn-outline-dark">
+                  <i class="ri-arrow-go-back-line pr-1"></i>Abort Sections
+                </button>
+              </div>
+              <!-- </div> -->
+            </div>
+            <div class="card mt-2">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Work Center:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">From Test Sites:</label>
+                    <select id="dropdown1" class="form-control">
+                      <option value="option1">Select</option>
+                      <option value="option2">Option-biology</option>
+                      <option value="option3">Option-biology</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- second-card -->
+            <!--table -->
+            <div class="card mt-2">
+              <table class="table table-bordered data mt-2">
+                <thead>
+                  <tr>
+                    <th style="width: 3rem">WC</th>
+                    <th style="width: 3rem">TS</th>
+                    <th style="width: 7rem">Test Code</th>
+                    <th style="width: 3rem">S</th>
+                    <th>Test Name</th>
+                    <th style="width: 9rem">Tst_id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                  <tr>
+                    <td>117</td>
+                    <td>123</td>
+                    <td>jhasdh</td>
+                    <td>
+                      <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen" />
+                    </td>
+                    <td>sample name</td>
+                    <td>123123123123</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--table -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button data-bs-dismiss="modal" class="btn btn-outline-dark order-section">
+          <i class="ri-save-line pr-1"></i>Submit Selections
+        </button>
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-alert rounded-3" id="SearchModal" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="bg-primary modal-header" style="color: white">
+        Search Test Definition
+      </div>
+
+      <div class="modal-body p-4 text-left">
+        <div class="col-md-12"></div>
+        <label class="form-label" for="abc3">Enter Test Definition Name or Code
+        </label>
+        <!-- back-link -->
+
+        <div class="input-group">
+          <!-- <input type="text" class="form-control" id="frmtxtdefname" [(ngModel)]="searchText" (input)="onSearch()"
+            placeholder="Test Definition Name"> -->
+          <!-- <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
+            <i class="ri-search-line"></i>
+          </button> -->
+        </div>
+
+        <br />
+        <table class="table table-hover table-striped truncate m-0" id="TablePRInformation">
+          <thead>
+            <tr>
+              <th>Test Definition Name</th>
+              <th>Code</th>
+              <th>Number</th>
+              <th>Synm</th>
+              <th>Specimen Type</th>
+              <!-- <th></th>
+              <th></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let objtd of tdSearchList">
+              <td>{{ objtd.full_Name }}</td>
+              <td>{{ objtd.tcode }}</td>
+              <td>{{ objtd.tesT_ID }}</td>
+              <td>{{ objtd.synm }}</td>
+              <td>{{ objtd.s_TYPE }}</td>
+              <!-- <td>{{objtd.tel}}</td> -->
+              <td>
+                <button class="btn btn-primary btn-icon btn-sm mb-1" (click)="selectedTestDefinitionName(objtd.sno)"
+                  data-bs-dismiss="modal">
+                  <i class="ri-send-plane-line"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Result-Conversion Modal -->
+<div class="modal fade" #childModal id="Result-Conversion" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="ResultConvertion" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <form #frmEmployee="ngForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="copyFromClients">Result Conversion</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-lg-12 col-12 no-padding-left">
+            <div class="card" style="background-color: #f6f8ff">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-12 col-lg-12 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">C.Units:</label>
+                    <input class="form-control" placeholder="Enter C.Units" value="{{ testDirectoryData.cnvunits }}"
+                      [(ngModel)]="testDirectoryData.cnvunits" (keypress)="numberOnly($event)" maxlength="8" type="text"
+                      formControlName="txtCUnits" id="txtCunits" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">C.Factor:</label>
+                    <input class="form-control" value="{{ testDirectoryData.cnvtfctr }}"
+                      [(ngModel)]="testDirectoryData.cnvtfctr" formControlName="txtCFactor" placeholder="Enter C.Factor"
+                      (keypress)="numberOnly($event)" maxlength="5" type="text" id="inputField1" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">No of Decimal:</label>
+                    <input class="form-control" maxlength="1" value="{{ testDirectoryData.cnvtdec }}" min="1" max="9"
+                      [(ngModel)]="testDirectoryData.cnvtdec" type="number"
+                      oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                      formControlName="txtNDecimal" (keypress)="numberOnly($event)" placeholder="Enter Decimal"
+                      id="inputField1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation px-4" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--Result-Conversion Modal -->
+
+<!--Delta-Check Modal -->
+<div class="modal fade" #childModal id="Delta-Check" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="DeltaCheck" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <form #frmEmployee="ngForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="copyFromClients">Delta Check</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 col-lg-12 col-12 no-padding-left no-padding-right">
+            <div class="card" style="background-color: #f6f8ff">
+              <div class="d-flex flex-wrap">
+                <div class="col-md-12 col-lg-12 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Delta Type:</label>
+                    <select id="dropdown1" class="form-control" [(ngModel)]="testDirectoryData.deltatp"
+                      formControlName="cmbDeltaType" value="{{ testDirectoryData.deltatp }}">
+                      <option value="A">A</option>
+                      <option value="P">P</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Value:</label>
+                    <input style="width: 90px" (keypress)="numberOnly($event)" class="form-control"
+                      [(ngModel)]="testDirectoryData.deltaval" type="text" value="{{ testDirectoryData.deltaval }}"
+                      placeholder="Enter Value" maxlength="3" formControlName="txtValue" id="inputField1" />
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-12">
+                  <div class="input-group">
+                    <label for="inputField1" class="input-group-text side-input-dia">Days Limit:</label>
+                    <input class="form-control" (keypress)="numberOnly($event)" placeholder="Enter Days Limit"
+                      value="{{ testDirectoryData.daysval }}" [(ngModel)]="testDirectoryData.daysval" type="text"
+                      id="inputField1" maxlength="3" formControlName="txtDaysLimit" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation px-4" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--Delta Check Modal -->

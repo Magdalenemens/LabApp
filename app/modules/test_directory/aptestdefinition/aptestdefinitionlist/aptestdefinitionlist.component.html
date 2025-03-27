@@ -1,0 +1,70 @@
+<div class="card mt-2">
+    <table class="table table-bordered data" id="mbListTable">
+        <thead class="table-head-fix">
+            <tr>
+                <!-- <th>Site No.</th> -->
+                <th>Test ID</th>
+                <th>Test Code</th>
+                <th>FUll Name</th>
+                <th>Status</th>
+                <th>Divisions</th>
+                <th>Sections</th>
+                <th>Work Center</th>
+                <th>Test Sites</th>
+                <th>Lab Module</th>
+                <!-- <th>Actions </th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                *ngFor="let item of tdAllData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+                <!-- <td><span>{{ item.sitE_NO }}</span></td> -->
+                <td><span>{{ item.tesT_ID }}</span></td>
+                <td><span>{{ item.tcode }}</span></td>
+                <td><span>{{ item.full_Name }}</span></td>
+                <td><span>{{ item.status}}</span> </td>
+                <td>
+                    <ng-select #selectedValue="ngModel" required="true" class="editable-dropdown" [disabled]="true"
+                        placeholder="select" [(ngModel)]="item.div">
+                        <ng-option [value]="obj.div" *ngFor="let obj of divsionDropDown">
+                            {{ obj.div + ' - ' + obj.descrip}}
+                        </ng-option>
+                    </ng-select>
+                </td>
+                <td><span>
+                <td>
+                    <ng-select #selectedValue="ngModel" required="true" class="editable-dropdown" [disabled]="true"
+                        placeholder="select" [(ngModel)]="item.sect">
+                        <ng-option [value]="obj.sect" *ngFor="let obj of sectionDropDown">
+                            {{ obj.sectdescrip}}
+                        </ng-option>
+                    </ng-select>
+                </td>
+                </span> </td>
+                <td><span>
+                        <ng-select #selectedValue="ngModel" required class="editable-dropdown" placeholder="select"
+                            [disabled]="true" [(ngModel)]="item.wc">
+                            <ng-option [value]="obj.wc" *ngFor="let obj of workcenterDropDown">
+                                {{ obj.wc + ' - ' + obj.descrip}}
+                            </ng-option>
+                        </ng-select>
+                    </span> </td>
+                <td><span>
+                        <ng-select #selectedValue="ngModel" required class="editable-dropdown" placeholder="select"
+                            [disabled]="true" [(ngModel)]="item.ts">
+                            <ng-option [value]="obj.ts" *ngFor="let obj of testsitesDropDown">
+                                {{obj.tsdescrip}}
+                            </ng-option>
+                        </ng-select>
+                    </span> </td>
+                <td><span>{{ item.mdl}}</span></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <!-- Pagination Component -->
+    <app-pagination [totalItems]="tdAllData.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination>
+</div>

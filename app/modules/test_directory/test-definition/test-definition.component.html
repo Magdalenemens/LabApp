@@ -1,0 +1,43 @@
+<div class="d-flex section-top-space pt-3">
+  <!-- <div class="d-flex">
+      <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+        <h6 class="py-1 mt-1 header-font">Test directory</h6>
+      </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+      <a style="color: #000000" href="#">
+        <h6 class="py-1 mt-1 header-font">Test Definition</h6>
+      </a>
+    </div> -->
+</div>
+<!-- back-link -->
+<!-- tabs -->
+<!-- tabs -->
+<section class="section-wrapper">
+  <div>
+    <nav class="tab-nav">
+      <button id="btnaddtestdefinition" data-tab-target="tab-content-1" (click)="goToTestDefinition('addtestdirectory')"
+        [class.is-active]="selected === 'addtestdirectory'">
+        Data Entry
+      </button>
+      <button data-tab-target="tab-content-2" id="btnreferencerange" (click)="goToTestDefinition('Reference-ranges')"
+        [class.is-active]="selected === 'Reference-ranges'">
+        Reference Range
+      </button>
+      <button data-tab-target="tab-content-3" id="btnsprofile" (click)="goToTestDefinition('Profile')"
+        [class.is-active]="selected === 'Profile'">
+        Profile
+      </button>
+      <button data-tab-target="tab-content-4" id="btnNumericReferenceRanges"
+        (click)="goToTestDefinition('Numeric-Reference-Ranges')"
+        [class.is-active]="selected === 'Numeric-Reference-Ranges'">
+        Numeric Reference Ranges
+      </button>
+      <button data-tab-target="tab-content-4" id="btnTestAllocation" (click)="goToTestDefinition('Test-Allocation')"
+        [class.is-active]="selected === 'Test-Allocation'">
+        Test Allocation
+      </button>
+      <h6 class="ml-auto mr-1 pt-1 specific-header-naming">General Lab Orders</h6>
+
+    </nav>
+    <app-default></app-default>
+  </div>
+</section>

@@ -1,0 +1,450 @@
+<div class="tab-target mt-3" id="tab-content-3">
+
+  <!-- add-section -->
+  <div class="add-content">
+    <div class="d-flex mt-0">
+      <!-- First Section -->
+      <div class="d-flex flex-column mt-0">
+        <div class="custom-input" style="width: 10.8rem">
+          <div class="card d-flex flex-column vertical-center">
+            <button
+              data-toggle="modal"
+              data-target="#copy-from-clients"
+              class="btn btn-outline-dark add-section mb-2"
+            >
+              <i class="ri-add-line pr-1"></i>Add Record
+            </button>
+            <button
+              class="btn btn-outline-dark order-section mb-2"
+              (click)="updateTDProfile()"
+            >
+              <i class="ri-pencil-line pr-2"></i>Edit
+            </button>
+            <button class="btn page-btn btn-outline-dark add-section mb-2">
+              <i class="ri-save-line pr-2"></i>Save
+            </button>
+            <button class="btn btn-outline-dark add-section cancelation mb-2">
+              <i class="ri-close-line pr-1"></i>Cancel
+            </button>
+            <button class="btn btn-outline-dark cancelation mb-2">
+              <i class="ri-delete-bin-6-line pr-2"></i>Delete
+            </button>
+            <button
+            data-toggle="modal"
+            data-target="#rename"
+            class="btn page-btn btn-outline-dark"
+            id="copyMtoF"
+          >
+            Rename
+          </button>
+          </div>
+          <div class="card mt-1">
+            <div
+              style="
+                border: 1px solid #bff5bb;
+                border-radius: 0.25rem;
+                padding: 0.25rem 0.25rem;
+              "
+            >
+              <div class="d-flex flex-wrap justify-content-between navigation">
+                <button
+                  class="btn page-btn btn-outline-paginate px-1"
+                  id="first"
+                  tooltip="First"
+                  (click)="getRecord('first', tdProfileData.sno)"
+                >
+                  <i class="ri-skip-left-line"></i>
+                </button>
+                <button
+                  class="btn page-btn btn-outline-paginate px-1"
+                  id="previous"
+                  tooltip="previous"
+                  (click)="getRecord('prev', tdProfileData.sno)"
+                >
+                  <i class="ri-arrow-left-double-line"></i>
+                </button>
+                <button
+                  class="btn page-btn btn-outline-paginate px-1"
+                  id="next"
+                  tooltip="next"
+                  (click)="getRecord('next', tdProfileData.sno)"
+                >
+                  <i class="ri-arrow-right-double-line"></i>
+                </button>
+                <button
+                  class="btn page-btn btn-outline-paginate px-1"
+                  id="last"
+                  tooltip="last"
+                  (click)="getRecord('last', tdProfileData.sno)"
+                >
+                  <i class="ri-skip-right-line"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 auto" class="no-padding-left">
+
+        <div class="d-flex justify-content-start">
+          <div>
+            <div class="input-group">
+              <label
+                style="height: 33px;"
+                class="input-group-text side-input-dia"
+                >Code:</label
+              >
+              <div>
+              <div class="search-container">
+              <input
+                class="btn search-input-icon py-2 w-100"
+                style="
+                  text-align: left;
+                  border: 1px solid #ced4da;
+                  background-color: #fff;
+                "
+                type="text"
+                id="searchInput"
+                placeholder="Search..."
+              />
+              <span class="search-icon"></span>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-0">
+          <div class="d-flex flex-wrap">
+            <div class="col-md-6 col-lg-6 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Code:</label
+                >
+                <label
+                  class="form-control highligter"
+                  readonly="true"
+                  type="text"
+                  id="Code"
+                  ><b>{{ tdProfileData.tcode }}</b></label
+                >
+                <input type="hidden" value="{{ tdProfileData.tesT_ID }}" />
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Number:</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Enter Number"
+                  type="text"
+                  id="inputField1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Report Name:</label
+                >
+                <label
+                  class="form-control highligter"
+                  readonly="true"
+                  type="text"
+                  id="Code"
+                  ><b>{{ tdProfileData.fulL_NAME }}</b></label
+                >
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="d-flex flex-wrap">
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Synm:</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Enter Synm"
+                  type="text"
+                  id="inputField1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Status:</label
+                >
+                <select id="dropdown1" class="form-control">
+                  <option value="option1">Option 1</option>
+                  <option value="option2">Option 2</option>
+                  <option value="option3">Option 3</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Is This Reportable</label
+                >
+                <select id="dropdown1" class="form-control">
+                  <option value="option1">Y</option>
+                  <option value="option2">N</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Priority:</label
+                >
+                <select id="dropdown1" class="form-control">
+                  <option value="option1">RT</option>
+                  <option value="option2">N</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >IS This Sub-Header:</label
+                >
+                <select id="dropdown1" class="form-control">
+                  <option value="option1">Y</option>
+                  <option value="option2">N</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Profile No:</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Enter Profile No"
+                  type="text"
+                  id="inputField1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Code No:</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Enter Code No"
+                  type="text"
+                  id="inputField1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Report No:</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Enter Report No"
+                  type="text"
+                  id="inputField1"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Components Work Load:</label
+                >
+                <select id="dropdown1" class="form-control">
+                  <option value="option1">F</option>
+                  <option value="option2">N</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Test Information & Collection Conditions:</label
+                >
+                <textarea
+                  class="form-control"
+                  id="textareaInput"
+                  rows="2"
+                  cols="50"
+                  placeholder="Enter text"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- First Section -->
+      <!-- right content -->
+      <!-- <button style="width:auto" class="edit btn-rounded" (click)="findTD()"  data-toggle="modal" data-target="#myModal" type="button">
+          <i class="ri-pencil-line pr-1"></i>Add TD</button> -->
+      <div class="col-md-5 no-padding-right">
+
+        <div class="d-flex justify-content-end">
+          <div class="d-flex">
+            <div class="mx-2">
+              <button
+                data-toggle="modal"
+                data-target="#copy-from-clients"
+                class="btn btn-outline-dark add-section w-100"
+                (click)="findTD()"
+              >
+                <i class="ri-add-line pr-1"></i>Add TD Record
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- table-card -->
+        <div class="card mt-2">
+          <div class="table-veritical">
+            <table class="table table-bordered data" id="editableTable">
+              <thead class="table-head-fix">
+                <tr>
+                  <th>Code</th>
+                  <th>Pndg</th>
+                  <th style="width: 700px">Full Name</th>
+                  <th style="width: 5rem !important">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tdGTDData; let i = index">
+                  <td>
+                    <span>{{ item.tcode }}</span>
+                  </td>
+                  <td>
+                    <span style="align-content: center">{{ item.pndg }}</span>
+                  </td>
+                  <td>
+                    <span>{{ item.fulL_NAME }}</span>
+                  </td>
+                  <td>
+                    <button
+                      style="width: auto"
+                      (click)="deleteRow(item)"
+                      class="delete btn-rounded"
+                    >
+                      <i class="ri-delete-bin-line pr-1"></i>Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- table-card -->
+      </div>
+      <!-- right content -->
+    </div>
+
+    <!-- add-section -->
+
+  </div>
+</div>
+
+<div
+  class="modal fade modal-alert rounded-3"
+  id="tdModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="bg-primary modal-header" style="color: white">
+        Search TD Information
+      </div>
+
+      <div class="modal-body p-4 text-left">
+        <div class="col-md-7">
+          <div class="input-group">
+            <label
+              style="height: 36px !important"
+              class="form-label input-group-text side-input-dia"
+              for="abc3"
+              >Enter TCode or Fullname</label
+            >
+            <input
+              style="height: 36px"
+              type="text"
+              class="form-control"
+              id="searchTD"
+              placeholder="TCode/Description"
+              (keyup)="BindSearchTDTable()"
+            />
+            <button
+              style="
+                height: 36px;
+                padding: inherit;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+              "
+              class="btn btn-outline-secondary"
+              type="button"
+              (click)="BindSearchTDTable()"
+            >
+              <i class="ri-search-line"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <table
+            class="table table-hover table-bordered modal-table truncate mt-3"
+            id="TableIsol"
+          >
+            <thead>
+              <tr>
+                <th>TD Code</th>
+                <th>Full Name</th>
+                <th style="width: 4.5rem"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tdData of tdPopupData">
+                <td>{{ tdData.tcode }}</td>
+                <td>
+                  {{ tdData.fulL_NAME }}
+                </td>
+                <td>
+                  <button
+                    class="rounded btn-primary btn-icon"
+                    (click)="addTDTable(tdData)"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="ri-send-plane-line"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-dark cancelation"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

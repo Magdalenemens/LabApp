@@ -1,0 +1,152 @@
+
+    <div class="row justify-content-center section-top-space pt-4">
+       
+        <div class="col-xxl-10 col-sm-10 col-10">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-wrap w-75">
+                    <button class="btn btn-outline-dark order-section"><i class="ri-printer-line pr-2"></i>Print</button>
+                  <button class="btn btn-outline-dark cancelation"><i class="ri-logout-box-line pr-2"></i>Exit</button>
+                </div>
+              </div>
+                <!-- first-card -->
+        <div class="card mt-3">
+            <div class="d-flex flex-wrap">
+              <div class="col-md-2 col-lg-2 col-12">
+                <div class="input-group">
+                  <label for="inputField1" class="input-group-text side-input-dia"
+                    >Client Id / Name:</label>
+                  <label class="form-control" id="inputField1"></label>
+                </div>
+              </div>
+              <div class="col-md-5 col-lg-5 col-12">
+                <div class="input-group">
+                  <label class="form-control"id="inputField1" ></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- first-card -->
+           <div class="d-flex">
+          <div class="col-md-8">
+          <div class="card mb-4 mt-2">
+            <div class="card-body" style="text-align:center;">
+              <table id="tableCentralReceiving" class="table table-bordered data mb-0">
+                <thead>
+                  <tr>
+                    <!--<th>No</th>-->
+                    <th style="width:1rem">Ln</th>
+                    <th style="width:9rem">Code</th>
+                    <th>Full Name</th>
+                    <th style="width:1rem">DT</th>
+                    <th style="width:6rem">U/Price</th>
+                    <th style="width:7rem">D%</th>
+                    <th style="width:6rem">D/Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ln</td>
+                    <td class="blue-link" (click)="showCard($event)">CBC</td>
+                    <td>sdsdfsddsgsdgsdgghfghf</td>
+                    <td>P</td>
+                    <td>430</td>
+                    <td>90.00</td>
+                    <td>120.00</td>
+                  </tr>
+                  <tr>
+                    <td>Ln</td>
+                    <td class="blue-link" (click)="showCard($event)">CBC</td>
+                    <td>sdsdfsddsgsdgsdgghfghf</td>
+                    <td>P</td>
+                    <td>430</td>
+                    <td>90.00</td>
+                    <td>120.00</td>
+                  </tr>
+                  <tr>
+                    <td>Ln</td>
+                    <td class="blue-link" (click)="showCard($event)">CBC</td>
+                    <td>sdsdfsddsgsdgsdgghfghf</td>
+                    <td>P</td>
+                    <td>430</td>
+                    <td>90.00</td>
+                    <td>120.00</td>
+                  </tr>
+                  <tr>
+                    <td>Ln</td>
+                    <td class="blue-link" (click)="showCard($event)">CBC</td>
+                    <td>sdsdfsddsgsdgsdgghfghf</td>
+                    <td>P</td>
+                    <td>430</td>
+                    <td>90.00</td>
+                    <td>120.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 mt-2">
+                <div class="d-flex justify-content-end mx-1">
+                    <div class="mx-3">
+                      <label for="inputField1" class="pt-1">Subtotal:</label>
+                    </div>
+                    <div class="float-right">
+                      <input class="form-control" placeholder="" type="text" maxlength="2"  />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="d-flex mx-3">
+                      <label for="inputField1" class="input-group-text side-input-dia" >Discount %:</label>
+                      <input style="width:6rem" class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                    <div class="float-right">
+                      <input class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="mx-3">
+                      <label for="inputField1" class="pt-1">After Discount:</label>
+                    </div>
+                    <div class="float-right">
+                      <input class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="d-flex mx-3">
+                      <label for="inputField1" class="input-group-text side-input-dia" >VAT %:</label>
+                      <input style="width:6rem" class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                    <div class="float-right">
+                      <input class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="mx-3">
+                      <label for="inputField1" class="pt-1">Net Value:</label>
+                    </div>
+                    <div class="float-right">
+                      <input class="form-control" placeholder="" type="text" maxlength="2" />
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+        </div>
+    </div>
+
+<!-- right-editing-card -->
+<div class="right-card" *ngIf="isCardVisible" [ngStyle]="{'top.px': cardPosition.top, 'left.px': cardPosition.left}">
+  <h6>Enter Price</h6>
+  <div class="p-2">
+    <div class="d-flex flex-wrap">
+      <div>
+      <input class="form-control" placeholder="" type="text" maxlength="20" />
+    </div>
+    <button (click)="save()" class="btn btn-outline-dark order-section icons-styles mt-0 mx-1 ml-2"><i class="ri-check-line"></i></button>
+    <button (click)="hideCard()" class="btn btn-outline-dark cancelation icons-styles mt-0 mx-1"><i class="ri-close-line"></i></button>
+    </div>
+  </div>
+</div>
+<!-- right-editing-card -->
+  

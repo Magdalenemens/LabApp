@@ -1,0 +1,195 @@
+<!-- app.component.html -->
+<div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2>Test Entry</h2>
+          </div>
+          <div class="panel-body">
+                <form (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                        <label> Code </label>
+                        <input type="text" reguired class="form-control" id="Code" [(ngModel)]="tdmodel.tcode"
+                            name="Code">
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label> Num</label>
+                        <input type="text" class="form-control" id="Num" 
+                            name="Num">
+                    </div> -->
+
+                    <div class="form-group">
+                        <label> Name</label>
+                        <input type="text" class="form-control" id="Name"   name="Name" >
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label> Synm</label>
+                        <input type="text" class="form-control" id="Synm"   name="Synm" [(ngModel)]="tdmodel.synm">
+                    </div> -->
+
+                    <div class="form-group">
+                        <label> Spec.</label>
+                        <!-- <p> selectedTeam </p> -->
+                          <!-- <select> 
+                                <option>--Select--</option> 
+                                <option>Serum</option>
+                                <option>Sputum</option>
+                                <option>Stone</option>
+                                <option>Stool</option>
+                                <option>Swab</option>
+                                <option>Synovial Fluid</option>
+                                <option>Throat Swab</option>
+                       </select>  -->
+                       <select class="form-control" id="dropdown" [(ngModel)]="tdmodel.s_TYPE" name="selectedValue">
+                        <option *ngFor="let value of dropdownValues" [value]="value">{{ value }}</option>
+                      </select>
+                        </div>
+                        
+                    <!-- <div class="form-group">
+                        <label> Req.</label>
+                        <input type="text" class="form-control" id="Req"   name="Req" [(ngModel)]="tdmodel.sr">
+                    </div> -->
+
+                    <!-- <div class="form-group">
+                        <label> SC</label>
+                        <input type="text" class="form-control" id="SC"   name="SC" [(ngModel)]="tdmodel.sc">
+                    </div> -->
+
+                    <div class="form-group">
+                        <label> Units</label>
+                        <input type="text" class="form-control" id="Units"   name="Units" [(ngModel)]="tdmodel.units">
+                    </div>
+
+                    <div class="form-group">
+                        <label> Priority</label>
+                        <input type="text" class="form-control" id="Priority"   name="Priority" [(ngModel)]="tdmodel.prty">
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label> Code No.</label>
+                        <input type="text" class="form-control" id="Code No"   name="Code b_NO" [(ngModel)]="tdmodel.b_NO">
+                    </div> -->
+
+                    <div class="form-group">
+                        <label> Status</label>
+                        <input type="text" class="form-control" id="Status"   name="status" [(ngModel)]="tdmodel.status">
+                    </div>
+
+                    <div class="form-group">
+                        <label> Orderable</label>
+                        <input type="text" class="form-control" id="Orderable"   name="ordable" [(ngModel)]="tdmodel.ordable">
+                    </div>
+                 
+
+                    <div class="form-group">
+                        <label> Print Result</label>
+                        <input type="text" class="form-control" id="PrintResult"   name="pr" [(ngModel)]="tdmodel.pr">
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label> BillngCode</label>
+                        <input type="text" class="form-control" id="BillngCode"   name="bcode" [(ngModel)]='tdmodel.bcode'>
+                    </div> -->
+                    
+                    
+                    <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <button class="btn btn-secondary" type="button" (click)="goBack()">Back</button>
+                    </div>
+                </form>
+                
+          </div>
+        </div>
+      </div>
+         <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <!-- Panel 2 -->
+          </div>
+          <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label for="dropdown">Lab Module</label>
+                    <select class="form-control" id="dropdown">
+                      <option>GL - General Lab</option>
+                      <option>MB - Microbiology</option>
+                      <option>AP - Anatomic Pathology</option>
+                      <option>SP - Special Report</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="dropdown">Result Type</label>
+                    <select class="form-control" id="dropdown">
+                      <option>I - Interp</option>
+                      <option>M - Microbiology</option>
+                      <option>N - Numeric</option>
+                    </select>
+                  </div>
+                <div class="form-group">
+                  <label for="dropdown">No.Of.Decimals</label>
+                  <select class="form-control" id="dropdown">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+                <!-- Add more form fields as needed -->
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+              </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <!-- Panel 3 -->
+          </div>
+          <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label for="dropdown">Division</label>
+                    <select class="form-control" id="dropdown">
+                      <option>01 - Chemistry</option>
+                      <option>02 - Haemotology</option>
+                      <option>03 - Seriology</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="dropdown">Section</label>
+                    <select class="form-control" id="dropdown">
+                      <option>General Chemistry</option>
+                      <option>Hormones</option>
+                      <option>Proteins</option>
+                    </select>
+                  </div>
+                <div class="form-group">
+                  <label for="dropdown">Accn. Prefix</label>
+                  <select class="form-control" id="dropdown">
+                    <option>Generic Prefix</option>
+                    <option>Year / Month / Date</option>
+                    <option>Liquid Base</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="dropdown">Test Template</label>
+                  <select class="form-control" id="dropdown">
+                    <option>SEMEN ANALYSIS</option>
+                    <option>URITHRAL CULTURE</option>
+                    <option>HVS</option>
+                  </select>
+                </div>
+                <!-- Add more form fields as needed -->
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</div>
+

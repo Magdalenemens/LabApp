@@ -1,0 +1,29 @@
+.btn.active {
+  background-color: #FC3A10 !important;
+  color: white;
+}
+.btn:focus{
+  background-color: #FC3A10;
+  color: white
+}
+
+.button,
+input,
+optgroup,
+select,
+textarea {
+  margin-top: 0rem;
+  font-family: Segoe UI !important;
+  font-size: inherit;
+  line-height: inherit;
+  border: 1px solid lightgrey;
+  width: 40%;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  font-size: revert-layer;
+}
+
+.btn-outline-dark {
+  border: none;
+}

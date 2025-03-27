@@ -1,0 +1,138 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+        <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+          <h6 class="py-1 mt-1 header-font">Order Processing</h6>
+        </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+        <a style="color: #000000" href="#">
+          <h6 class="py-1 mt-1 header-font">Cytogenetics Login</h6>
+        </a>
+      </div> -->
+    </div>
+    <div class="card mt-2 login-bg">
+      <div class="card-body px-4">
+        <h4 class="pt-3 pb-2 text-dark text-center">Cytogenetics Login</h4>
+        <div class="d-flex justify-content-between">
+          <div class="col-xxl-3 col-sm-3 col-3">
+            <div class="input-group">
+              <label class="input-group-text" for="PAT_ID">Accession No.</label>
+              <input class="form-control" placeholder="Enter ACCN" type="text" id="ACCN" required [(ngModel)]="accn" value="{{accn}}" />
+              <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal" type="button" 
+                style="height: 27px;padding: inherit;border-top-left-radius: 0;border-bottom-left-radius: 0;" (click)="getCytogeneticsLogin(accn)">
+                <i class="ri-search-line"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-xxl-5 col-sm-5 col-5">
+            <div class="d-flex justify-content-end">
+              <button id="BtnSubmit" class="btn btn-outline-dark" (click) = "submitCGLogin()">
+                <i class="ri-save-line"></i> Submit
+              </button>
+              <button id="BtnAbort" class="btn btn-outline-dark" (click)="clear()">
+                <i class="ri-arrow-go-back-line"></i> Abort
+              </button>
+              <button class="btn btn-outline-dark cancelation add-section" style="display:none">
+                <i class="ri-expand-left-line pr-2"></i>Close
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- first-card -->
+        <div class="card mt-3">
+          <div class="d-flex flex-wrap">
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia"
+                  >Patient Id:</label>
+                <label class="form-control" id="inputField1"  >{{cgLogin.paT_ID}}</label>
+              </div>
+            </div>
+            <div class="col-md-5 col-lg-5 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Patient Name:</label>
+                <label class="form-control"id="inputField1" >{{cgLogin.paT_NAME}}</label>
+              </div>
+            </div>
+            <div class="col-md-5 col-lg-5 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Clinical Indication:</label>
+                <input class="form-control" placeholder="Enter Clinical Indication" type="text" id="cliN_IND" required [(ngModel)]="cgLogin.cliN_IND" value="{{cgLogin.cliN_IND}}" (keyup)="onFetchAbbrevationForCIndication($event)"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- first-card -->
+        <!-- second-card -->
+        <h6 class="header-font mt-3">Sample Details:</h6>
+        <div class="card mt-2 mb-4">
+          <div class="d-flex flex-wrap">
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Specimen Type:</label>
+                <select id="dropdown1" class="form-control" [(ngModel)]="cgLogin.sP_TYPE" value="{{cgLogin.sP_TYPE}}">
+                  <option *ngFor="let sp of cgLoginSP" value="{{sp.cd}}">{{sp.cd}}</option>             
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Received Date/Time:</label>
+                <input type="datetime-local" class="form-control" id="rcvD_DTTM" required [(ngModel)]="cgLogin.rcvD_DTTM" value="{{cgLogin.rcvD_DTTM}}">
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Seq No:</label>
+                <input class="form-control" placeholder="Enter Sequence No." type="text" id="seq" required [(ngModel)]="cgLogin.seq" value="{{cgLogin.seq}}" />
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Consent:</label>
+                <input class="form-control" placeholder="Enter Consent" type="text" id="cnst" required [(ngModel)]="cgLogin.cnst" value="{{cgLogin.cnst}}" (blur) = "getCodeResponse(cgLogin.cnst,1)"/>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >Color:</label>
+                <input class="form-control" placeholder="Enter Color" type="text" id="color" required [(ngModel)]="cgLogin.color" value="{{cgLogin.color}}" (blur) = "getCodeResponse(cgLogin.color,2)"/>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >PAC:</label>
+                <input class="form-control" placeholder="Enter PAC" type="text" id="pac" required [(ngModel)]="cgLogin.pac" value="{{cgLogin.pac}}" (blur) = "getCodeResponse(cgLogin.pac,3)"/>
+              </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >Container:</label>
+                <input class="form-control" placeholder="Enter Container" type="text" id="cntr" required [(ngModel)]="cgLogin.cntr" value="{{cgLogin.cntr}}" (blur) = "getCodeResponse(cgLogin.cntr,4)"/>
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >Volume:</label>
+                <input class="form-control" placeholder="Enter Volume" type="text" id="volume" required [(ngModel)]="cgLogin.volume" value="{{cgLogin.volume}}" />
+              </div>
+            </div>
+            <div class="col-md-2 col-lg-2 col-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >Integrity:</label>
+                <input class="form-control" placeholder="Enter Intgrity" type="text" id="intgrty" required [(ngModel)]="cgLogin.intgrty" value="{{cgLogin.intgrty}}" (blur) = "getCodeResponse(cgLogin.intgrty,5)"/>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Other Comments:</label>
+                <textarea class="form-control" placeholder="Enter Comments" rows="2" cols="50" id="comments" required [(ngModel)]="cgLogin.comments" value="{{cgLogin.comments}}" (keyup)="onFetchAbbrevation($event)"> </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- second-card -->
+      </div>
+    </div>
+  </div>
+</div>

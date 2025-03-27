@@ -1,0 +1,103 @@
+<div class="col-md-3 col-lg-3 col-3 pt-1">
+    <div class="input-group">
+      <label style="height: 33px" class="input-group-text side-input-dia">User Id / Name:</label>
+      <ng-select
+          #patientSelect
+          bindLabel="name"
+          bindValue="id"
+          placeholder="Select User Id / Name"
+        >
+        </ng-select>
+      <!-- <ng-select style="padding-left: 0" class="editable-dropdown col-md-4" placeholder="Select User"
+        [(ngModel)]="selectedUser" (change)="onUserChange($event)">
+        <ng-option [value]="obj.useR_ID" *ngFor="let obj of userDropDown">
+          {{ obj.useR_ID }} - {{ obj.useR_NAME }}
+        </ng-option>
+      </ng-select> -->
+  
+      <!-- <div *ngIf="submitted && f['useR_ID']?.errors" class="text-danger">
+        Please select a user.
+      </div> -->
+    </div>
+  </div>
+  <div class="card">
+    <table class="table table-bordered data text-black" id="editableTable">
+      <thead>
+        <tr>
+          <th style="width: 8rem">Site No</th>
+          <th style="width: 20rem">Site Name</th>
+          <th style="width: 8rem">Module</th>
+          <th style="text-align:center;">View</th>
+          <th style="text-align:center;">Add New</th>
+          <th style="text-align:center;">Modify</th>
+          <th style="text-align:center;">Collect</th>
+          <th style="text-align:center;">Change Price</th>   
+          <th style="text-align:center;">Issue Invoice</th>     
+          <th style="text-align:center;">Add Test</th>
+          <th style="text-align:center;">Cancel</th>
+          <th style="text-align:center;">Delete</th>
+          <th style="text-align:center;width: 7rem">Add Attachment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <ng-select
+                #patientSelect
+                bindLabel="name"
+                bindValue="id"
+                placeholder="Select Site No"
+              >
+              </ng-select>
+          </td>
+          <td>sitE_NAME</td>
+          <td>
+            <ng-select
+                #patientSelect
+                bindLabel="name"
+                bindValue="id"
+                placeholder="Select Module"
+              >
+              </ng-select>
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+          <td class="text-center">
+            <input type="checkbox"/>
+          </td>
+          <td class="text-center">
+            <input type="checkbox"/>
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+          <td class="text-center">
+            <input type="checkbox"/>
+          </td>
+          <td class="text-center">
+            <input type="checkbox"/>
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+          <td class="text-center">
+            <input type="checkbox" />
+          </td>
+        </tr>
+        <!-- <tr>
+          <td colspan="10" class="text-center">No modules available for the selected user.</td>
+        </tr> -->
+      </tbody>
+    </table>
+    <!-- <app-pagination [totalItems]="moduleDetails.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination> -->
+  </div>

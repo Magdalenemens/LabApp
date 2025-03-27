@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <!-- back-link -->
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+        <a style="color:#000000">
+          <h6 class=" py-1 mt-1 header-font">System</h6>
+        </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+        <a style="color:#000000">
+          <h6 class=" py-1 mt-1 header-font">Login Track</h6>
+        </a>
+      </div> -->
+    </div>
+
+    <!-- back-link -->
+    <div class="form-group col-md-2 float-right">
+      <input type="text" class="form-control search-style" placeholder="Search..." [(ngModel)]="searchText"
+        (input)="onSearch()">
+    </div>
+    <!-- Add-division -->
+    <!-- <button class="add-btn add-row mb-2" type="button"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+      Record</button> -->
+    <button class="btn btn-outline-dark add-section">
+      <i class="ri-calendar-line pr-1"></i>Current
+    </button>
+    <button class="btn btn-outline-dark add-section cancelation">
+      <i class="ri-logout-box-line pr-1"></i>Exit
+    </button>
+
+    <!-- Add-division -->
+    <!-- Table -->
+    <div class="card mt-2">
+      <table class="table table-bordered data" id="editableTable">
+
+        <thead>
+          <tr>
+            <th style="width:7rem">Station Id</th>
+            <th style="width:4rem">No</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Date - In Time</th>
+            <th>Date - Out Time</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of userloginList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+            <td>{{ item.statioN_ID }}</td>
+            <td> {{ item.u_ID }}</td>
+            <td>{{ item.useR_CODE }}</td>
+            <td>{{ item.fulL_NAME }}</td>
+            <td>{{ item.iN_DTTM }}</td>
+            <td>{{ item.ouT_DTTM }}</td>
+            <td>{{ calculateDuration(item.iN_DTTM, item.ouT_DTTM) }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <app-pagination [totalItems]="userloginList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,19 @@
+<div class="d-flex section-top-space pt-3">
+  </div>
+  <!-- back-link -->
+  <!-- tabs -->
+  <section class="section-wrapper mt-0">
+    <div >
+      <nav class="tab-nav">
+        <button  id="btnaddorder" data-tab-target="tab-content-1" (click)="addOrdersNew('AddOrderentryNew')" [class.is-active]="selected === 'AddOrderentryNew'">
+          Data Entry
+        </button>
+        <button data-tab-target="tab-content-2" id="btnlist" (click)="EditOrdersNew('ListOrderentryNew')" [class.is-active]="selected === 'ListOrderentryNew'">List</button>
+        <h6 class="ml-auto mr-1 pt-1 specific-header-naming">General Orders</h6>
+    
+      </nav>
+      <app-default></app-default>
+  
+    </div>
+    </section>
+  

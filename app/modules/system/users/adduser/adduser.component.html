@@ -1,0 +1,645 @@
+<div class="tab-content-0">
+  <div class="tab-target is-active" id="tab-content-1">
+
+    <main>
+      <div class="d-flex">
+
+        <div class="d-flex flex-column mt-0">
+          <div class="custom-input" style="width: 11.2rem">
+            <div class="card d-flex flex-column vertical-center">
+              <button class="btn btn-outline-dark add-section mb-2" [disabled]="isAddBtnActive" (click)="onAddRecord()">
+                <i class="ri-add-line pr-1"></i>Add Record
+              </button>
+              <button class="btn btn-outline-dark order-section mb-2" [disabled]="isEditBtnActive"
+                (click)="onEditRecord()">
+                <i class="ri-pencil-line pr-2"></i>Edit
+              </button>
+              <button class="btn btn-outline-dark add-section mb-2" [disabled]="isSaveBtnActive" (click)="onSubmit()">
+                <i class="ri-save-line pr-2"></i>Save
+              </button>
+              <button class="btn btn-outline-dark cancelation mb-2" [disabled]="isCancelBtnActive"
+                (click)="onCancelRecord(userData.useR_FL_ID)">
+                <i class="ri-close-line pr-1"></i>Cancel
+              </button>
+              <button class="btn btn-outline-dark cancelation mb-2" [disabled]="isDeleteBtnActive"
+                (click)="onDeleteRecord(userData.useR_FL_ID)">
+                <i class="ri-delete-bin-6-line pr-2"></i>Delete
+              </button>
+              <button class="btn btn-outline-dark cancelation mb-0">
+                <i class="ri-close-line pr-1"></i>Close
+              </button>
+            </div>
+            <div class="card mt-1">
+              <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+                <div class="d-flex flex-wrap justify-content-between navigation">
+
+                  <button class="btn page-btn btn-outline-paginate  px-1" id="first" [disabled]="isNavigationActive"
+                    tooltip="First" (click)="getRecord('first',userData.sno)">
+                    <i class="ri-skip-left-line"></i>
+                  </button>
+                  <button class="btn page-btn btn-outline-paginate  px-1" id="previous" [disabled]="isNavigationActive"
+                    tooltip="previous" (click)="getRecord('prev',userData.sno)">
+                    <i class="ri-arrow-left-double-line"></i>
+                  </button>
+                  <button class="btn page-btn btn-outline-paginate  px-1" id="next" [disabled]="isNavigationActive"
+                    tooltip="next" (click)="getRecord('next',userData.sno)">
+                    <i class="ri-arrow-right-double-line"></i>
+                  </button>
+                  <button class="btn page-btn btn-outline-paginate px-1" id="last" [disabled]="isNavigationActive"
+                    tooltip="last" (click)="getRecord('last',userData.sno)">
+                    <i class="ri-skip-right-line"></i>
+                  </button>
+                </div>
+
+              </div>
+              <div class="m-auto text-center">
+                {{ calculateCurrentIndex(userData.sno) }} / {{ userAllData.length }}
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-1">
+            <!-- Single Image Upload Section -->
+            <div>
+              <input #inputFile type="file" (change)="onFileChange($event)" style="display: none;" accept="image/*">
+            </div>
+
+            <img class="uploaded-img" #previewImage [src]="'data:image/jpeg;base64,' + userData.sngr" alt="">
+            <div class="d-flex justify-content-center">
+
+              <button class="btn btn-outline-dark mx-1 my-1" [disabled]="isDisableSignature" type="button"
+                (click)="onSelectImage()">Upload
+
+                Signature</button>
+              <button [disabled]="isDisableSignature" *ngIf="userData && userData.sngr!==null && userData.sngr!==''"
+                class="btn btn-outline-dark cancelation mx-1 my-1" type="button" (click)="onRemoveImage()">
+                <i class="ri-delete-bin-6-line"></i>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="flex:1 1 auto">
+          <form [formGroup]="form">
+
+            <section>
+              <!-- back-link -->
+
+              <!-- back-link -->
+              <!-- tabs -->
+              <section class="section-wrapper">
+                <div class="tab-target is-active" id="tab-content-1">
+                  <div class="d-flex justify-content-between">
+
+
+                    <div class="col-md-4">
+
+                      <div class="pr-0">
+                        <div class="input-group">
+                          <label style="height: 33px;" class="input-group-text side-input-dia">UserName:</label>
+                          <ng-select [items]="matchedUsers$ | async" bindLabel="displayName" class="custom" #userSelect
+                            [searchFn]="customSearch" [searchable]="true" (search)="onSearchUser($event)"
+                            (change)="onUserSelection($event, userSelect)" placeholder="Search...">
+
+                            <!-- Template for no search results -->
+                            <ng-template #noResults>
+                              <div>No results found</div>
+                            </ng-template>
+                          </ng-select>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="app-body">
+                    <!-- add-section -->
+                    <div class="add-content">
+                      <!-- first-card -->
+                      <div class="card mt-1 ml-1">
+                        <div class="d-flex flex-wrap">
+                          <div style="width:8rem" class="custom-input">
+                            <div class="input-group">
+                              <label for="inputField2" class="input-group-text side-input-dia">UserId:</label>
+                              <input class="form-control" placeholder="Enter Number" formControlName="txtNumber"
+                                maxlength="5" type="text" [(ngModel)]="userData.useR_ID" id="inputField3"
+                                [readonly]="true" />
+                            </div>
+                          </div>
+                          <div style="width:15rem">
+                            <div class="input-group" style="width:14rem">
+                              <label for="inputField6" class="input-group-text side-input-dia">UserName:</label>
+                              <input class="form-control" placeholder="Enter User Name" type="text" minlength="6"
+                                maxlength="12" id="userName" [disabled]="isUserNameReadOnly" formControlName="txtName"
+                                [(ngModel)]="userData.useR_NAME" required (blur)="checkAlreadyExisting($event)"
+                                [ngClass]="{'is-invalid': isFieldInvalid('txtName') || isUserNameInvalid}"
+                                value="{{userData.useR_NAME}}" />
+                              <div *ngIf="isUserNameInvalid" class="text-danger">
+                                Username must be at least six characters long.
+                              </div>
+                            </div>
+                          </div>
+
+                          <div style="width:20rem" class="custom-input">
+                            <div class="input-group">
+                              <label for="inputField4" class="input-group-text side-input-dia">Full Name:</label>
+                              <input class="form-control" placeholder="Enter Full Name" type="text" maxlength="30"
+                                id="inputField5" formControlName="txtFullName" (keypress)="blockNumericInput($event)"
+                                [(ngModel)]="userData.fulL_NAME" required
+                                [ngClass]="{'is-invalid': isFieldInvalid('txtFullName')}"
+                                value="{{userData.fulL_NAME}}" />
+                            </div>
+                          </div>
+
+                          <div style="width:15rem" class="custom-input">
+                            <div class="input-group" style="width:14rem">
+                              <label for="inputField4" class="input-group-text side-input-dia">National ID:</label>
+                              <input class="form-control" placeholder="Enter National Id" type="text" maxlength="10"
+                                id="inputField5" formControlName="txtNatId" [(ngModel)]="userData.naT_ID" required
+                                [ngClass]="{'is-invalid': isFieldInvalid('txtNatId')}" value="{{userData.naT_ID}}" />
+                            </div>
+                          </div>
+                          <div style="width:14rem" class="custom-input">
+                            <div class="input-group">
+                              <label for="inputField4" class="input-group-text side-input-dia">Telephone:</label>
+                              <input class="form-control" placeholder="Enter Telephone" type="text" maxlength="10"
+                                id="inputField5" formControlName="txtTel" (keypress)="restrictNonNumeric($event)"
+                                [(ngModel)]="userData.tel" value="{{userData.tel}}" />
+                            </div>
+                          </div>
+                          <div style="width:18rem" class="custom-input">
+                            <div class="input-group">
+                              <label for="inputField4" class="input-group-text side-input-dia">Email:</label>
+                              <input class="form-control" placeholder="Enter Email" type="text" maxlength="35"
+                                id="email" formControlName="txtEmail" [(ngModel)]="userData.email" required
+                                [ngClass]="{'is-invalid': isFieldInvalid('txtEmail')}" value="{{userData.email}}" />
+                            </div>
+                          </div>
+
+                          <div style="width:12rem" class="custom-input">
+                            <div class="input-group">
+                              <label for="inputField1" class="input-group-text side-input-dia">User Code:</label>
+                              <input class="form-control" maxlength="5" placeholder="Enter User Code" type="text"
+                                id="usercode" [(ngModel)]="userData.useR_CODE" formControlName="txtUserCode"
+                                value="{{userData.useR_CODE}}" />
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="input-group" style="width:40rem">
+                              <label class="input-group-text side-input-dia">Job Type:</label>
+                              <ng-select style="padding-left: 0" (keypress)="numberOnly($event)"
+                                class="editable-dropdown col-md-4" placeholder="Select Job Type"
+                                formControlName="joB_CD" [(ngModel)]="selectedJobType"
+                                (change)="onJobTypeChange($event)" [readonly]="isDefaultSiteReadOnly">
+                                <ng-option [value]="obj.joB_CD" *ngFor="let obj of jobTypeDropDown">
+                                  {{ obj.joB_TITLE }}
+                                </ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['joB_CD'].errors" class="text-danger">
+                                Please select a job.
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="input-group" style="width:40rem">
+                              <label class="input-group-text side-input-dia">Def Site:</label>
+                              <ng-select style="padding-left: 0;" (keypress)="numberOnly($event)"
+                                (change)="onSiteChange($event)" class="editable-dropdown col-md-4"
+                                placeholder="Select Site" formControlName="reF_SITE" [(ngModel)]="siteData.reF_SITE"
+                                [readonly]="isDefaultSiteReadOnly">
+                                <ng-option [value]="obj.sitE_NO + ' - ' + obj.sitE_NAME"
+                                  *ngFor="let obj of refDropDown">
+                                  {{ obj.sitE_NO + ' - ' + obj.sitE_NAME}}
+                                </ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['reF_SITE'].errors" class="text-danger">
+                                Please select a site.
+                              </div>
+                            </div>
+                          </div>
+                          &nbsp;&nbsp;&nbsp;
+                          <div class="col-md-3">
+                            <div class="input-group" style="width:40rem">
+                              <label class="input-group-text side-input-dia">Role:</label>
+                              <ng-select style="padding-left: 0;" (keypress)="numberOnly($event)"
+                                class="editable-dropdown col-md-4" placeholder="Select Role" formControlName="rolE_ID"
+                                [(ngModel)]="userData.useR_ROLE" (change)="onRoleChange($event)">
+                                <ng-option [value]="obj.rolE_ID + ' - ' + obj.rolE_NAME"
+                                  *ngFor="let obj of roleDropDown">
+                                  {{ obj.rolE_ID + ' - ' + obj.rolE_NAME}}
+                                </ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['rolE_ID'].errors" class="text-danger">
+                                Please select a role.
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <div class="modal fade" #childModal id="copy-from-user" data-backdrop="static"
+                            data-keyboard="false" tabindex="-1" aria-labelledby="copyFromClientsLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-md">
+                              <form #frmEmployee="ngForm" (ngSubmit)="frmEmployee.form.valid">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h6 class="modal-title" id="copyFromClients"> Copy Roles From Existing UserId:</h6>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="col-md-12 pb-2">
+                                      <label for="inputField1">From:</label>
+                                      <ng-select #selectedValue="ngModel" name="fromId" [(ngModel)]="fromId"
+                                        (change)="onUserIdSelection(fromId)" placeholder="Select User"
+                                        [ngClass]="{'is-invalid': selectedValue.invalid && (selectedValue.dirty || selectedValue.touched)}">
+                                        <ng-option *ngFor="let user of userAllData" [value]="user.useR_FL_ID">
+                                          {{ user.useR_ID }} - {{ user.useR_NAME }}
+                                        </ng-option>
+                                      </ng-select>
+
+                                    </div>
+                                    <div class="col-md-12 pb-2">
+                                      <label for="inputField1">To:</label>
+                                      <ng-select #selectedToValue="ngModel" name="toId" [(ngModel)]="toId"
+                                        placeholder="Select User"
+                                        [ngClass]="{'is-invalid': selectedToValue.invalid && (selectedToValue.dirty || selectedToValue.touched)}">
+                                        <ng-option *ngFor="let user of userAllData" [value]="user.useR_FL_ID">
+                                          {{ user.useR_ID }} - {{ user.useR_NAME }}
+                                        </ng-option>
+                                      </ng-select>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark cancelation px-4"
+                                      data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-outline-dark px-4" data-dismiss="modal"
+                                      (click)="assignPrivilegesToAnotherUser(userData)">Ok</button>
+                                  </div>
+
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- first-card -->
+                      <div class="col-md-6">
+                        <!-- <div class="mx-3 mt-1">
+                          <div class="toggle d-flex">
+                            <input type="checkbox" id="allowBilling" />
+                            <label for="allowBilling"></label>
+                            <span class="ms-2">Allow Billing</span>
+                          </div>
+                        </div> -->
+                        <div class="d-flex mt-2">
+                          <!-- allow billing -->
+                          <div class="col-md-6 no-padding-left item-list row d-flex align-items-stretch">
+                            <div class="card">
+                              <div class="mx-3 mt-1">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="chkActive" [(ngModel)]="userData.iS_ACTIVE"
+                                    formControlName="chkActive" (change)=userData.iS_ACTIVE?true:false />
+                                  <label for="chkActive">Active</label>
+                                </div>
+                              </div>
+                              <div class="mx-3 mt-1">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="chkbilling" [(ngModel)]="userData.billing"
+                                    formControlName="chkbilling" (change)=userData.billing?true:false />
+                                  <label for="chkbilling">Allow Billing</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox2" [(ngModel)]="userData.ndc"
+                                    formControlName="chkNDC" (change)=userData.ndc?true:false />
+                                  <label for="checkbox2">Disable Discount changes</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox4" [(ngModel)]="userData.npc"
+                                    formControlName="chkNpc" (change)=userData.npc?true:false />
+                                  <label for="checkbox4">Disable Price Change</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox6" [(ngModel)]="userData.sP_UPDATE"
+                                    formControlName="chkPriceUpdate" (change)=userData.sP_UPDATE?true:false />
+                                  <label for="checkbox6">Allow S.Price Update</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox8" [(ngModel)]="userData.siteslct"
+                                    formControlName="chkSiteSelection" (change)=userData.siteslct?true:false />
+                                  <label for="checkbox8">Disable Site Selection</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox24" [(ngModel)]="userData.md"
+                                    formControlName="chkdefaultspcmnRcvd" (change)=userData.siteslct?true:false />
+                                  <label for="checkbox24" style="font-size: 0.8rem">Default
+                                    Specimen Received Once Ordered</label>
+                                </div>
+                              </div>
+                              <br />
+                            </div>
+                          </div>
+                          <!-- allow billing -->
+                          <!-- page headers -->
+                          <div class="col-md-6 no-padding-left no-padding-right">
+                            <div class="card">
+                              <div class="mx-3 mt-1">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox10" [(ngModel)]="userData.pagehdr"
+                                    formControlName="chkpagehdr" (change)=userData.pagehdr?true:false />
+                                  <label for="checkbox10">Page Header</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox12" formControlName="chkelecsngr"
+                                    [(ngModel)]="userData.elecsngr" (change)=userData.elecsngr?true:false />
+                                  <label for="checkbox12">Electronic Signature</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox14" [(ngModel)]="userData.dfltsngr"
+                                    formControlName="chkdfltsngr" (change)=userData.dfltsngr?true:false />
+                                  <label for="checkbox14">Allow Electronic Signature</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox16" formControlName="chkesngracs"
+                                    [(ngModel)]="userData.esngracs" (change)=userData.esngracs?true:false />
+                                  <label for="checkbox16">Stop Access To Other Signatures</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox18" formControlName="chkvalidator"
+                                    [(ngModel)]="userData.validator" (change)=userData.validator?true:false />
+                                  <label for="checkbox18">Results validator</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox20" formControlName="chkvldprmt"
+                                    [(ngModel)]="userData.vldtprmt" (change)=userData.vldtprmt?true:false />
+                                  <label for="checkbox20">Validation Prompt</label>
+                                </div>
+                              </div>
+                              <div class="mx-3">
+                                <div class="toggle d-flex">
+                                  <input type="checkbox" id="checkbox22" formControlName="chkdrsldprint"
+                                    [(ngModel)]="userData.rsldprint" (change)=userData.rsldprint?true:false />
+                                  <label for="checkbox22">Do Not print With Release</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- page headers -->
+                        </div>
+                        <!-- last-card -->
+                        <div class="card mt-2">
+                          <div class="d-flex">
+                            <div class="col-md-12 no-padding-left">
+                              <div class="col-md-12 mt-1">
+                                <div class="input-group">
+                                  <label for="inputField21" class="input-group-text side-input-dia">Signature Line
+                                    1:</label>
+                                  <input class="form-control" placeholder="Enter Signature" type="text" maxlength="55"
+                                    id="inputField22" required formControlName="txtsign_line1"
+                                    value="{{userData.sigN_LINE1}}" [(ngModel)]="userData.sigN_LINE1" />
+                                </div>
+                              </div>
+                              <div class="col-md-12 mt-1">
+                                <div class="input-group">
+                                  <label for="inputField23" class="input-group-text side-input-dia">Signature Line
+                                    2:</label>
+                                  <input class="form-control" placeholder="Enter Signature" type="text"
+                                    id="inputField24" required formControlName="txtsign_line2"
+                                    value="{{userData.sigN_LINE2}}" [(ngModel)]="userData.sigN_LINE2" maxlength="55" />
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="input-group">
+                                  <label for="inputField25" class="input-group-text side-input-dia">Notes:</label>
+                                  <textarea class="form-control" id="textareaInput" rows="2" cols="50"
+                                    placeholder="Enter text" formControlName="txtnotes" value="{{userData.notes}}"
+                                    [(ngModel)]="userData.notes"></textarea>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <!-- last-card -->
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- tabs -->
+            </section>
+          </form>
+          <div class="col-md-6 mt-2 no-padding-right ml-auto right-card-adjustment">
+            <!-- remote section -->
+            <div class="card" style="border:1px solid white">
+              <div class="col-md-12">
+                <h6 class="card-title text-center w-100" style="margin-bottom: 0.1rem; border-radius: 5px;"> Associated
+                  Sites </h6>
+              </div>
+              <div class="vertical-scroll">
+                <table class="table table-bordered data text-black mt-2" id="editableTable">
+                  <thead class="table-head-fix">
+                    <tr>
+                      <th style="width: 1rem;display: none;">UserId</th>
+                      <th style="width: 1rem">Site No</th>
+                      <th style="width: 1rem">Abrv</th>
+                      <th style="width:35rem">Site Name</th>
+                      <th style="width: 3rem">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="userAllData.length > 0 && userSiteList === null">
+                      <td colspan="5">Loading...</td>
+                    </tr>
+
+                    <!-- Display a row with a message and action buttons if `userSiteList` is empty -->
+                    <tr *ngIf="userAllData.length > 0 && userSiteList.length === 0">
+                      <td colspan="4" style="text-align: center;">No sites available for the selected UserId.</td>
+                      <td style="white-space: nowrap; text-align: center;padding-left: 5px;padding-right: 5px;">
+                        <!-- Add Site Button -->
+                        <!-- <button id="BtnAddProc" tooltip="Add New Site" class="btn btn-outline-dark px-2"
+                          (click)="addEmptyRow()">
+                          <i class="ri-pantone-line"></i>
+                        </button> -->
+                      </td>
+                    </tr>
+
+                    <tr *ngFor="let item of userSiteList; let i = index" [id]="'row_' + i">
+                      <td style="display:none"><span *ngIf="!item.isEditing">{{ item.useR_ID }}</span>
+                        <input class="form-control" *ngIf="item.isEditing" [(ngModel)]="item.useR_ID" readonly="true" />
+
+                      <td style="width: 3rem"><span *ngIf="!item.isEditing">{{ item.sitE_NO }}</span>
+                        <input class="form-control" maxlength="3" *ngIf="item.isEditing" [(ngModel)]="item.sitE_NO"
+                          #siteNoInput [attr.id]="'txt_' + i" tagname="sitE_NO" name="sitE_NO" id="sitE_NO"
+                          (blur)="onSiteNoChange($event, i)" (keydown)="onKeydown($event, i)">
+
+                      <td style="width: 8rem"><span *ngIf="!item.isEditing">{{ item.abrv }}</span>
+                        <input class="form-control" *ngIf="item.isEditing" maxlength="3" [(ngModel)]="item.abrv"
+                          tagname="abrv" readonly="true" name="abrv" id="abrv">
+
+                      <td><span *ngIf="!item.isEditing">{{ item.sitE_NAME }}</span>
+                        <input class="form-control" *ngIf="item.isEditing" [(ngModel)]="item.sitE_NAME" readonly="true"
+                          tagname="sitE_NAME" name="sitE_NAME" id="sitE_NAME">
+
+                      <td><span *ngIf="item.isEditing">
+                          <button id="BtnAddProc" tooltip="Add New Site" class="btn btn-outline-dark px-2"
+                            style="padding-left: 5px;padding-right: 5px;" (click)="addEmptyRow()">
+                            <i class="ri-pantone-line"></i>
+                          </button></span>
+                        <button tooltip="Delete Site" class="btn btn-danger btn-sm px-2"
+                          style="padding-left: 5px;padding-right: 5px;" (click)="onDeleteUserSite(item.useR_SITES_ID, i)">
+                          <i class="ri-delete-bin-line"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+            <div class="card" style="margin-top:-1.3%;border:1px solid white">
+              <div class="col-md-12">
+                <button style="width: fit-content;" class="btn edit px-2" id="btnRef" (click)="toggleEditUserSites()">
+                  <i *ngIf="!isEditing" class="ri-edit-2-line">Edit</i>
+                  <i *ngIf="isEditing" class="ri-close-line">Cancel</i> </button>
+                <button class="btn btn-outline-dark px-2" type="button" (click)="onSubmitList()"
+                  [disabled]="isSubmitBtnActive">
+                  <i class="ri-save-line">Save</i>
+                </button>
+              </div>
+            </div>
+            <!-- remote section -->
+            <div class="card mt-2">
+              <div class="col-md-12 no-padding-right">
+                <div class="m-auto row justify-content-center">
+                  <button data-toggle d-flex="modal" style="margin-top: 1.8rem !important;" *ngIf="!isDisabled"
+                    id="btncopy" data-target="#copy-from-user" class="btn btn-outline-dark add-section my-1"><i
+                      class="ri-file-copy-line pr-2"></i>Copy From
+                    Other
+                    UserId
+                  </button>
+                  <!-- image-uploading -->
+                  <div>
+                    <div>
+                      <input #inputFile type="file" (change)="onFileChange($event)" style="display: none;"
+                        accept="image/*">
+                      <img class="uploaded-img" #previewImage [src]="''" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button class="btn btn-outline-dark mx-1 my-1" type="button" (click)="onSelectImage()">Select
+                        Image</button>
+                      <button *ngIf="imageSelected" class="btn btn-outline-dark mx-1 my-1" type="button"
+                        (click)="onRemoveImage()">Remove Image</button>
+                    </div>
+                  </div>
+                  <!-- image-uploading -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- add-section -->
+
+          <div class="modal fade modal-alert rounded-3" id="siteModel" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="bg-primary modal-header" style="color: white">
+                  Search Site
+                </div>
+
+                <div class="modal-body p-4 text-left">
+                  <div class="col-md-12 m-0">
+                    <label class="form-label" for="abc3">Enter Site/Site Name</label>
+                    <div class="input-group">
+                      <input type="hidden" class="form-control" id="rowTestCode" value="0" />
+                      <input type="text" class="form-control" id="searchInputSiteNo" placeholder="Search Site"
+                        (keyup)="onSearchSites()" />
+                      <button class="btn btn-outline-secondary" type="button" (click)="onSearchSites()">
+                        <i class="ri-search-line"></i>
+                      </button>
+                    </div>
+
+                    <br />
+                    <!--<table class="table table-hover table-striped truncate m-0" id="TableTestCollection">-->
+                    <div *ngIf="hasData; else noData">
+                      <div>
+                        <table class="table table-bordered data" id="TableTestCollection">
+                          <thead>
+                            <tr>
+                              <th>Site No</th>
+                              <th>Abrv</th>
+                              <th>Site Name</th>
+                              <th style="width:4rem">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="let items of findAllSites.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+                              <td>{{ items.sitE_NO }}</td>
+                              <td>{{ items.abrv }}</td>
+                              <td>{{ items.sitE_NAME }}</td>
+
+                              <button class="btn btn-primary btn-icon btn-sm mb-1" data-bs-dismiss="modal"
+                                (click)="addSite(items)">
+                                <i class="ri-send-plane-line"></i>
+                              </button>
+
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- Pagination Component -->
+                        <app-pagination [totalItems]="findAllSites.length" [itemsPerPage]="itemsPerPage"
+                          [currentPage]="currentPage" (pageChange)="goToPage($event)"
+                          (pageSizeChange)="onPageSizeChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                        </app-pagination>
+                      </div>
+                    </div>
+                    <ng-template #noData>
+                      <p>No data available. Please search for a site.</p>
+                    </ng-template>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<!-- <div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    back-link -->
+<!-- <div class="d-flex section-top-space">
+  <div class="d-flex">
+    <a style="color: #000000">
+      <h6 class="py-1 mt-1 header-font">System</h6> </a
+    ><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+    <a style="color: #000000">
+      <h6 class="py-1 mt-1 header-font">Login Track</h6>
+    </a>
+  </div>
+</div> -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText"
+    (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-division -->
+<button class="add-btn add-row mb-2" type="button" [disabled]="true"><i class="ri-list-view pr-1"></i>&nbsp;&nbsp;
+  View Login Tracking</button>
+<div class="card mt-0 table-responsive-lg" id="tab-content-2">
+    <table class="table table-bordered data" id="editableTable">
+      <thead class="table-head-fix">
+        <tr>
+          <th style="width: 9rem" (click)="sortData('statioN_ID')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('statioN_ID')">{{ getSortIcon('statioN_ID') }}</i>Station Id<i class="filter-icon ri-filter-3-line pl-2"></i> </th>
+          <th style="width: 7rem" (click)="sortData('u_ID')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('u_ID')">{{ getSortIcon('u_ID') }}</i>UserId<i class="filter-icon ri-filter-3-line pl-2"></i> </th>
+          <th (click)="sortData('useR_CODE')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('useR_CODE')">{{ getSortIcon('useR_CODE') }}</i>Code<i class="filter-icon ri-filter-3-line pl-2"></i> </th>
+          <th (click)="sortData('fulL_NAME')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('fulL_NAME')">{{ getSortIcon('fulL_NAME') }}</i>Name<i class="filter-icon ri-filter-3-line pl-2"></i> </th>
+          <th (click)="sortData('iN_DTTM')"> <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('iN_DTTM')">{{ getSortIcon('iN_DTTM') }}</i>Date - In Time<i class="filter-icon ri-filter-3-line pl-2"></i></th>
+          <th (click)="sortData('ouT_DTTM')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('ouT_DTTM')">{{ getSortIcon('ouT_DTTM') }}</i>Date - Out Time<i class="filter-icon ri-filter-3-line pl-2"></i> </th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="
+            let item of userloginList.slice(
+              (currentPage - 1) * itemsPerPage,
+              currentPage * itemsPerPage
+            );
+            let i = index
+          ">
+          <td>{{ item.statioN_ID }}</td>
+          <td>{{ item.u_ID }}</td>
+          <td>{{ item.useR_CODE }}</td>
+          <td>{{ item.fulL_NAME }}</td>
+          <td>{{ item.iN_DTTM | date:'dd-MM-yyyy'}}&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{item.iN_DTTM | date:'HH:mm:ss'}}</td>
+          <td>{{ item.ouT_DTTM | date:'dd-MM-yyy'}}&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{item.ouT_DTTM | date:'HH:mm:ss'}}</td>
+          <td>{{ calculateDuration(item.iN_DTTM, item.ouT_DTTM) }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <app-pagination [totalItems]="userloginList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination> -->
+</div>

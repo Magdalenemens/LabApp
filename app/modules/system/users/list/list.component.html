@@ -1,0 +1,64 @@
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText"
+    (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-division -->
+<button class="add-btn add-row mb-2" type="button" [disabled]="true"><i class="ri-list-view pr-1"></i>&nbsp;&nbsp;
+  View User Tracking</button>
+<div class="tab-target  mt-0" id="tab-content-2" >
+  <div class="card table-responsive-lg">
+    <table class="table table-bordered data" id="editableTable" >
+      <thead class="table-head-fix">
+        <tr>
+          <th (click)="sortData('useR_ID')">UserId <i class="material-icons sort-icon" [ngClass]="getSortIconClass('useR_ID')">{{ getSortIcon('useR_ID') }}</i></th>
+          <th (click)="sortData('useR_NAME')">UserName <i class="material-icons sort-icon" [ngClass]="getSortIconClass('useR_NAME')">{{ getSortIcon('useR_NAME') }}</i></th>
+          <th (click)="sortData('fulL_NAME')">FullName <i class="material-icons sort-icon" [ngClass]="getSortIconClass('fulL_NAME')">{{ getSortIcon('fulL_NAME') }}</i></th>
+          <!-- <th>Telephone</th> -->
+          <th (click)="sortData('joB_CD')">Job Type <i class="material-icons sort-icon" [ngClass]="getSortIconClass('joB_CD')">{{ getSortIcon('joB_CD') }}</i></th>
+          <th (click)="sortData('email')">Email <i class="material-icons sort-icon" [ngClass]="getSortIconClass('email')">{{ getSortIcon('email') }}</i></th>
+          <!-- <th>National Id</th> -->
+          <th>Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of userList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+
+          <td><span>{{ item.useR_ID }}</span></td>
+          <td><span>{{ item.useR_NAME }}</span></td>
+          <td><span>{{ item.fulL_NAME }}</span></td>
+          <!-- <td><span>{{ item.tel }}</span></td> -->
+          <td><span>{{ item.joB_CD }}</span></td>
+          <td><span>{{ item.email }}</span></td>
+          <!-- <td><span>{{ item.naT_ID }}</span></td> -->
+          <td>
+            <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit w-auto"
+              (click)="routePath('adduser/',item.useR_FL_ID)">View</button>
+            <!-- <a routerLink="/system/Login-track"><button class="edit">Login Track</button></a> -->
+            <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit w-auto"
+              (click)="routePath('logintracking/',item.useR_ID)">Login Track</button>
+            <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit w-auto"
+              (click)="routePath('pagetracking/',item.useR_ID)">page Track</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Pagination Component -->
+    <app-pagination [totalItems]="userList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination>
+  </div>
+</div>

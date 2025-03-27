@@ -1,0 +1,158 @@
+/* Filter icon styles */
+.filter-icon {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #007bff;
+    font-size: 18px;
+    position: absolute;
+    /* Ensures icon stays in place */
+    right: 10px;
+    /* Adjust to move the icon to the far right of the header cell */
+    top: 50%;
+    /* Align the icon vertically in the middle of the table header */
+    transform: translateY(-50%);
+    /* Ensures the icon is centered vertically */
+
+}
+
+/* Table header cells to ensure consistent layout */
+.table th {
+    position: relative;
+    /* Required to keep the icon within the header */
+    vertical-align: middle;
+    /* Ensures header text remains aligned correctly */
+}
+
+/* Optional: Add padding to the text inside table headers if the icon overlaps */
+.table tr th tr td {
+    border: 1px solid red;
+
+}
+
+
+
+/* Show filter container when triggered */
+.show-filter {
+    display: block;
+}
+
+
+
+/* Reduced checkbox size and custom hover effect with border shading */
+.table tr td .ng-option-tmp input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    transform: scale(0.9);
+    /* Slight reduction in checkbox size */
+    border: 1px solid #ccc;
+    /* Light border */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle box shadow for 3D effect */
+    transition: all 0.2s ease;
+    /* Smooth transition for hover effects */
+}
+
+/* Hover effect with red border */
+.table tr td .ng-option-tmp input[type="checkbox"]:hover {
+    border-color: #e74c3c;
+    /* Red border on hover */
+    box-shadow: 0px 4px 6px rgba(231, 76, 60, 0.3);
+    /* Stronger shadow on hover */
+}
+
+/* Checked state */
+.table tr td .ng-option-tmp input[type="checkbox"]:checked {
+    background-color: #e74c3c;
+    /* Red background when checked */
+    border-color: #e74c3c;
+    box-shadow: 0px 4px 8px rgba(231, 76, 60, 0.5);
+    /* More prominent shadow when checked */
+}
+
+
+/* Hover effect - checkbox turns red on hover */
+.ng-option-tmp input[type="checkbox"]:hover {
+    outline: 2px solid red;
+    background-color: red !important;
+
+}
+
+/* Reduce the height of the table row */
+.table tr.custom-filter-row {
+    height: 1rem;
+    /* Adjust the height as needed */
+    vertical-align: middle;
+    /* Center content vertically */
+
+}
+
+/* Adjust the ng-select to fit the reduced row height */
+.table tr.custom-filter-row td ng-select {  
+    
+    /* Match the line-height to the row height */
+   
+    border: 0px solid green;
+}
+
+/* Adjust padding and margins for ng-select */
+.table tr.custom-filter-row td ng-select .ng-select {
+    padding: 0;
+    /* Remove default padding */
+    border: 1px solid blue;
+
+}
+
+
+/* Adjust the checkbox size and spacing */
+.table tr.custom-filter-row td ng-select .ng-option-tmp input[type="checkbox"] {
+    margin-right: 5px;
+    /* Adjust margin between checkbox and label */
+    width: 12px;
+    /* Reduce checkbox size */
+    height: 12px;
+    /* Reduce checkbox size */
+    border: 1px solid green;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+
+    border: 1px solid red;
+}
+// .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+//     align-items:center !important;
+//     text-align: left !important;
+//     }
+//     .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+//     display: flex !important;
+//     }
+
+.search-container {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+  }
+  
+  .search-input-icon {
+    text-align: left;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    padding-right: 35px; /* Create space for the icon */
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust distance from the right */
+    transform: translateY(-50%);
+    width: 16px; /* Icon size */
+    height: 16px;
+    background-image: url('./../../../../../assets/icons/search.png'); /* Replace with the search icon path */
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .table-responsive-lg{
+    height:60vh;
+    overflow-y: scroll;
+  }

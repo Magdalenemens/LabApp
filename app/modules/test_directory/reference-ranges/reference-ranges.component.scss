@@ -1,0 +1,29 @@
+.btn-rounded {
+    border-radius: 0.3rem;
+  }
+  .btn {
+    padding: 0rem 1rem;
+    height: 2.1rem;
+    border: 1.6px solid transparent;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .btn-outline-danger {
+    color: #dc4c64 !important;
+    border-color: #dc4c64 !important;
+    background: #fff;
+  }
+  .delete{
+    color: #dc4c64;
+    background-color: #fff;
+    border: 1px solid #dc4c64;
+    font-weight: 500;
+  }
+  .edit {
+    color: #51459E;
+    background-color: #fff;
+    border: 1px solid #51459E;
+    font-weight: 500;
+  }
+  

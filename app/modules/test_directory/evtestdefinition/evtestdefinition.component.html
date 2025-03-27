@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space">
+    </div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="addevtestdefinition" data-tab-target="tab-content-1"
+            (click)="goToEvTestDefinition('addevtestdefinition')"
+            [class.is-active]="selected === 'addevtestdefinition'">
+            Data Entry
+          </button>
+
+          <!-- <button data-tab-target="tab-content-2" id="evtestdefinitionProfile"
+            (click)="goToEvTestDefinition('evtestdefinitionProfile')"
+            [class.is-active]="selected === 'evtestdefinitionProfile'">Profile</button> -->
+          <button data-tab-target="tab-content-2" id="setuptestdefinitionProfile"
+            (click)="goToEvTestDefinition('setuptestdefinitionProfile')"
+            [class.is-active]="selected === 'setuptestdefinitionProfile'">Methods and Instruments</button>
+            <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Environmental Orders</h6>
+
+          <!--  <div style="width:60%;text-align:right">
+            <button type="button" (click)="exit()" 
+            class="btn btn-icon icon-left btn-danger mb-2"><i class="fas fa-times"></i>
+              Exit</button>
+          </div>  -->
+
+        </nav>
+        <app-default></app-default>
+
+      </div>
+
+    </section>
+  </div>
+</div>

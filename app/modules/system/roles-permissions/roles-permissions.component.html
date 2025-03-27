@@ -1,0 +1,275 @@
+<div class="row justify-content-center mt-5 pt-4">
+
+    <div class="col-md-12 col-lg-12 col-xl-12">
+    <!-- back-link -->
+    
+    <!-- back-link -->
+
+    <div class="col-md-3 float-right d-flex justify-content-end">
+          <button type="button" class="btn btn-outline-dark "  *ngIf="isEditable === true"  (click)="savePermissions()"><i class="ri-save-line pr-1"></i>Save</button>
+          <button type="button" class="btn btn-outline-dark cancelation"  *ngIf="isEditable === true"  (click)="EditMode(false)"><i class="ri-close-line pr-1"></i>Cancel</button>
+          <button type="button" class="btn btn-outline-dark" *ngIf="isEditable === false" (click)="EditMode(true)"><i class="ri-edit-line pr-1" ></i>Edit</button>
+
+    </div>
+
+    <!-- Add-division -->
+    <div class="d-flex flex-wrap">
+
+      <div class="col-md-6 col-lg-6 col-12" style="min-width:16rem">
+        <div class="input-group">
+          <label class="input-group-text side-input-dia">Role Id / Description:</label>
+          <ng-select required="true" class="editable-dropdown" placeholder="Select Role Id" [(ngModel)]="roleId"
+            (change)="roleChange($event)">
+            <ng-option *ngFor="let item of roles" [value]="item.rolE_ID">
+              {{item.rolE_ID + '  -  '+ item.suB_MODULE}}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="d-flex">
+      <div class="col-md-3">
+   <!-- Add-division -->
+   <h6 class="card-title text-center mt-3 mb-2 w-auto bg-white" style="border-radius: 5px">
+    Main Modules
+  </h6>
+
+
+  <div class="card">
+
+    <div class="d-flex flex-wrap">
+      <!-- Table -->
+      <div class=" col-md-12">
+        <h6 class="pb-1 sub-header">Main Modules</h6>
+        <table class="table table-bordered data" id="editableTable">
+          <thead>
+            <tr>
+              <th>Access</th>
+              <th class="text-left">Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let options of mainAccessPermissions;let i=index">
+              <td>
+                <div class="toggle d-flex">
+                  <input [disabled]="!isEditable" type="checkbox" [id]="'Access'+'_'+i" [(ngModel)]="options.alloW_ACCS" (change)="updateMainAccessPermission(options)" />
+                  <label  [for]="'Access'+'_'+i"></label>
+                </div>
+              </td>
+              <td style="max-width: 10rem" class="tooltip-cell text-left" appTooltip="{{ options.module }}">{{options.module}}</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+      </div>
+  </div>
+      </div>
+      <div class="col-md-9">
+           <!-- Add-division -->
+    <h6 class="card-title text-center mt-3 mb-2 w-auto bg-white" style="border-radius: 5px">
+      Orders Permissions
+    </h6>
+
+
+    <div class="card">
+
+      <div class="d-flex flex-wrap">
+        <!-- Table -->
+        <div class=" col-md-3" *ngFor="let item of orderPermissions;let j=index">
+          <h6 class="pb-1 sub-header">{{item.suB_MODULE}}</h6>
+          <table class="table table-bordered data" id="editableTable">
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let options of item.orderPermissions;let i=index">
+                <td>
+                  <div class="toggle d-flex">
+                    <input [disabled]="!isEditable" type="checkbox" [id]="'Access'+j+'_'+i" [(ngModel)]="options.alloW_ACCS" (change)="updatePermission(options)" />
+                    <label  [for]="'Access'+j+'_'+i"></label>
+                  </div>
+                </td>
+                <td style="max-width: 10rem" class="tooltip-cell text-left" appTooltip="{{ options.action }}">{{options.action}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+        </div>
+    </div>
+      </div>
+    </div>
+  
+
+     <!-- Results-Permissions -->
+     <h6 class="card-title text-center mt-3 mb-2 w-auto bg-white" style="border-radius: 5px">
+      Results Permissions
+    </h6>
+
+
+    <div class="card">
+      <div class="d-flex flex-wrap justify-content-between">
+        <!-- Table -->
+        <div style="width:19%" *ngFor="let item of resultPermissions;let l=index">
+          <h6 class="pb-1 sub-header">{{item.suB_MODULE}}</h6>
+          <table class="table table-bordered data" id="editableTable">
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let results of item.resultPermissions;let k=index">
+                <td>
+                  <div class="toggle d-flex">
+                    <input [disabled]="!isEditable" type="checkbox" [id]="'result'+l+'_'+k" [(ngModel)]="results.alloW_ACCS" (change)="updateResultPermission(results)" />
+                    <label  [for]="'result'+l+'_'+k"></label>
+                  </div>
+                </td>
+                <td class="text-left">{{results.action}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      <!-- <div class="d-flex flex-wrap justify-content-between">
+        <div style="width:19%">
+          <h6 class="pb-1 sub-header">General Lab</h6>
+          <table class="table table-bordered data" id="editableTable">
+
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="toggle d-flex">
+                    <input type="checkbox" id="Access" formControlName="Access" />
+                    <label for="Access"></label>
+                  </div>
+                </td>
+                <td class="text-left">Active</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <div style="width:19%">
+          <h6 class="pb-1 sub-header">Microbiology</h6>
+          <table class="table table-bordered data" id="editableTable">
+
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="toggle d-flex">
+                    <input type="checkbox" id="Access" formControlName="Access" />
+                    <label for="Access"></label>
+                  </div>
+                </td>
+                <td class="text-left">Active</td>
+              </tr>
+            </tbody>
+
+
+          </table>
+        </div>
+
+        <div style="width:19%">
+          <h6 class="pb-1 sub-header">Anatomic Patholgy</h6>
+          <table class="table table-bordered data" id="editableTable">
+
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="toggle d-flex">
+                    <input type="checkbox" id="Access" formControlName="Access" />
+                    <label for="Access"></label>
+                  </div>
+                </td>
+                <td class="text-left">Active</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <div style="width:19%">
+          <h6 class="pb-1 sub-header">Cytogenetics</h6>
+          <table class="table table-bordered data" id="editableTable">
+
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="toggle d-flex">
+                    <input type="checkbox" id="Access" formControlName="Access" />
+                    <label for="Access"></label>
+                  </div>
+                </td>
+                <td class="text-left">Active</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <div style="width:19%">
+          <h6 class="pb-1 sub-header">Environmental</h6>
+          <table class="table table-bordered data" id="editableTable">
+
+            <thead>
+              <tr>
+                <th>Access</th>
+                <th class="text-left">Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="toggle d-flex">
+                    <input type="checkbox" id="Access" formControlName="Access" />
+                    <label for="Access"></label>
+                  </div>
+                </td>
+                <td class="text-left">Active</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+     Results-Permissions -->
+
+  </div>
+</div>

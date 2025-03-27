@@ -1,0 +1,38 @@
+<div class="pagination-wrapper">
+  <div class="row">
+    <div class="col-md-6 row">
+      <div class="pr-4">
+        {{ firstItemIndex }} - {{ lastItemIndex }} of {{ totalItems }} entries
+      </div>
+      <div class="d-flex">
+        <span>Page Size: </span>
+        <span>
+          <select class="button, input, optgroup, select, textare  form-control w-auto ml-1" (change)="onPageSizeChange($event)">
+            <option *ngFor="let size of pageSizeOptions" [value]="size">
+              {{ size }}
+            </option>
+          </select>
+        </span>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 d-flex justify-content-end paginators">
+      <button class="btn" [disabled]="currentPage === 1" id="first" (click)="goToPage(1)" tooltip="First">
+        <i class="ri-skip-left-line"></i>
+      </button>
+      <button class="btn" [disabled]="currentPage === 1" id="previous" (click)="goToPage(currentPage - 1)" tooltip="Previous">
+        <i class="ri-arrow-left-double-line"></i>
+      </button>
+      <span *ngFor="let page of visiblePages">
+        <button class="btn" [class.active]="page === currentPage" (click)="goToPage(page)">
+          {{ page }}
+        </button>
+      </span>
+      <button class="btn" [disabled]="currentPage === totalPages" id="next" (click)="goToPage(currentPage + 1)" tooltip="Next">
+        <i class="ri-arrow-right-double-line"></i>
+      </button>
+      <button class="btn" [disabled]="currentPage === totalPages" id="last" (click)="goToPage(totalPages)" tooltip="Last">
+        <i class="ri-skip-right-line"></i>
+      </button>
+    </div>
+  </div>
+</div>

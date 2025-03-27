@@ -1,0 +1,29 @@
+.table-veritical {
+    height:60vh;
+    overflow-y: scroll;
+  }
+  
+  .search-container {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+  }
+  
+  .search-input-icon {
+    text-align: left;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    padding-right: 35px; /* Create space for the icon */
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust distance from the right */
+    transform: translateY(-50%);
+    width: 16px; /* Icon size */
+    height: 16px;
+    background-image: url('./../../../../../assets/icons/search.png'); /* Replace with the search icon path */
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  

@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <!-- back-link -->
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+        <a style="color:#000000">
+          <h6 class=" py-1 mt-1 header-font">System</h6>
+        </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+        <a style="color:#000000">
+          <h6 class=" py-1 mt-1 header-font">System Configuration</h6>
+        </a>
+      </div> -->
+    </div>
+
+    <!-- back-link -->
+    <!-- <div class="form-group col-md-2 float-right">
+      <input type="text" class="form-control search-style" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    </div> -->
+
+    <div class="float-right">
+
+      <div>
+        <div class="input-group">
+          <div>
+          <div class="search-container">
+        <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+        <span class="search-icon"></span>
+      </div>
+    </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Add-division -->
+    <!-- <button class="add-btn add-row mb-2" type="button"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+      Record</button> -->
+    <button class="btn btn-outline-dark add-section">
+      <i class="ri-shut-down-line pr-1"></i>Activate
+    </button>
+    <button class="btn btn-outline-dark add-section cancelation">
+      <i class="ri-logout-box-line pr-1"></i>Exit
+    </button>
+    <button class="btn btn-outline-dark add-section">
+      <i class="ri-save-line pr-1"></i>Save
+    </button>
+    <!-- Add-division -->
+    <!-- Table -->
+    <div class="card mt-2">
+      <table class="table table-bordered data" id="editableTable">
+
+        <thead>
+          <tr>
+            <th style="width:6rem" (click)="sortData('seq')">Seq<i class="material-icons sort-icon" [ngClass]="getSortIconClass('seq')">{{ getSortIcon('seq') }}</i></th>
+            <th (click)="sortData('deF_DESCRP')">Description<i class="material-icons sort-icon" [ngClass]="getSortIconClass('deF_DESCRP')">{{ getSortIcon('deF_DESCRP') }}</i></th>
+            <th style="width:10rem" (click)="sortData('deF_NAME')">Def.Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('deF_NAME')">{{ getSortIcon('deF_NAME') }}</i></th>
+            <th style="width:7rem" (click)="sortData('deF_VAL')">Value<i class="material-icons sort-icon" [ngClass]="getSortIconClass('deF_VAL')">{{ getSortIcon('deF_VAL') }}</i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of sytemConfigList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+            <td>{{item.seq}}</td>
+            <td>{{item.deF_DESCRP}}</td>
+            <td>{{item.deF_NAME}}</td>
+            <td>{{item.deF_VAL}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination [totalItems]="sytemConfigList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

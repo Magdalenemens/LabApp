@@ -1,0 +1,435 @@
+<main>
+  <form [formGroup]="form">
+    <section>
+      <div class="tab-target is-active mt-2" id="tab-content-1">
+ 
+        <!-- <div class="d-flex justify-content-end">
+
+          <div class="col-md-3">
+            <div>
+              <div class="input-group">
+                <button class="btn btn-outline-secondary mr-0" data-toggle="modal" data-target="#myModal" type="button"
+                  style="
+                    height: 33px;
+                    padding: inherit;
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                  ">
+                  <i class="ri-search-line"></i>
+                </button>
+                <label style="height: 33px; border-radius: 0" class="input-group-text side-input-dia">Code:</label>
+                <ng-select #testSelect style="flex: 1 1 auto" [items]="matchedTests$ | async" bindLabel="combinedLabel"
+                  class="custom" [searchFn]="customSearch" [searchable]="true" (search)="onTestSearch($event)"
+                  (change)="onTestSelection($event, testSelect)" placeholder="search" (keypress)="numberOnly($event)">
+                  <ng-template #noResults>
+                    <div>No results found</div>
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+        </div> -->
+ 
+        <!-- add-section -->
+        <div class="add-content">
+          <div class="d-flex mt-0">
+            <!-- First Section -->
+            <div class="d-flex flex-column mt-0">
+              <div class="custom-input m-auto" style="width: 11rem">
+                <div class="card d-flex flex-column vertical-center">
+ 
+                  <button data-toggle="modal" data-target="#copy-from-clients" [disabled]="isAddBtnActive"
+                    (click)="onAddRecord()" class="btn btn-outline-dark add-section mb-1">
+                    <i class="ri-add-line pr-1"></i>Add Record
+                  </button>
+                  <button class="btn btn-outline-dark add-section mb-1" [disabled]="isSaveBtnActive"
+                    (click)="onSubmit()">
+                    <i [class]="
+ 
+                        isEditing
+                          ? 'ri-bookmark-line pr-2'
+                          : 'ri-save-line pr-2'
+                      "></i>Save
+                  </button>
+
+ 
+                  <button data-toggle="modal" data-target="#rename" class="btn btn-outline-dark mb-1" id="copyMtoF">
+                    Rename
+                  </button>
+
+                  <button class="btn btn-outline-dark order-section mb-1" [disabled]="isEditBtnActive"
+                    (click)="onEditRecord()">
+                    <i [class]="
+ 
+                        isEditing
+                          ? 'ri-edit-2-line pr-2'
+                          : 'ri-pencil-line pr-2'
+                      "></i>Edit
+                  </button>
+
+ 
+                  <button class="btn btn-outline-dark cancelation mb-1" [disabled]="isCancelBtnActive"
+                    (click)="onCancelRecord(apTestDefinitionData.tD_ID)">
+                    <i class="ri-close-line pr-1"></i>Cancel
+                  </button>
+
+                  <button class="btn btn-outline-dark cancelation mb-1"
+                    (click)="onDeleteRecord(apTestDefinitionData.tD_ID)">
+ 
+                    <i class="ri-delete-bin-6-line pr-2"></i>Delete
+                  </button>
+                </div>
+                <div class="card mt-1">
+                  <div style="
+                      border: 1px solid #bff5bb;
+                      border-radius: 0.25rem;
+                      padding: 0.25rem 0.25rem;
+                    ">
+                    <div class="d-flex flex-wrap justify-content-between navigation">
+
+                      <button class="btn page-btn btn-outline-paginate px-1" id="first" tooltip="First"
+                        [disabled]="isNavigationActive" (click)="getRecord('first', apTestDefinitionData.sno)">
+                        <i class="ri-skip-left-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="previous" tooltip="previous"
+                        [disabled]="isNavigationActive" (click)="getRecord('prev', apTestDefinitionData.sno)">
+                        <i class="ri-arrow-left-double-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="next" tooltip="next"
+                        [disabled]="isNavigationActive" (click)="getRecord('next', apTestDefinitionData.sno)">
+                        <i class="ri-arrow-right-double-line"></i>
+                      </button>
+                      <button class="btn page-btn btn-outline-paginate px-1" id="last" tooltip="last"
+                        [disabled]="isNavigationActive" (click)="getRecord('last', apTestDefinitionData.sno)">
+                        <i class="ri-skip-right-line"></i>
+                      </button>
+
+                    </div>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-center">
+                    {{ calculateCurrentIndex(apTestDefinitionData.sno) }} /
+                    {{ apTestDefinitionAllData.length }}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="flex: 1 1 auto">
+              <div class="row mt-0">
+                <div class="col-md-6 col-lg-6 col-12 no-padding-left">
+
+                  <div class="d-flex justify-content-start"> 
+
+                    <div class="col-md-6">
+                      <div>
+                        <div class="input-group">
+                          <label
+                            style="height: 33px;"
+                            class="input-group-text side-input-dia"
+                            >Code:</label
+                          >
+                          <ng-select
+                            #testSelect
+                            style="flex: 1 1 auto"
+                            [items]="matchedTests$ | async"
+                            bindLabel="combinedLabel"
+                            class="custom"
+                            [searchFn]="customSearch"
+                            [searchable]="true"
+                            (search)="onTestSearch($event)"
+                            (change)="onTestSelection($event, testSelect)"
+                            placeholder="search"
+                            (keypress)="numberOnly($event)"
+                          >
+                            <!-- Template for no search results -->
+                            <ng-template #noResults>
+                              <div>No results found</div>
+                            </ng-template>
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="d-flex flex-wrap">
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Code:</label>
+                          <input [(ngModel)]="apTestDefinitionData.tcode" formControlName="txtCode" id="tcode"
+                            maxlength="10" class="form-control" placeholder="Enter Code" type="text" [ngClass]="{
+                              'is-invalid': submitted && f['txtCode'].errors
+                            }" required />
+                          <div *ngIf="submitted && f['txtCode'].errors" class="invalid-feedback">
+                            <div *ngIf="f['txtCode'].errors['required']"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="isViewMode" class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Number:</label>
+                          <input [(ngModel)]="apTestDefinitionData.tesT_ID" formControlName="txtdtNumber"
+                            [readonly]="true" class="form-control" maxlength="4" placeholder="Enter Number" type="text"
+                            id="inputField1" required />
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Name:</label>
+                          <input [(ngModel)]="apTestDefinitionData.full_Name" formControlName="txtFullName"
+                            maxlength="50" class="form-control" placeholder="Enter Name" type="text" id="inputField1"
+                            required />
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-4 col-lg-4 col-12" style="direction:rtl;float:right;text-align: right;margin-top:-4px">
+                  <div class="input-group-ar">
+                  <label for="inputField1" class="input-group-text-ar side-input-dia">اسم العميل:</label>
+                  <input formControlName="txtFullNameArabic" maxlength="40" value="{{testDirectoryData.aFull_Name}}"  [(ngModel)]="testDirectoryData.aFull_Name" class="form-control" placeholder="أدخل اسم العميل" type="text" id="inputField1"
+                    required />
+                  </div>
+                </div> -->
+                      <!-- </div>
+                <div class="d-flex flex-wrap" > -->
+                      <div class="col-md-5 col-lg-5 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Label Comments:</label>
+                          <input [(ngModel)]="apTestDefinitionData.lbL_CMNT" formControlName="txtSynm" maxlength="20"
+                            class="form-control" placeholder="Enter Label Comments" type="text" id="inputField1" />
+                        </div>
+                      </div>
+                      <div class="col-md-7 col-lg-7 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia" for="inputField1">Specimen Type:</label>
+                          <ng-select formControlName="cmbSpecimenstypes" value="{{ apTestDefinitionData.s_TYPE }}"
+                            (change)="onChange($event)" [(ngModel)]="apTestDefinitionData.s_TYPE"
+                            placeholder="Select Specimen" class="form-select" id="cmbSpecimenstypes" aria-label="">
+                            <ng-option selected="">Select Specimen Type
+                            </ng-option>
+                            <ng-option *ngFor="let obj of specimenstypes" [value]="obj.sP_CODE" [ngValue]="obj">{{
+                              obj.sP_CODE }}</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Priority:</label>
+                          <select id="dropdown1" formControlName="cmbPriority" [(ngModel)]="apTestDefinitionData.prty"
+                            class="form-control" value="{{ apTestDefinitionData.prty }}">
+                            <option value="0">Select</option>
+                            <option value="RT">RT</option>
+                            <option value="ST">ST</option>
+                            <option value="SO">SO</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Status:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbStatus"
+                            value="{{ apTestDefinitionData.status }}" [(ngModel)]="apTestDefinitionData.status">
+                            <option value="0">Select</option>
+                            <option value="A">A</option>
+                            <option value="I">I</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Orderable:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbOrderable"
+                            value="{{ apTestDefinitionData.ordable }}" [(ngModel)]="apTestDefinitionData.ordable">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Print Result:</label>
+                          <select id="dropdown1" class="form-control" formControlName="cmbPrintResult"
+                            value="{{ apTestDefinitionData.pr }}" [(ngModel)]="apTestDefinitionData.pr">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- First Section -->
+
+                <!-- right content -->
+                <div class="col-md-6 col-lg-6 col-12 no-padding-right">
+                  <div class="card" style="margin-top:2.5rem">
+                    <div class="d-flex flex-wrap">
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Division:</label>
+                          <ng-select required formControlName="cmblabDivision" value="{{ apTestDefinitionData.div }}"
+                            [(ngModel)]="apTestDefinitionData.div" (change)="onComboSelected($event, 'Division')"
+                            placeholder="Select Division" class="form-select" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmblabDivision'].errors
+                            }" id="cmblabDivision" aria-label="">
+                            <ng-option *ngFor="let obj of ArrayLabDivision" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmblabDivision'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmblabDivision'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Section:</label>
+                          <ng-select formControlName="cmbSection" value="{{ apTestDefinitionData.sect }}"
+                            [(ngModel)]="apTestDefinitionData.sect" (change)="onComboSelected($event, 'Section')"
+                            placeholder="Select Section" [ngClass]="{
+                              'is-invalid': submitted && f['cmbSection'].errors
+                            }" required class="form-select" id="cmbSection" aria-label="">
+                            <ng-option *ngFor="let obj of ArrayLabSection" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbSection'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbSection'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Primary Work Center:</label>
+                          <ng-select formControlName="cmbWorkCenter" value="{{ apTestDefinitionData.wc }}"
+                            (change)="onComboSelected($event, 'WorkCenter')" placeholder="Select Work Center" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbWorkCenter'].errors
+                            }" required class="form-select" id="cmbWorkCenter" aria-label=""
+                            [(ngModel)]="apTestDefinitionData.wc">
+                            <ng-option *ngFor="let obj of ArrayWorkCenter" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbWorkCenter'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbWorkCenter'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Primary Test Sites:</label>
+
+                          <ng-select formControlName="cmbTestSite" value="{{ apTestDefinitionData.ts }}"
+                            (change)="onComboSelected($event, 'TestSite')" placeholder="Select TestSite"
+                            class="form-select" id="cmbTestSite" aria-label="" [(ngModel)]="apTestDefinitionData.ts"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['cmbTestSite'].errors
+                            }" required>
+                            <ng-option *ngFor="let obj of ArrayTestSite" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbTestSite'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbTestSite'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Main Header:</label>
+                          <ng-select formControlName="cmbMainHeader" value="{{ apTestDefinitionData.mhn }}"
+                            (change)="onComboSelected($event, 'MainHeader')" placeholder="Select MainHeader" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbMainHeader'].errors
+                            }" required class="form-select" id="cmbMainHeader" aria-label=""
+                            [(ngModel)]="apTestDefinitionData.mhn">
+                            <ng-option *ngFor="let obj of ArrayMainHeader" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbMainHeader'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbMainHeader'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-lg-6 col-12">
+                        <div class="input-group">
+                          <label for="inputField1" class="input-group-text side-input-dia">Sub Header:</label>
+                          <ng-select formControlName="cmbSubHeader" value="{{ apTestDefinitionData.shn }}"
+                            [(ngModel)]="apTestDefinitionData.shn" (change)="onComboSelected($event, 'SubHeader')"
+                            placeholder="Select SubHeader" [ngClass]="{
+                              'is-invalid':
+                                submitted && f['cmbSubHeader'].errors
+                            }" required class="form-select" id="cmbSubHeader" aria-label="">
+                            <ng-option *ngFor="let obj of ArraySubHeader" [value]="obj.code">{{ obj.code }} {{
+                              obj.description }}</ng-option>
+                          </ng-select>
+                          <div *ngIf="submitted && f['cmbSubHeader'].errors" class="invalid-feedback">
+                            <div *ngIf="f['cmbSubHeader'].errors['required']" class="custom">
+                              *
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- right content -->
+              </div>
+              <!-- Module-card -->
+              <div class="card mt-2">
+                <div class="d-flex flex-wrap">
+                  <div style="width: 20rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="inputField1" class="input-group-text side-input-dia">Lab Module:</label>
+                      <ng-select formControlName="cmblabModule" value="{{ apTestDefinitionData.mdl }}"
+                        [(ngModel)]="apTestDefinitionData.mdl" (change)="onComboSelected($event, 'LabModule')"
+                        placeholder="Select labModule" [ngClass]="{
+                          'is-invalid': submitted && f['cmblabModule'].errors
+                        }" required class="form-select" id="cmblabModule" aria-label="">
+                        <ng-option *ngFor="let obj of ArrayLabModule" [value]="obj.code">{{ obj.description
+                          }}</ng-option>
+                      </ng-select>
+                      <div *ngIf="submitted && f['cmblabModule'].errors" class="invalid-feedback">
+                        <div *ngIf="f['cmblabModule'].errors['required']" class="custom">
+                          *
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="width: 18rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="inputField1" class="input-group-text side-input-dia">Accn. Prefix:</label>
+                      <select id="dropdown1" class="form-control" formControlName="cmbOrderable">
+                        <option value="Y">Y</option>
+                        <option value="N">N</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div style="width: 14rem" class="custom-input">
+                    <div class="input-group">
+                      <label for="inputField1" class="input-group-text side-input-dia">Average TAT(Mins):</label>
+                      <input [(ngModel)]="apTestDefinitionData.tat" formControlName="txtAvgTAT" maxlength="8"
+                        class="form-control" placeholder="Enter Average TAT" type="text" id="inputField1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Module-card -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </form>
+</main>

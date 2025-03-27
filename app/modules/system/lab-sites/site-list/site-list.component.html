@@ -1,0 +1,69 @@
+<div class="tab-target  mt-2" id="tab-content-2">
+
+  <div class="col-md-3 mr-auto">
+
+    <div>
+      <div class="input-group">
+        <label style="height: 33px;" class="input-group-text side-input-dia">Ref.SiteName:</label>
+        <div>
+          <div class="search-container">
+        <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+        <span class="search-icon"></span>
+      </div>
+    </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card mt-1 table-responsive-lg">
+    <table class="table table-bordered data" id="editableTable">
+      <thead class="table-head-fix">
+        <tr>
+          <th (click)="sortData('sitE_NO')">Site No> </th>
+          <th (click)="sortData('sitE_NAME')">SiteName</th>
+          <th (click)="sortData('sitE_TP')">SiteType </th>
+          <th (click)="sortData('reF_SITE')">Ref.Site </th>
+          <th (click)="sortData('reF_SITE_NAME')">Ref.SiteName </th>
+          <th (click)="sortData('city')">City </th>
+          <th (click)="sortData('mobile')">Mobile </th>
+          <th (click)="sortData('mobile')">Email</th>
+          <th>Actions</th>
+          <!-- <th (click)="sortData('sitE_NO')">Site No  ('sitE_NO')">
+                        {{ getSortIcon('sitE_NO') }}
+                      </i></th>
+                    <th (click)="sortData('sitE_NAME')">SiteName <i class="material-icons sort-icon" [ngClass]="getSortIconClass('sitE_NAME')">{{ getSortIcon('sitE_NAME') }}</i></th>
+                    <th (click)="sortData('sitE_TP')">SiteType <i class="material-icons sort-icon" [ngClass]="getSortIconClass('sitE_TP')">{{ getSortIcon('sitE_TP') }}</i></th>
+                    <th (click)="sortData('reF_SITE')">Ref.Site <i class="material-icons sort-icon" [ngClass]="getSortIconClass('reF_SITE')">{{ getSortIcon('reF_SITE') }}</i></th>
+                    <th (click)="sortData('reF_SITE_NAME')">Ref.SiteName <i class="material-icons sort-icon" [ngClass]="getSortIconClass('reF_SITE_NAME')">{{ getSortIcon('reF_SITE_NAME') }}</i></th>
+                    <th (click)="sortData('city')">City <i class="material-icons sort-icon" [ngClass]="getSortIconClass('city')">{{ getSortIcon('city') }}</i></th>
+                    <th (click)="sortData('mobile')">Mobile <i class="material-icons sort-icon" [ngClass]="getSortIconClass('mobile')">{{ getSortIcon('mobile') }}</i></th>
+                    <th (click)="sortData('mobile')">Email <i class="material-icons sort-icon" [ngClass]="getSortIconClass('email')">{{ getSortIcon('email') }}</i></th>
+                    <th>Actions</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of siteList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+
+          <td><span>{{ item.sitE_NO }}</span></td>
+          <td><span>{{ item.sitE_NAME }}</span></td>
+          <td><span>{{ item.sitE_TP }}</span></td>
+          <td><span>{{ item.reF_SITE }}</span></td>
+          <td><span>{{ item.reF_SITE_NAME }}</span></td>
+          <td><span>{{ item.city }}</span></td>
+          <td><span>{{ item.mobile }}</span></td>
+          <td><span>{{ item.email }}</span></td>
+          <td>
+            <button class="edit" (click)="routePath(item.sitE_DTL_ID)">View</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Pagination Component -->
+    <app-pagination [totalItems]="siteList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination>
+  </div>
+</div>

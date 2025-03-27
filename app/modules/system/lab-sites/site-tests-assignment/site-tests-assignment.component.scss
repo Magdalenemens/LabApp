@@ -1,0 +1,42 @@
+.tableHalf {
+    width: 60%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.w-80{
+    width: 80%;
+}
+
+.buttonhyperlink {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    // text-decoration: underline;
+    cursor: pointer;    
+    text-align: right!important;
+   
+  }
+ // common-for-specific-screen
+ .table-veritical{
+    height:75vh;
+    overflow-y: scroll;
+  }
+  .table-veritical-sm{
+    height:10rem;
+    overflow-y: scroll;
+  }
+
+  .float-left{
+    float: left;
+  }
+  .button-tooltip{
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+     white-space: nowrap !important;
+     max-width: 17rem;
+  }

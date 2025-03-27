@@ -1,0 +1,135 @@
+
+<div class="col-md-3 mr-auto">
+
+    <div>
+      <div class="input-group">
+        <div>
+            <div class="search-container">
+
+      <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText"
+      (input)="onSearch()">
+      <span class="search-icon"></span>
+    </div>
+</div>
+      </div>
+    </div>
+
+  </div>
+
+<div class="tab-target  mt-2" id="tab-content-2">
+    <div class="card ">
+        <div class="table-responsive-lg">
+            <div class="filter-container">
+                <table class="table table-bordered data" id="editableTable">
+                    <thead class="table-head-fix">
+                        <tr>
+                            <th>
+                                Order Lab
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('orderLab')"></i>
+                            </th>
+                            <th>
+                                Process Lab
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('processLab')"></i>
+                            </th>
+                            <th>
+                                Test Code
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('testCode')"></i>
+                            </th>
+                            <th>
+                                Test Id
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('testId')"></i>
+                            </th>
+                            <th>
+                                Test Name
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('testName')"></i>
+                            </th>
+                            <th style="width:12rem">
+                                CT
+                                <i class="filter-icon ri-filter-3-line pr-2" (click)="toggleFilter('ct')"></i>
+                            </th>
+                            <th style="width:12rem">
+                                Action
+                            </th>
+                        </tr>
+                        <tr *ngIf="isFilterVisible()" class="custom-filter-row">
+                            <td>
+                                <ng-select *ngIf="filterVisibility.orderLab" [items]="orderLabOptions" bindLabel="name"
+                                    [(ngModel)]="selectedOrderLabs" placeholder="Select Process Labs" [multiple]="true"
+                                    [closeOnSelect]="false" (change)="applyFilters()">
+                                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                                        <input type="checkbox" [(ngModel)]="item.selected"
+                                            (ngModelChange)="onOrderLabFilterChange(item)" /> {{ item.name }}
+
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <ng-select *ngIf="filterVisibility.processLab" [items]="processLabOptions"
+                                    bindLabel="name" [(ngModel)]="selectedProcessLabs"
+                                    placeholder="Select Regional Labs" [multiple]="true" [closeOnSelect]="false"
+                                    (change)="applyFilters()">
+                                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                                        <input type="checkbox" [(ngModel)]="item.selected" /> {{ item.name }}
+                                    </ng-template>
+                                </ng-select>
+
+                            </td>
+                            <td>
+                                <input *ngIf="filterVisibility.testCode" type="text" class="form-control"
+                                    placeholder="Filter Test Code" [(ngModel)]="testCodeFilter"
+                                    (input)="applyFilters()" />
+                            </td>
+                            <td>
+                                <input *ngIf="filterVisibility.testId" type="text" class="form-control"
+                                    placeholder="Filter Test Id" [(ngModel)]="testIdFilter" (input)="applyFilters()" />
+                            </td>
+                            <td>
+                                <input *ngIf="filterVisibility.testName" type="text" class="form-control"
+                                    placeholder="Filter Test Name" [(ngModel)]="testNameFilter"
+                                    (input)="applyFilters()" />
+                            </td>
+                            <td>
+                                <ng-select *ngIf="filterVisibility.ct" [items]="ctLabOptions" bindLabel="name"
+                                    [(ngModel)]="selectedCtLabs" placeholder="Select Type" [multiple]="true"
+                                    [closeOnSelect]="false">
+
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <!-- Custom template to include a checkbox -->
+                                        <input type="checkbox" [(ngModel)]="item.selected"
+                                            (ngModelChange)="onCtSelectionChange(item)" />
+                                        {{ item.name }}
+                                    </ng-template>
+                                </ng-select>
+                                <!-- <input *ngIf="filterVisibility.ct" type="text" class="form-control"
+                                    placeholder="Filter CT" [(ngModel)]="ctFilter" (input)="applyFilters()" /> -->
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of filterListData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+                            <td><span>{{ item.reF_SITE }}</span></td>
+                            <td><span>{{ item.reF_SITE_S }}</span></td>
+                            <td><span>{{ item.tcode }}</span></td>
+                            <td><span>{{ item.tesT_ID }}</span></td>
+                            <td style="text-align: left"><span>{{ item.fulL_NAME }}</span></td>
+                            <td><span>{{ getDisplayType(item.ct) }}</span></td>
+                            <td style="width: 5%;"><span>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteRow(item.sitE_TESTS_ID)">
+                                        <i class="ri-delete-bin-line"></i>
+                                    </button></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Pagination Component -->
+        <app-pagination [totalItems]="filterListData.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+            (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+        </app-pagination>
+    </div>
+</div>

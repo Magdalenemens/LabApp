@@ -1,0 +1,44 @@
+.right-card {
+  position: fixed;
+  flex:1 1 auto;
+  height: auto; /* Adjust height */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it's above other elements */
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2);
+  margin-left: -1rem;
+}
+.right-card button {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+.right-card:after {
+  content: " ";
+  position: absolute;
+  left: -15px;
+  top: 4px;
+  border-top: 15px solid transparent;
+  border-right: 15px solid black;
+  border-left: none;
+  border-bottom: 15px solid transparent;
+}
+.right-card h6{
+padding: 0.7rem 1rem;
+background-color: #f8f9fc;
+border-bottom: 2px solid #dee2e6;
+font-weight: 450;
+color: rgb(17, 16, 16);
+margin-bottom: 0;
+}
+.icons-styles{
+  font-weight: bold;
+}
+.blue-link{
+  color: #0079FE;
+  text-decoration: none;
+  border-bottom: 1px dotted #0079FE;
+  padding-bottom: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,290 @@
+::ng-deep .ng-dropdown-panel {
+  z-index: 9999999 !important;
+  font-size: 0.8rem !important;
+}
+
+.buttonhyperlink {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 0rem;
+}
+
+.app-footer {
+  font-size: .8rem;
+  padding: .6rem 1.5rem 1rem 1.5rem;
+}
+
+card {
+  border: 0;
+  box-shadow: 10px 20px 10px rgba(13, 14, 17, .03);
+  padding: 1rem 1rem .5rem 1rem !important
+}
+
+.mb-4 {
+  margin-bottom: 0rem !important;
+}
+
+.form-control {
+  height: 2.01rem;
+  // font-size: 0.8rem;
+}
+
+.app-footer {
+  font-size: .8rem;
+  padding: 0.6rem 0.5rem 1rem 0rem !important;
+}
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control, .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #fff;
+  border: var(--bs-border-width) solid #d0d5e1;
+  border-radius: var(--bs-border-radius);
+  box-sizing: border-box;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+.section-top-space {
+  margin-top: 4rem;
+}
+
+.btn-outline-secondary {
+  width: 35px;
+  height: 32px;
+  padding: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 1px solid #ced4da;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.input-group-text {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 1px solid #ced4da;
+  border: 1px solid #ced4da;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-right: 0px;
+  height: 33px;
+  font-size: 12px;
+  color: #58555e;
+  background-color: #f7f7f7;
+}
+
+.card-header {
+  padding: .5rem 0rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+
+.ng-select .ng-select-container {
+  cursor: default;
+  display: flex;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ng-select-container {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ng-select-container .ng-has-value {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#ng-select-container #ng-has-value {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 33px;
+  min-height: 33px;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  font-size: 12px;
+  
+}
+
+
+
+/*
+.ng-dropdown-panel .scroll-host {
+  font-size: 12px !important;
+}
+.ng-select .ng-select-container {
+  color: #333;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  min-height: 36px;
+  align-items: center;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.ng-dropdown-panel.ng-select-bottom{
+    font-size:12px;
+}
+.ng-dropdown-panel .scroll-host {
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+  font-size:12px;
+}
+.ng-dropdown-panel.ng-select-bottom {
+  top: 100%;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-color: #e6e6e6;
+  margin-top: -1px;
+  font-size: 12px;
+}
+
+    */
+.row {
+ 
+  margin-bottom: 5px;
+}
+
+
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  position: relative;
+  width: 100%;
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+/*
+.table {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+*/
+.table-hover > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(232, 246, 253, 0.9) !important;
+}
+tr:nth-child(even) td {
+  background-color: rgba(239, 250, 238, 0.9) !important;
+}
+
+.ng-select-container{
+  height: 36px !important;
+}
+.ng-select-container ng-has-value{
+  height: 36px !important;
+}
+
+.modal-tall .modal-dialog {
+  height: 90%;
+}
+.modal-tall .modal-content {
+  height: 100%;
+}
+
+.table>thead>tr>th:last-child
+{
+  text-align: left !important
+}
+.table>tbody>tr>td
+{
+  text-align: left !important
+}
+/* fix SO stick navigation ;) */
+@media (min-width: 768px) { body { padding-top: 75px; } }
+
+.table-veritical {
+  height:19.3rem;
+  overflow-y: scroll;
+}
+/*
+@media print {
+  .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.col-print-1 {width:8%;  float:left;}
+.col-print-2 {width:16%; float:left;}
+.col-print-3 {width:25%; float:left;}
+.col-print-4 {width:33%; float:left;}
+.col-print-5 {width:42%; float:left;}
+.col-print-6 {width:50%; float:left;}
+.col-print-7 {width:58%; float:left;}
+.col-print-8 {width:66%; float:left;}
+.col-print-9 {width:75%; float:left;}
+.col-print-10{width:83%; float:left;}
+.col-print-11{width:92%; float:left;}
+.col-print-12{width:100%; float:left;}
+}
+
+@media print and (max-width: 767px) {
+  .row{
+    display: flex;
+    flex-direction: row;
+  }
+  .col-md-3{
+    flex-basis: 25%;
+  }
+  .col-md-1{
+    flex-basis: 8.33%;
+  }
+  .col-md-8{
+    flex-basis: 66.67%;
+  }
+  .col-md-6{
+    flex-basis: 50%;
+  }
+}
+  */
+
+  .ng-dropdown-panel .scroll-host {
+    height: 17rem !important;
+}

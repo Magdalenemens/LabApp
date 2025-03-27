@@ -1,0 +1,965 @@
+<style>
+  .ng-select.ng-select-single .ng-select-container {
+    height: 27px !important;
+  }
+</style>
+
+<!-- back-link -->
+<!-- <form [formGroup]="evform"> -->
+<!-- App header ends -->
+<!-- App body starts -->
+<div class="app-body" style="padding-top: 3.8rem;">
+  <div class="d-flex">
+    <div class="d-flex flex-column">
+      <div class="custom-input" style="width: 10.8rem">
+        <div class="card d-flex flex-column vertical-center">
+          <button id="BtnPRNew" class="btn btn-outline-dark mb-2" *ngIf="rolebaseaction.isAddAccess; else noClick_New"
+            (click)="newCGOrder()">
+            <i class="ri-pencil-line"></i> New F22
+          </button>
+          <button id="btnHidden" class="btn btn-outline-dark mb-2" style="display: none">
+            <i class="ri-pencil-line"></i>
+          </button>
+
+          <ng-template #noClick_New>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              New F22
+            </button>
+          </ng-template>
+
+          <button id="BtnPRSave" class="btn btn-outline-dark mb-2"
+            style="min-width: 100%; padding-left: 5px; padding-right: 5px"
+            *ngIf="rolebaseaction.isSaveAccess; else noClick_Submit" (click)="SaveInitial()">
+            <i class="ri-save-line"></i> Submit
+          </button>
+          <ng-template #noClick_Submit>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Submit
+            </button>
+          </ng-template>
+          <button id="BtnCancel" class="btn btn-outline-dark mb-2" style="min-width: 100%; width: 100% !important"
+            *ngIf="rolebaseaction.isCancelAccess; else noClick_Abort" (click)="abort()">
+            <i class="ri-arrow-go-back-line"></i> Abort
+          </button>
+          <ng-template #noClick_Abort>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Abort
+            </button>
+          </ng-template>
+
+          <input type="hidden" value='0' id="aborthf">
+          <input type="hidden" id="ord_no" value="{{ cytogeneticOrderData.orD_NO }}" />
+          <input type="hidden" id="hfpaT_ID" value="{{ cytogeneticOrderData.paT_ID }}" />
+          <button id="BtnModify" class="btn btn-outline-dark mb-2" style="min-width: 100%; width: 100% !important"
+            *ngIf="rolebaseaction.isModifyAccess; else noClick_Modify" (click)="ModifyEVOrder()">
+            <i class="ri-edit-box-line pr-1"></i>Modify
+          </button>
+          <ng-template #noClick_Modify>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Modify
+            </button>
+          </ng-template>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-1">
+            <i class="ri-barcode-line"></i> Barcode
+          </button>
+        </div>
+        <div class="card mt-1">
+          <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+            <div class="d-flex flex-wrap justify-content-between navigation">
+              <button id="BtnFirst" class="btn page-btn btn-outline-paginate p-0" tooltip="First"
+                (click)="getRecord('first', cytogeneticOrderData.sno)">
+                <i class="ri-skip-left-line px-1"></i>
+              </button>
+              <button id="BtnPrevious" class="btn page-btn btn-outline-paginate p-0" tooltip="previous"
+                (click)="getRecord('prev', cytogeneticOrderData.sno)">
+                <i class="ri-arrow-left-double-line px-1"></i>
+              </button>
+              <button id="BtnNext" class="btn page-btn btn-outline-paginate p-0" tooltip="next"
+                (click)="getRecord('next', cytogeneticOrderData.sno)">
+                <i class="ri-arrow-right-double-line px-1"></i>
+              </button>
+              <button id="BtnLast" class="btn page-btn btn-outline-paginate p-0" tooltip="last"
+                (click)="getRecord('last', cytogeneticOrderData.sno)">
+                <i class="ri-skip-right-line px-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xxl-6 col-sm-6 col-6">
+        <div class="card">
+          <!--<div class="card-header">
+              <h5 class="card-title">Sales</h5>
+            </div>-->
+          <div class="card-body">
+            <div class="d-flex flex-wrap">
+              <div class="col-md-5">
+                <div class="input-group">
+                  <label class="input-group-text" for="PAT_ID">Patient No</label>
+                  <input type="text" class="form-control" id="PAT_ID" value="{{ cytogeneticOrderData.paT_ID }}"
+                    [disabled]="!isDisabled" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    (blur)="findPR('')" />
+                  <button id="BtnPat_ID" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal"
+                    type="button" style="
+                      height: 33px;
+                      padding: inherit;
+                      border-top-left-radius: 0;
+                      border-bottom-left-radius: 0;
+                    " (click)="findPR('')">
+                    <i class="ri-search-line"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-md-7">
+                <div class="input-group">
+                  <label for="PAT_NAME" class="input-group-text">Name</label>
+                  <input type="text" class="form-control" id="PAT_NAME" value="{{ cytogeneticOrderData.paT_NAME }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="DOB" class="input-group-text">DOB</label>
+                  <input type="date" class="form-control" ng-init="model(DOB:'yyyy-MM-dd')" ng-model="model" id="DOB"
+                    value="{{ cytogeneticOrderData.dob }}" (change)="computeAges()" />
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="input-group">
+                  <label for="Age" class="input-group-text">Age</label>
+                  <input id="Age" type="text" class="form-control" value="{{ cytogeneticOrderData.age }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="input-group">
+                  <label class="input-group-text" for="Gender">Gender</label>
+                  <select class="form-control" id="Gender" value="{{ cytogeneticOrderData.gender }}">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-xxl-2 col-sm-2 col-2">
+                <div class="form-check" style="float: left"></div>
+                <div class="input-group">
+                  <input class="form-check-input" type="checkbox" value="" id="cash" style="margin-top: 5px"
+                    checked="{{ cytogeneticOrderData.cash }}" [disabled]="!isDisabled" />
+                  <label class="form-check-label" for="flexCheckDefault" style="margin-top: 5px">Cash</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-2">
+          <!--<div class="card-header">
+                <h5 class="card-title">Notifications</h5>
+              </div>-->
+          <div class="card-body">
+            <div class="d-flex flex-wrap">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label class="input-group-text" for="CN">Client</label>
+                  <ng-select [tabIndex]="5" value="{{ cytogeneticOrderData.cn }}" [(ngModel)]="cytogeneticOrderData.cn"
+                    placeholder="Select Source Code" class="form-select" id="cn" aria-label=""
+                    (ngModelChange)="change($event)" [readonly]="!isDisabled">
+                    <ng-option [tabIndex]="5" selected="">Select Source Code
+                    </ng-option>
+                    <ng-option [tabIndex]="5" *ngFor="let obj of evClient" [value]="obj.cn" [ngValue]="obj"
+                      style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.cnclient }}">{{ obj.cnclient
+                      }}</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label class="input-group-text" for="abc3">Doctor</label>
+                  <ng-select [tabIndex]="5" value="{{ cytogeneticOrderData.drno }}"
+                    [(ngModel)]="cytogeneticOrderData.drno" placeholder="Select Source Code" class="form-select"
+                    id="DRNO" aria-label="" (ngModelChange)="changeDoctor($event)" [readonly]="!isDisabled">
+                    <ng-option [tabIndex]="5" selected="">Select Source Code
+                    </ng-option>
+                    <ng-option [tabIndex]="5" *ngFor="let obj of DoctorTableList" [value]="obj.drno" [ngValue]="obj"
+                      style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.doctor }}">{{ obj.doctor
+                      }}</ng-option>
+                  </ng-select>
+
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label for="SITE_NO" class="input-group-text">Specimen Type</label>
+                  <ng-select class="form-select" id="cmbSpecimenstypes" aria-label="" style="min-width: 30%"
+                    value="{{ cytogeneticOrderData.s_TYPE }}" [(ngModel)]="cytogeneticOrderData.s_TYPE"
+                    (change)="changestype($event)">
+                    <ng-option selected="">Select Specimen Type</ng-option>
+                    <ng-option *ngFor="let specimenstypes of specimenstypes">{{ specimenstypes.sP_CODE }}</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label for="RSVRD_DTTM" class="input-group-text">Recieved Date/Time:</label>
+                  <input type="datetime-local" class="form-control" id="rcvD_DATE"
+                    value="{{ cytogeneticOrderData.rcvD_DATE | date:'yyyy-MM-dd hh:mm'}}" [disabled]="!isDisabled"
+                    ng-init="model(rcvD_DATE:'yyyy-MM-dd hh:mm')" ng-model="model" />
+
+                  <input type="hidden" class="form-control" id="InsNo" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Color" class="input-group-text">Color:</label>
+                  <input type="text" class="form-control" id="Color" placeholder="Enter Color"
+                    value="{{ cytogeneticOrderData.color }}" [disabled]="!isDisabled"
+                    (blur)="getCodeResponse($event,2)" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="PAC" class="input-group-text">PAC:</label>
+                  <input type="text" class="form-control" id="PAC" placeholder="Enter PAC"
+                    value="{{ cytogeneticOrderData.pac }}" [disabled]="!isDisabled"
+                    (blur)="getCodeResponse($event,3)" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Container" class="input-group-text">Container:</label>
+                  <input type="text" class="form-control" id="Container" placeholder="Enter Container"
+                    value="{{ cytogeneticOrderData.cntr }}" [disabled]="!isDisabled"
+                    (blur)="getCodeResponse($event,4)" />
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label for="CLN_IND" class="input-group-text">Other Comments:</label>
+                  <textarea rows="1" style="height: 80%" class="form-control" id="comments" maxlength="90"
+                    value="{{ cytogeneticOrderData.comments }}" [disabled]="!isDisabled"
+                    (keyup)="onFetchAbbrevation($event)"></textarea>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-0" class="col-xxl-6 col-sm-6 col-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-wrap">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label for="CLN_IND" class="input-group-text">Clinical Details</label>
+                  <textarea style="height: 80%" class="form-control" id="CLN_IND" maxlength="90"
+                    value="{{ cytogeneticOrderData.clN_IND }}" [disabled]="!isDisabled"
+                    (keyup)="onFetchAbbrevationForCIndication($event)"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label class="input-group-text" for="SAUDI">Nationality</label>
+                  <ng-select class="form-select" id="NATIONALITY" aria-label="Default select example"
+                    style="min-width: 63%" value="{{ cytogeneticOrderData.nationality }}"
+                    [(ngModel)]="cytogeneticOrderData.nationality" (change)="changeNationality($event)">
+                    <!-- [{ngModel}]="{{ cytogeneticOrderData.nationality }}" -->
+                    <ng-option selected="">Select nationality</ng-option>
+                    <ng-option *ngFor="let sharedtableNat of sharedtableNat">{{ sharedtableNat.nationality
+                      }}</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <label for="IDNT" class="input-group-text">Id/Iqama No</label>
+                  <input type="text" class="form-control" id="iqama" value="{{ cytogeneticOrderData.iqama }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-2">
+          <div class="card-body">
+            <div class="d-flex flex-wrap">
+              <div class="col-md-3">
+                <div class="input-group">
+                  <label for="REF_NO" class="input-group-text">Ref.No</label>
+                  <input type="text" class="form-control" id="REF_NO" value="{{ cytogeneticOrderData.reF_NO }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="TEL" class="input-group-text">Tel.No</label>
+                  <input type="text" class="form-control" id="TEL" value="{{ cytogeneticOrderData.tel }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+              <div class="col-md-5">
+                <div class="input-group">
+                  <label for="EMAIL" class="input-group-text">Email Add</label>
+                  <input type="text" class="form-control" id="EMAIL" placeholder="Email"
+                    value="{{ cytogeneticOrderData.email }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Seq" class="input-group-text">Seq No.</label>
+                  <input type="text" class="form-control" id="Seq" placeholder="Enter Sequence"
+                    value="{{ cytogeneticOrderData.orD_SEQ }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="input-group">
+                  <label for="Seq" class="input-group-text">Consent:</label>
+                  <input type="text" class="form-control" id="consent" placeholder="Enter Consent"
+                    value="{{ cytogeneticOrderData.consent }}" [disabled]="!isDisabled"
+                    (blur)="getCodeResponse($event,1)" />
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="Voulme" class="input-group-text">Voulme:</label>
+                  <input type="text" class="form-control" id="Voulme" placeholder="Enter Voulme"
+                    value="{{ cytogeneticOrderData.volume }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="input-group">
+                  <label for="Integrety" class="input-group-text">Integrety:</label>
+                  <input type="text" class="form-control" id="Integrety" placeholder="Enter Integrety"
+                    value="{{ cytogeneticOrderData.intgrty }}" [disabled]="!isDisabled"
+                    (blur)="getCodeResponse($event,5)" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex gx-4 mb-0">
+    <div style="flex: 1 1 auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-outer">
+            <div class="table-responsive">
+              <input type="hidden" value="0" id="hdFocus" />
+              <div class="table-veritical-sm">
+                <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+                  style="font-size: 11.5px" id="tableTestOrder">
+                  <thead class="table-head-fix">
+                    <tr>
+                      <th>Ln</th>
+
+                      <th width="10%">Code</th>
+                      <!-- <th width="20%">Col Datetime</th> -->
+
+                      <th width="5%">PRTY</th>
+                      <th width="5%">Status</th>
+                      <th width="10%">U/Price</th>
+                      <th width="20%">Full Name</th>
+                      <th width="10%">Accession No</th>
+                      <th width="5%">DT</th>
+                      <th width="10%">D%</th>
+                      <th width="10%">D/Price</th>
+                      <th width="10%">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyList" class="bodyList">
+                    <tr *ngFor="let item of evOrderData; let i = index" id="rRowFocus">
+                      <td>{{ item.sno }}</td>
+                      <td id="tdReqcode">
+                        <input [tabIndex]="24" type="text" class="form-control" tagname="reqcode" name="reqcode"
+                          id="reqcode{{item.sno}}" [(ngModel)]="item.reQ_CODE" value="{{ item.reQ_CODE }}"
+                          (keyup)="getCode($event, 'reqcode')" (keydown.Tab)="getData($event)" [disabled]="!isFreeze" />
+                        <!-- <ng-select
+                        [tabIndex]="3"
+                        value="{{ item.reQ_CODE }}"
+                        [(ngModel)]="item.reQ_CODE"
+                        placeholder="Select Req Code"
+                        class="form-select"
+                       
+                        id="reqcode{{item.sno}}"
+                        aria-label=""
+                        [readonly]="!isDisabled"
+                        [tabIndex]="3"
+                      >
+                        <ng-option selected="" [tabIndex]="3"
+                          >Select Req Code
+                        </ng-option>
+                        <ng-option
+                          [tabIndex]="3"
+                          *ngFor="let obj of evTdOrg"
+                          [value]="obj.tcode"
+                          [ngValue]="obj"
+                          >{{ obj.tcode + '-' + obj.fulL_NAME }}</ng-option
+                        >
+                      </ng-select> -->
+
+
+                      </td>
+                      <td>
+                        <input type="text" [tabIndex]="25" class="form-control" id="{{ item.prty }}"
+                          [(ngModel)]="item.prty" value="{{ item.prty }}" (blur)="prtycode($event, item.prty, i)"
+                          (keyup)="getCode($event, 'prty')" [disabled]="!isDisabled" />
+                      </td>
+                      <td>
+                        <input type="hidden" value="{{ item.sect }}" id="hfSect" />
+                        <input [tabIndex]="26" type="text" class="form-control" id="{{ item.r_STS }}"
+                          [(ngModel)]="item.r_STS" value="{{ item.r_STS }}" (keyup)="getCode($event, 'sts')"
+                          (keydown.arrowdown)="onKeydown($event)" />
+                      </td>
+                      <td>
+                        <input [tabIndex]="27" type="text" class="form-control" id="{{ item.uprice }}"
+                          [(ngModel)]="item.uprice" value="{{ item.uprice }}" (keyup)="getCode($event, 'uprice')"
+                          (blur)="getUnitPrice($event, item.uprice, i)" [disabled]="!isDisabled" />
+                      </td>
+                      <td class="tooltip-cell" style="max-width: 9rem; cursor: pointer"
+                        appTooltip="{{ item.fulL_NAME }}">
+                        {{ item.fulL_NAME }}
+                      </td>
+                      <td>{{ item.accn }}</td>
+                      <td>
+                        <input [tabIndex]="29" type="text" class="form-control" id="{{ item.dt }}" [(ngModel)]="item.dt"
+                          value="{{ item.dt }}" (keyup)="getCode($event, 'dt')"
+                          (blur)="getDiscountType($event, item.dt, i)" [maxLength]="1"
+                          onkeydown="return /[a-zA-Z]/i.test(event.key)" [disabled]="!isDisabled" />
+                      </td>
+
+                      <td>
+                        <input [tabIndex]="30" type="text" class="form-control" id="{{ item.dscnt }}"
+                          [(ngModel)]="item.dscnt" value="{{ item.dscnt }}" (blur)="getDiscount($event, item.dscnt, i)"
+                          (keyup)="getCode($event, 'dscnt')" [disabled]="!isDisabled" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="{{ item.dprice }}" [(ngModel)]="item.dprice"
+                          value="{{ item.dprice }}" (keyup)="getCode($event, 'dprice')" [readOnly]="true"
+                          [tabIndex]="-1" />
+                        <input type="hidden" value="{{ item.atR_ID }}" id="hfatrid" />
+                      </td>
+                      <td>
+                        <button *ngIf="rolebaseaction.isAddTestAccess; else noClick_AddTest" id="BtnAddProc"
+                          tooltip="Add Test" class="btn btn-outline-dark" [disabled]="item.accn == '' ? true : false"
+                          [tabIndex]="-1" (click)="addTest()">
+                          <!-- <i class="ri-pantone-line"></i> -->
+                          <i class="ri-add-fill"></i>
+                        </button>
+                        <ng-template #noClick_AddTest>
+                          <button class="btn btn-outline-dark" disabled>
+                            <i class="ri-add-fill"></i>
+                          </button>
+                        </ng-template>
+                        <button *ngIf="rolebaseaction.isCancelAccess; else noClick_CancelTest"
+                          tooltip="Cancel Ordet Test" class="btn btn-danger btn-sm mx-1" (click)="deleteRow(item)"
+                          [tabIndex]="-1">
+                          <i class="ri-delete-bin-line"></i>
+                        </button>
+                        <ng-template #noClick_CancelTest>
+                          <button class="btn btn-danger btn-sm mx-1" disabled>
+                            <i class="ri-delete-bin-line"></i>
+                          </button>
+                        </ng-template>
+                        <button tooltip="Add Notes" class="btn btn-info btn-sm" [tabIndex]="-1">
+                          <i class="ri-sticky-note-add-fill"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-1">
+        <div class="d-flex">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-end mt-1">
+                <div>
+                  <label class="input-group-text side-input-dia" for="inputField1">Invoice No:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="33" readonly="true" class="form-control float-right" id="vC_NO" placeholder=""
+                    value="{{ cytogeneticOrderData.vC_NO }}" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-1">
+                <div>
+                  <label class="input-group-text side-input-dia" for="inputField1">Invoice Date:</label>
+                </div>
+                <div class="float-right">
+                  <input id="inV_DATE" readonly="true" [tabIndex]="34" class="form-control float-right" placeholder=""
+                    value="{{ cytogeneticOrderData.inV_DATE }}" />
+                </div>
+              </div>
+              <!-- data-bs-toggle="modal"-->
+              <button type="button" *ngIf="this.cytogeneticOrderData.vC_NO == ''" class="btn btn-outline-dark"
+                (click)="updateInvoice()">
+                <i class="ri-printer-line pr-1"></i>Issue Invoice
+              </button>
+              <button type="button" class="btn btn-outline-dark" (click)="displayInvoice()"
+                *ngIf="this.cytogeneticOrderData.vC_NO != ''">
+                <i class="ri-printer-line pr-1"></i>Display Invoice
+              </button>
+            </div>
+          </div>
+          <!-- Row ends -->
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-sm-3 col-3">
+      <div class="card" style="background-color: #f8f9fc">
+        <div class="d-flex justify-content-end mx-1">
+          <div>
+            <label class="input-group-text sm-height" for="inputField1">Subtotal:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="36" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              value="{{ subtotal }}" id="subtotal" value="{{ cytogeneticOrderData.toT_VALUE }}"
+              [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div class="d-flex pr-1">
+            <label for="inputField1" class="input-group-text sm-height">Discount %:</label>
+            <input [tabIndex]="37" class="form-control sm-height" style="width: 3.7rem; font-weight: 500" placeholder=""
+              type="text" value="{{ discountPercentage }}" id="discountPercentage"
+              value="{{ cytogeneticOrderData.totdscnt }}" (blur)="calculateDiscountByPercent()"
+              [disabled]="!isDisabled" />
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="38" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="discount" value="{{ discount }}" value="{{ cytogeneticOrderData.dscamnt }}"
+              (blur)="calculateDiscountByRiyal()" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text sm-height">Total After Discount:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="39" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" value="{{ discountedprice }}" id="discountedprice"
+              value="{{ cytogeneticOrderData.neT_VALUE }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div class="mx-3">
+            <input [tabIndex]="40" type="checkbox" id="chkVAT" (change)="vatCheck()" [checked]="true" />
+            <label for="inputField1">15% VAT:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="41" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="vat" value="{{ cytogeneticOrderData.vat }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text sm-height">Grand Total:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="42" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="grandtotal" value="{{ cytogeneticOrderData.granD_VAL }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+      </div>
+      <div class="card mt-1" style="background-color: #f8f9fc">
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label class="input-group-text sm-height" for="inputField1">Total Paid:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="43" type="text" class="form-control sm-height" style="font-weight: 500; width: 10rem"
+              id="totalpaid" value="{{ cytogeneticOrderData.paid }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label class="input-group-text side-input-dia sm-height" for="inputField1">Remaining Balance:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="44" type="text" class="form-control sm-height" style="font-weight: 500; width: 10rem"
+              id="remainingbalance" value="{{ cytogeneticOrderData.rmng }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1">
+          <div>
+            <!-- <button id="BtnShowIssueInvoice" class="btn page-btn btn-outline-dark mb-1"><i class="ri-money-dollar-box-fill"></i>
+                Issue Invoice</button> -->
+            <label class="input-group-text sm-height" for="inputField1">Payment Type:</label>
+          </div>
+          <div class="float-right">
+            <select [tabIndex]="45" style="width: 10rem; font-weight: 500" class="form-control sm-height" id="paytp"
+              value="{{ cytogeneticOrderData.paytp }}" [(ngModel)]="cytogeneticOrderData.paytp">
+              <option value="1">Cash</option>
+              <option value="2">Credit</option>
+              <option value="3">Visa</option>
+              <option value="4">Span</option>
+              <option value="5">Cheque</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- </div> -->
+    <!-- App body ends -->
+
+    <!-- The Modal Start -->
+
+    <div class="modal fade modal-alert rounded-3" id="tcodeModal" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="bg-primary modal-header" style="color: white">
+            Search Test
+          </div>
+
+          <div class="modal-body p-4 text-left">
+            <div class="col-md-12 m-0"></div>
+            <label class="form-label" for="abc3">Enter Test Code/Name</label>
+            <div class="input-group">
+              <input type="hidden" class="form-control" id="rowTestCode" value="0" />
+              <input type="text" class="form-control" id="InpTestCode" placeholder="Test Code"
+                (keyup)="BindSearchTDTable()" />
+              <button class="btn btn-outline-secondary" type="button" (click)="BindSearchTDTable()">
+                <i class="ri-search-line"></i>
+              </button>
+            </div>
+
+            <br />
+            <!--<table class="table table-hover table-striped truncate m-0" id="TableTestCollection">-->
+            <table class="table table-bordered data" id="TableTestCollection">
+              <thead>
+                <tr>
+                  <th>Test Code</th>
+                  <th>Full Name</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let td_gt of evTd">
+                  <td>{{ td_gt.tcode }}</td>
+                  <td>{{ td_gt.fulL_NAME }}</td>
+                  <td>{{ td_gt.uprice }}</td>
+                  <td>{{ td_gt.dscntg }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-icon btn-sm mb-1" data-bs-dismiss="modal"
+                      (click)="addTD(td_gt, $event)">
+                      <i class="ri-send-plane-line"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--The Modal End-->
+
+    <!-- </form> -->
+  </div>
+
+  <!-- Modal 1 -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-primary modal-header">
+          <h5 class="modal-title text-white" id="exampleModalToggleLabel">
+            Issue Invoice
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-close-line pr-1"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column">
+            <div class="col-md-12">
+              <div class="card mt-1">
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">Print Cancelled orders</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">VAT Invoice</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">Print Client Notes</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">Print Payment Status</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">Print Page Header</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label for="inputField1">Electronic Signature</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="card mt-1">
+                <div class="d-flex flex-column justify-content-end">
+                  <div class="d-flex justify-content-start">
+                    <div>
+                      <label class="input-group-text side-input-dia" for="inputField1">Signed By:</label>
+                    </div>
+                    <div>
+                      <select style="width: 11.9rem" class="form-control float-right">
+                        <option value="1">Cash</option>
+                        <option value="2">Credit</option>
+                        <option value="3">Visa</option>
+                        <option value="4">Span</option>
+                        <option value="5">Cheque</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between mt-3">
+                    <button type="button" class="btn-close" data-toggle="modal" data-bs-dismiss="modal"
+                      data-target="#exampleModalPrint" (click)="getEVPrint()">
+                      <i class="ri-printer-line pr-1"></i>Print
+                    </button>
+                    <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"
+                      class="btn page-btn btn-outline-dark mb-1">
+                      <i class="ri-printer-cloud-line"></i> Mult-Invoice
+                    </button>
+                    <button id="BtnShowIssueInvoice" class="btn page-btn btn-outline-dark mb-1">
+                      <i class="ri-discount-percent-line"></i> Extra Discount
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+            <i class="ri-close-line pr-1"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-primary modal-header">
+          <h5 class="modal-title text-white" id="exampleModalToggleLabel2">
+            Mult-Invoice Reporting
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-close-line pr-1"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="input-group">
+                <label class="input-group-text" for="sinceDate">Since</label>
+                <input type="date" class="form-control" id="SinceDate" placeholder="" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark" (click)="evMultiInvoice()">
+              <i class="ri-restart-line pr-1"></i>Refersh
+            </button>
+          </div>
+          <div class="card">
+            <div class="table-veritical-sm">
+              <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+                style="font-size: 11.5px" id="tableTestOrder">
+                <thead class="table-head-fix">
+                  <tr>
+                    <th width="5%">Sn</th>
+                    <th width="10%">Sample</th>
+                    <th width="10%">Invoice</th>
+                    <th width="15%">Sample Date</th>
+                    <th width="40%">Sample Name</th>
+                    <th width="15%">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="bodyList" class="bodyList">
+                  <tr *ngFor="let res of _responsePlus">
+                    <td>
+                      <input [tabIndex]="40" type="checkbox" id="chktablesn" [checked]="res.checked"
+                        [(ngModel)]="res.checked" value="{{res.checked}}" (change)="checkChange($event)" />
+                    </td>
+                    <td>{{res.paT_ID}}</td>
+                    <td>{{ res.vC_NO }}</td>
+                    <td>{{ res.inV_DATE }}</td>
+                    <td>{{ res.fulL_NAME }}</td>
+                    <td>{{ res.uprice }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="custom-input" style="width: 7rem">
+              <div class="input-group">
+                <label class="input-group-text" for="abc3">selected</label>
+                <input [tabIndex]="18" type="text" class="form-control" id="tselectedckeckboxs" placeholder=""
+                  value="0" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark" (click)="selectAll()">
+              Select All
+            </button>
+            <button type="button" class="btn btn-outline-dark" (click)="evPrintMultiInvoice()">
+              <i class="ri-printer-line pr-1"></i>Print
+            </button>
+            <div class="col-md-3 ml-auto">
+              <div class="input-group">
+                <h6 class="pr-2" style="padding-top: 0.4rem;">Total</h6>
+                <input style="font-size: 0.95rem;font-weight:500;" [tabIndex]="18" type="text" class="form-control"
+                  id="tabletotal" placeholder="" value="4356" [disabled]="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+            <i class="ri-close-line pr-1"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade modal-alert rounded-3" id="modalCancelReason" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-danger modal-header" style="color: white">
+          Warning! You about to cancel the Order.
+          <label id="LblARTID" style="font-weight: bold"></label>
+        </div>
+
+        <div class="modal-body p-4 text-left">
+          <h5 class="text-danger">Order Cancellation:</h5>
+          <input type="hidden" id="hfIndex" value="0">
+          <div class="m-0">
+            <label class="form-label" for="abc1">Code</label>
+            <input type="text" class="form-control" id="InputCode" value="Disabled Field" disabled="" />
+            <input type="hidden" class="form-control" id="InputSect" />
+          </div>
+          <div class="m-0">
+            <label class="form-label" for="abc1">Full Name</label>
+            <input type="text" class="form-control" id="InputFullName" value="Disabled Field" disabled="" />
+          </div>
+
+          <hr />
+
+          <div class="col-md-12 m-0">
+            <label class="form-label" for="abc3">Order Type</label>
+            <div class="input-group">
+              <ng-select class="form-select" id="cmbCancelReason" aria-label="Default select Cancel Reason"
+                style="min-width: 100%">
+                <ng-option selected="">Select Cancel Reason</ng-option>
+                <ng-option *ngFor="let creason of evCancelReason" [ngValue]="creason">{{ creason.cc }} | {{
+                  creason.reason }} |
+                  {{ creason.descrip }}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-12">
+            <div class="mb-3">
+              <label class="form-label" for="a9">Message</label>
+              <textarea class="form-control" id="AreaNOTES" placeholder="Enter message" rows="6"
+                style="height: auto !important"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button (click)="cancelOrder()" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+            <strong><i class="ri-save-line"></i> Submit</strong>
+          </button>
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+            <i class="ri-arrow-go-back-line"></i> Abort
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Button to open first modal -->
+  <!-- <div class="container mt-3">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+      Open Modal 1
+    </button>
+  </div> -->
+</div>
+
+
+<!-- The Modal Start -->
+<div class="modal fade modal-alert rounded-3" id="PRNewModal" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="bg-primary modal-header">
+
+      </div>
+
+      <div class="modal-body p-4 text-center">
+        <h5 class="text-primary">Patient not register!</h5>
+        <p class="mb-0">
+          This Patient is not register. Do you want to register a new patient?
+        </p>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <button (click)="BtnPRYes()" type="button" class="btn text-primary fs-6 col-6 m-0 border-end"
+          data-bs-dismiss="modal">
+          <strong>Yes</strong>
+        </button>
+        <button type="button" (click)="BtnPRNo()" class="btn text-dark fs-6 col-6 m-0" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

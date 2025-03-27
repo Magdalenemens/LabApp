@@ -1,0 +1,103 @@
+<!-- back-link-->
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+        <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+          <h6 class="py-1 mt-1 header-font">Order Processing</h6>
+        </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+        <a style="color: #000000" href="#">
+          <h6 class="py-1 mt-1 header-font">Pre-Analytic Receiving</h6>
+        </a>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<style>
+  .table>thead>tr>th:last-child {
+    width: 65vw;
+    text-align: left;
+  }
+
+  td:last-child {
+    text-align: left;
+  }
+</style>
+<form>
+  <div class="d-flex" style="padding-bottom:10px;">
+    <div class="col-xxl-1 col-sm-1 col-1">
+
+    </div>
+    <div class="col-xxl-3 col-sm-3 col-3">
+
+      <div class="input-group">
+        <label class="input-group-text" for="PAT_ID">Accession No.</label>
+        <input type="text" class="form-control" id="ACCN">
+        <button (click)="BindOrdersTable()" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal"
+          type="button"
+          style="height: 33px; padding: inherit; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+          <i class="ri-search-line"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-xxl-5 col-sm-5 col-5" style="margin-left:0px !important;">
+
+    </div>
+    <div class="col-xxl-3 col-sm-3 col-3">
+      <button id="BtnSubmit" (click)="btnSubmit()" disabled class="btn btn-outline-dark"><i class="ri-save-line"></i>
+        Submit</button>
+      <button id="BtnAbort" (click)="btnAbort()" disabled class="btn btn-outline-dark"><i
+          class="ri-arrow-go-back-line"></i> Abort </button>
+      <button id="BtnNewList" (click)="btnNewList()" class="btn btn-outline-dark" style="visibility:hidden;"><i
+          class="ri-file-add-line"></i> New List</button>
+    </div>
+  </div>
+  <div class="app-body">
+    <div class="row gx-4">
+      <div class="col-xxl-1 col-sm-1 col-1">
+      </div>
+      <div class="col-xxl-10 col-sm-10 col-10">
+        <div class="card mb-4 card-height-120">
+          <div class="card-body" style="text-align:center;">
+            <table id="tablePreAnalyticalReceiving" class="table table-hover table-striped truncate m-0">
+              <thead>
+                <tr>
+                  <th>Accession</th>
+                  <th>Rcvd</th>
+                  <th>Test Code</th>
+                  <th>Site</th>
+                  <th>Col. Date/Time</th>
+                  <th>Rcvd Date/Time</th>
+                  <th>Prt</th>
+                  <th>Section</th>
+                  <th>Test Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let OrdDtlTables of OrdDtlTable; let x = index">
+                  <td>{{OrdDtlTables.accn}}</td>
+                  <td><input class="form-check-input" type="checkbox" value="" id="checkRcvd" checked></td>
+                  <td>{{OrdDtlTables.reQ_CODE}}</td>
+                  <td>{{OrdDtlTables.sitE_NO}}</td>
+                  <td>{{OrdDtlTables.drawN_DTTM}}</td>
+                  <td [attr.rowspan]="1" *ngIf="x % 1 == 0">
+                    <input (ngModel)="OrdDtlTables[OrdDtlTables.rcvD_DTTM]" value="{{dt}}" type="datetime-local"
+                      class="form-control" id="InpReceivingDateTime">
+                  </td>
+                  <td>{{OrdDtlTables.prty}}</td>
+                  <td>{{OrdDtlTables.descrip}}</td>
+                  <td>{{OrdDtlTables.fulL_NAME}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</form>

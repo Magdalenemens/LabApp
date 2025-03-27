@@ -1,0 +1,1470 @@
+<style>
+  .ng-select.ng-select-single .ng-select-container {
+    height: 27px !important;
+  }
+</style>
+
+<!-- back-link -->
+<!-- <form [formGroup]="evform"> -->
+<!-- App header ends -->
+<!-- App body starts -->
+<div class="app-body">
+  <div class="d-flex">
+    <div class="d-flex flex-column">
+      <div class="custom-input" style="width: 10.8rem">
+        <div class="card d-flex flex-column vertical-center">
+          <button id="BtnPRNew" class="btn btn-outline-dark mb-2" *ngIf="rolebaseaction.isAddAccess; else noClick_New"
+            (click)="newEVOrder()">
+            <i class="ri-pencil-line"></i> New F22
+          </button>
+          <ng-template #noClick_New>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              New F22
+            </button>
+          </ng-template>
+          <button id="btnHidden" class="btn btn-outline-dark mb-2" style="display: none" (click)="addRow()">
+            <i class="ri-pencil-line"></i>
+          </button>
+
+          <button id="BtnPRSave" class="btn btn-outline-dark mb-2"
+            style="min-width: 100%; padding-left: 5px; padding-right: 5px"
+            *ngIf="rolebaseaction.isSaveAccess; else noClick_Submit" (click)="SaveInitial()">
+            <i class="ri-save-line"></i> Submit
+          </button>
+          <ng-template #noClick_Submit>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Submit
+            </button>
+          </ng-template>
+          <button id="BtnCancel" class="btn btn-outline-dark mb-2" style="min-width: 100%; width: 100% !important"
+            *ngIf="rolebaseaction.isCancelAccess; else noClick_Abort" (click)="abort()" (click)="abort()">
+            <i class="ri-arrow-go-back-line"></i> Abort
+          </button>
+          <ng-template #noClick_Abort>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Abort
+            </button>
+          </ng-template>
+          <input type="hidden" value='0' id="aborthf">
+          <button id="BtnModify" class="btn btn-outline-dark mb-2" style="min-width: 100%; width: 100% !important"
+            *ngIf="rolebaseaction.isModifyAccess; else noClick_Modify" (click)="ModifyEVOrder()"
+            (click)="ModifyEVOrder()">
+            <i class="ri-edit-box-line pr-1"></i>Modify
+          </button>
+          <ng-template #noClick_Modify>
+            <button class="btn btn-outline-dark mb-2" disabled>
+              Modify
+            </button>
+          </ng-template>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-1" (click)="showBarCode()">
+            <i class="ri-barcode-line"></i> Barcode
+          </button>
+        </div>
+        <div class="card mt-1">
+          <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+            <div class="d-flex flex-wrap justify-content-between navigation">
+              <button id="BtnFirst" class="btn page-btn btn-outline-paginate p-0"
+                (click)="getRecord('first', environmentOrderData.sno)" tooltip="First">
+                <i class="ri-skip-left-line px-1"></i>
+              </button>
+              <button id="BtnPrevious" class="btn page-btn btn-outline-paginate p-0"
+                (click)="getRecord('prev', environmentOrderData.sno)" tooltip="previous">
+                <i class="ri-arrow-left-double-line px-1"></i>
+              </button>
+              <button id="BtnNext" class="btn page-btn btn-outline-paginate p-0"
+                (click)="getRecord('next', environmentOrderData.sno)" tooltip="next">
+                <i class="ri-arrow-right-double-line px-1"></i>
+              </button>
+              <button id="BtnLast" class="btn page-btn btn-outline-paginate p-0"
+                (click)="getRecord('last', environmentOrderData.sno)" tooltip="last">
+                <i class="ri-skip-right-line px-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pb-0 mb-0">
+      <!-- top-card -->
+      <div style="flex: 1 1 auto">
+
+        <div class="d-flex justify-content-start">
+          <div class="col-xxl-4 col-sm-4 col-4 pr-0 pt-1">
+            <div class="input-group">
+              <label style="height: 33px;" class="input-group-text side-input-dia">Search:</label>
+              <ng-select [(ngModel)]="patientSearch" [(ngModel)]="patientSelect" placeholder="Select Source Code"
+                bindValonPatientSelectionue="id" class="form-select" id="search" aria-label=""
+                (ngModelChange)="onPatientSelection($event, patientSelect)" #patientSelect>
+                <ng-option [tabIndex]="5" selected="">Select Sample
+                </ng-option>
+                <ng-option [tabIndex]="5" *ngFor="let obj of patientSearch" [value]="obj.id" [ngValue]="obj"
+                  style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.name }}">{{ obj.name
+                  }}</ng-option>
+              </ng-select>
+
+              <button (click)="ShowMulipleSearch()" tooltip="Multi Criteria" class="btn btn-outline-secondary"
+                data-toggle="modal" data-target="#myModal" type="button" style="
+                  height: 34px;
+                  padding: inherit;
+                  border-top-left-radius: 0;
+                  border-bottom-left-radius: 0;
+                ">
+                <i class="ri-search-line mx-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-4 ml-auto">
+            <div class="input-group">
+              <label for="validationCustom01" class="input-group-text side-input-dia head-search ">Display
+                Since:</label>
+              <input id="pSize" type="number" class="form-control head-search" [value]="60" [step]="30"
+                (input)="onInput($event)" (input)="sizeChange($event)" (keydown)="keypress()" />
+
+              <label class="input-group-text side-input-dia head-search "
+                style="border-right:1px solid #ced4da;border-radius:4px">days</label>
+              <button class="btn btn-outline-dark px-2 mx-1" syle="height: 1.95rem !important;"><i
+                  class="ri-refresh-line pr-2"></i>Refresh</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card pb-0 mb-1 mr-2">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="input-group">
+                  <label class="input-group-text" for="paT_ID">Sample No</label>
+                  <input type="text" class="form-control" id="paT_ID" value="{{ environmentOrderData.paT_ID }}"
+                    readonly="true" [tabIndex]="1" />
+                  <input type="hidden" id="ord_no" value="{{ environmentOrderData.orD_NO }}" />
+                  <input type="hidden" id="hfpaT_ID" value="{{ environmentOrderData.paT_ID }}" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <label for="paT_NAME" class="input-group-text">Description Name</label>
+                  <input type="text" class="form-control" id="paT_NAME" placeholder=""
+                    value="{{ environmentOrderData.paT_NAME }}" [disabled]="!isDisabled" [tabIndex]="2" />
+                </div>
+              </div>
+
+              <div class="col-md-4 m-0">
+                <div class="input-group">
+                  <label class="input-group-text" for="s_TYPE">Source Code</label>
+
+                  <ng-select [tabIndex]="3" value="{{ environmentOrderData.s_TYPE }}"
+                    [(ngModel)]="environmentOrderData.sP_DESCRP" placeholder="Select Source Code" class="form-select"
+                    (ngModelChange)="changestype($event)" id="s_TYPE" aria-label="" [readonly]="!isDisabled"
+                    [tabIndex]="3">
+                    <ng-option selected="" [tabIndex]="3">Select Source Code
+                    </ng-option>
+                    <ng-option [tabIndex]="3" *ngFor="let obj of evSample" [value]="obj.s_TYPE" [ngValue]="obj">{{
+                      obj.sP_DESCRP }}</ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <div class="col-xxl-2 col-sm-2 col-2">
+                <div class="form-check" style="float: left"></div>
+                <div class="input-group">
+                  <label class="input-group-text" for="flexCheckDefault">Cash</label>
+                  <select [tabIndex]="4" style="width: 1rem;" class="form-control" id="cash" [disabled]="isReadOnly">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                  </select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- top-card -->
+
+      <div class="row pb-0 mb-0">
+        <div class="d-flex mt-0">
+          <div style="flex: 1 1 auto">
+            <div class="row">
+              <div class="card mb-4 card-height-120 pb-0">
+                <div class="card-header" style="padding-top: 0px">
+                  <div class="row" style="margin-bottom: 2px">
+                    <div class="col-md-5">
+                      <h6 [tabIndex]="-1" class="card-title" style="margin-bottom: 0.1rem; border-radius: 5px">
+                        Customer Information
+                      </h6>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row" style="margin-bottom: 2px">
+                    <div class="col-md-8 m-0">
+                      <div class="input-group">
+                        <label class="input-group-text" for="CN">Client</label>
+                        <ng-select [tabIndex]="5" value="{{ environmentOrderData.cn }}"
+                          [(ngModel)]="environmentOrderData.cnclient" placeholder="Select Source Code"
+                          class="form-select" id="cn" aria-label="" (ngModelChange)="change($event)"
+                          [readonly]="!isDisabled">
+                          <ng-option [tabIndex]="5" selected="">Select Source Code
+                          </ng-option>
+                          <ng-option [tabIndex]="5" *ngFor="let obj of evClient" [value]="obj.cn" [ngValue]="obj"
+                            style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.cnclient }}">{{ obj.cnclient
+                            }}</ng-option>
+                        </ng-select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Type</label>
+                        <input type="text" class="form-control" id="cuS_TP" placeholder=""
+                          value="{{ environmentOrderData.cuS_TP }}" [disabled]="!isDisabled" [tabIndex]="6" />
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Customer Name</label>
+                        <input [tabIndex]="9" type="text" class="form-control" id="cuS_NAME"
+                          value="{{ environmentOrderData.cuS_NAME }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">LIMS</label>
+                        <input [tabIndex]="10" type="text" class="form-control" id="reF_NO" placeholder=""
+                          value="{{ environmentOrderData.reF_NO }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="input-group">
+
+                        <label class="input-group-text" for="abc3">Ref Date</label>
+                        <input [tabIndex]="13" type="Date" class="form-control" id="tel" placeholder=""
+                          value="{{ environmentOrderData.tel }}" [disabled]="isReadOnly"
+                          ng-init="model(tel:'yyyy-MM-dd')" ng-model="model" />
+                      </div>
+                    </div>
+
+                    <!-- value="{{ environmentOrderData.tel }}" -->
+                    <div class="col-md-5">
+
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Email</label>
+                        <input [tabIndex]="14" type="email" class="form-control" id="email" placeholder=""
+                          value="{{ environmentOrderData.email }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Brand</label>
+                        <input type="brand" class="form-control" id="brand" placeholder=""
+                          value="{{ environmentOrderData.brand }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Contact</label>
+                        <input [tabIndex]="15" type="text" class="form-control" id="cperson" placeholder=""
+                          value="{{ environmentOrderData.cperson }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Issue Date</label>
+                        <input type="date" class="form-control" id="issU_DATE" placeholder=""
+                          value="{{ environmentOrderData.issU_DATE }}" [disabled]="isReadOnly" [tabIndex]="19" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">City/Country</label>
+                        <input [tabIndex]="20" type="text" class="form-control" id="citY_CNTRY" placeholder=""
+                          value="{{ environmentOrderData.citY_CNTRY }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Address</label>
+
+                        <!-- <span style="max-width: 8rem; margin-left: 4.7rem;"
+                              class="tooltip-cell address-label"
+                              appTooltip="{{ environmentOrderData.address }}">
+                            {{ environmentOrderData.address }}
+                        </span> -->
+
+                        <!-- Input field -->
+                        <input [tabIndex]="21" type="text" class="form-control" id="address" placeholder=""
+                          value="{{ environmentOrderData.address }}" [disabled]="true" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Exp Period</label>
+                        <input type="exp-period" class="form-control" id="expirY_PERIOD" placeholder=""
+                          value="{{ environmentOrderData.expirY_PERIOD }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g3">
+                    <div class="col-md-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row starts -->
+          <div class="col-lg-5 col-xxl-5 col-sm-5 col-5 no-padding-left">
+            <!-- Row ends -->
+            <!-- Row starts -->
+            <div class="row">
+              <div class="card">
+                <div class="card-header" style="padding-top: 0px">
+                  <div class="row" style="margin-bottom: 2px">
+                    <div class="col-md-6">
+                      <h6 [tabIndex]="-1" class="card-title" style="margin-bottom: 0.1rem; border-radius: 5px">
+                        Sample Details
+                      </h6>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-check" style="float: left"></div>
+                      <div class="input-group">
+                        <label class="input-group-text" for="flexCheckDefault">Received From</label>
+                        <select id="receivedfrom" style="width: 4.9rem" class="form-control float-right"
+                          [(ngModel)]="environmentOrderData.otp" value="{{environmentOrderData.otp}}">
+                          <option *ngFor="let su of evSOTP" value="{{su.id}}">{{su.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row" style="margin-bottom: 2px">
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Batch Number</label>
+                        <input [tabIndex]="-1" type="text" class="form-control" id="batchA_NO" placeholder=""
+                          value="{{ environmentOrderData.batchA_NO }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Received Date</label>
+                        <input [tabIndex]="7" type="date" class="form-control" id="rcvD_DATE" placeholder=""
+                          value="{{ environmentOrderData.rcvD_DATE }}" [disabled]="isReadOnly" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Physical Cond.</label>
+                        <input type="text" class="form-control" id="phyS_COND" placeholder=""
+                          value="{{ environmentOrderData.phyS_COND }}" [disabled]="!isDisabled" [tabIndex]="8" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Origin</label>
+                        <input [tabIndex]="11" type="text" class="form-control" id="origin" placeholder=""
+                          value="{{ environmentOrderData.origin }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Analysis S.Date</label>
+                        <input [tabIndex]="12" type="date" class="form-control" id="asT_DATE" placeholder=""
+                          value="{{ environmentOrderData.asT_DATE }}" [disabled]="isReadOnly"
+                          ng-init="model(asT_DATE:'yyyy-MM-dd')" ng-model="model" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Cust.Ref. No</label>
+                        <input [tabIndex]="16" type="text" class="form-control" id="custoM_SR" placeholder=""
+                          value="{{ environmentOrderData.custoM_SR }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Quoted W/V</label>
+                        <input [tabIndex]="17" type="text" class="form-control" id="voL_WT" placeholder=""
+                          value="{{ environmentOrderData.voL_WT }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Product No.</label>
+                        <input [tabIndex]="18" type="text" class="form-control" id="voL_WT2" placeholder=""
+                          value="{{ environmentOrderData.voL_WT2 }}" [disabled]="!isDisabled" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Prod. Date</label>
+                        <input [tabIndex]="22" type="date" class="form-control" id="prD_DATE" placeholder=""
+                          value="{{ environmentOrderData.prD_DATE }}" [disabled]="isReadOnly"
+                          ng-init="model(prD_DATE:'yyyy-MM-dd')" ng-model="model" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-group">
+                        <label class="input-group-text" for="abc3">Expiry Date</label>
+                        <input [tabIndex]="23" type="date" class="form-control" id="expR_DATE" placeholder=""
+                          value="{{ environmentOrderData.expR_DATE }}" [disabled]="isReadOnly"
+                          ng-init="model(expR_DATE:'yyyy-MM-dd')" ng-model="model" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Row ends -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex gx-4 mb-0">
+    <div style="flex: 1 1 auto">
+      <!-- Row starts -->
+      <!-- <div class="col-xxl-18"> </div> -->
+      <div class="card">
+        <div class="card-body">
+          <div class="table-outer">
+            <div class="table-responsive">
+              <input type="hidden" value="0" id="hdFocus" />
+              <!--<table id="tableTestOrder" class="table table-hover table-striped truncate m-0" style="font-size:11.5px;">-->
+              <div class="table-veritical-sm">
+                <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+                  style="font-size: 11.5px" id="tableTestOrder">
+                  <thead class="table-head-fix">
+                    <tr>
+                      <th>Ln</th>
+
+                      <th width="10%">Code</th>
+                      <!-- <th width="20%">Col Datetime</th> -->
+
+                      <th width="5%">PRTY</th>
+                      <th width="5%">Status</th>
+                      <th width="10%">U/Price</th>
+                      <th width="20%">Full Name</th>
+                      <th width="10%">Accession No</th>
+                      <th width="5%">DT</th>
+                      <th width="10%">D%</th>
+                      <th width="10%">D/Price</th>
+                      <th width="10%">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyList" class="bodyList">
+                    <tr *ngFor="let item of evOrderData; let i = index" id="rRowFocus">
+                      <td>{{ item.sno }}</td>
+                      <td id="tdReqcode">
+                        <input [tabIndex]="24" type="text" class="form-control" tagname="reqcode" name="reqcode"
+                          id="reqcode{{item.sno}}" [(ngModel)]="item.reQ_CODE" value="{{ item.reQ_CODE }}"
+                          (keyup)="getCode($event, 'reqcode')" (keydown.Tab)="getData($event)" [disabled]="!isFreeze"
+                          style="text-transform:uppercase" />
+                      </td>
+                      <td>
+                        <input type="text" [tabIndex]="24" class="form-control" id="{{ item.prty }}"
+                          [(ngModel)]="item.prty" value="{{ item.prty }}" (blur)="prtycode($event, item.prty, i)"
+                          (keyup)="getCode($event, 'prty')" [disabled]="!isDisabled" />
+                      </td>
+                      <td>
+                        <input type="hidden" value="{{ item.sect }}" id="hfSect" />
+                        <input [tabIndex]="24" type="text" class="form-control" id="r_STS" [(ngModel)]="item.r_STS"
+                          value="{{ item.r_STS }}" (keyup)="getCode($event, 'sts')"
+                          (keydown.arrowdown)="onKeydown($event)" />
+                      </td>
+                      <td>
+                        <input [tabIndex]="24" type="text" class="form-control" id="{{ item.uprice }}"
+                          [(ngModel)]="item.uprice" value="{{ item.uprice }}" (keyup)="getCode($event, 'uprice')"
+                          (blur)="getUnitPrice($event, item.uprice, i)" [disabled]="!isDisabled" />
+                      </td>
+                      <td class="tooltip-cell" style="max-width: 9rem; cursor: pointer"
+                        appTooltip="{{ item.fulL_NAME }}">
+                        {{ item.fulL_NAME }}
+                      </td>
+                      <td>{{ item.accn }}</td>
+                      <!-- <td>
+                        <input
+                          [tabIndex]="28"
+                          type="text"
+                          class="form-control"
+                          id="{{ item.r_STS }}"
+                          [(ngModel)]="item.r_STS"
+                          value="{{ item.r_STS }}"
+                          (keyup)="getCode($event, 'sts')"
+                          (keydown.arrowdown)="onKeydown($event)"
+                          [disabled]="!isDisabled"
+                        />
+                      </td> -->
+                      <td>
+                        <input [tabIndex]="24" type="text" class="form-control" id="{{ item.dt }}" [(ngModel)]="item.dt"
+                          value="{{ item.dt }}" (keyup)="getCode($event, 'dt')"
+                          (blur)="getDiscountType($event, item.dt, i)" [maxLength]="1"
+                          onkeydown="return /[a-zA-Z]/i.test(event.key)" [disabled]="!isDisabled" />
+                      </td>
+
+                      <td>
+                        <input [tabIndex]="24" type="text" class="form-control" id="{{ item.dscnt }}"
+                          [(ngModel)]="item.dscnt" value="{{ item.dscnt }}" (blur)="getDiscount($event, item.dscnt, i)"
+                          (keyup)="getCode($event, 'dscnt')" [disabled]="!isDisabled" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control" id="{{ item.dprice }}" [(ngModel)]="item.dprice"
+                          value="{{ item.dprice }}" (keyup)="getCode($event, 'dprice')" [readOnly]="true"
+                          [tabIndex]="-1" />
+                        <input type="hidden" value="{{ item.atR_ID }}" id="hfatrid" />
+                      </td>
+                      <td>
+                        <button *ngIf="rolebaseaction.isAddTestAccess; else noClick_AddTest" id="BtnAddProc"
+                          class="btn btn-outline-dark" [disabled]="item.accn == '' ? true : false" [tabIndex]="-1"
+                          (click)="addTest()">
+                          <i class="ri-add-fill"></i>
+                        </button>
+                        <ng-template #noClick_AddTest>
+                          <button class="btn btn-outline-dark" disabled>
+                            <i class="ri-add-fill"></i>
+                          </button>
+                        </ng-template>
+                        <button *ngIf="rolebaseaction.isCancelAccess; else noClick_CancelTest"
+                          class="btn btn-danger btn-sm mx-1" (click)="deleteRow(item)" [tabIndex]="-1">
+                          <i class="ri-delete-bin-line"></i>
+                        </button>
+                        <ng-template #noClick_CancelTest>
+                          <button class="btn btn-danger btn-sm mx-1" disabled>
+                            <i class="ri-delete-bin-line"></i>
+                          </button>
+                        </ng-template>
+                        <button class="btn btn-info btn-sm" [tabIndex]="-1">
+                          <i class="ri-sticky-note-add-fill"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-1">
+        <div class="d-flex">
+          <div class="col-md-12">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-end mt-1">
+                <div>
+                  <label class="input-group-text side-input-dia" for="inputField1">Invoice No:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="33" readonly="true" class="form-control float-right" id="vC_NO" placeholder=""
+                    value="{{ environmentOrderData.vC_NO }}" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-1">
+                <div>
+                  <label class="input-group-text side-input-dia" for="inputField1">Invoice Date:</label>
+                </div>
+                <div class="float-right">
+                  <input id="inV_DATE" readonly="true" [tabIndex]="34" class="form-control float-right" placeholder=""
+                    value="{{ environmentOrderData.inV_DATE }}" />
+                </div>
+              </div>
+              <!-- data-bs-toggle="modal"
+                data-bs-target="#exampleModalToggle" -->
+              <button type="button" *ngIf="this.environmentOrderData.vC_NO == ''" class="btn btn-outline-dark"
+                (click)="updateInvoice()">
+                <i class="ri-printer-line pr-1"></i>Issue Invoice
+              </button>
+              <button type="button" class="btn btn-outline-dark" (click)="displayInvoice()"
+                *ngIf="this.environmentOrderData.vC_NO != ''">
+                <i class="ri-printer-line pr-1"></i>Display Invoice
+              </button>
+              <!-- <button type="button" class="btn btn-outline-dark" (click)="IssueExtraDiscount()">
+                <i class="ri-printer-line pr-1"></i>Extra Discount
+              </button> -->
+            </div>
+          </div>
+          <!-- Row ends -->
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-sm-3 col-3">
+      <div class="card" style="background-color: #f8f9fc">
+        <div class="d-flex justify-content-end mx-1">
+          <div>
+            <label class="input-group-text sm-height" for="inputField1">Subtotal:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="36" class="form-control sm-height" style="font-weight: 500; width: 10rem;" placeholder=""
+              value="{{ subtotal }}" id="subtotal" value="{{ environmentOrderData.toT_VALUE }}"
+              [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div class="d-flex pr-1">
+            <label for="inputField1" class="input-group-text sm-height">Discount %:</label>
+            <input [tabIndex]="37" class="form-control sm-height" style="width: 3.7rem; font-weight: 500" placeholder=""
+              type="text" value="{{ discountPercentage }}" id="discountPercentage"
+              value="{{ environmentOrderData.totdscnt }}" (blur)="calculateDiscountByPercent()"
+              [disabled]="!isDisabled" />
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="38" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="discount" value="{{ discount }}" value="{{ environmentOrderData.dscamnt }}"
+              (blur)="calculateDiscountByRiyal()" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text sm-height">Total After Discount:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="39" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" value="{{ discountedprice }}" id="discountedprice"
+              value="{{ environmentOrderData.neT_VALUE }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div class="mx-3">
+            <input [tabIndex]="40" type="checkbox" id="chkVAT" (change)="vatCheck()" [checked]="true" />
+            <label for="inputField1">15% VAT:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="41" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="vat" value="{{ environmentOrderData.vat }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text sm-height">Grand Total:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="42" class="form-control sm-height" style="font-weight: 500; width: 10rem" placeholder=""
+              type="text" id="grandtotal" value="{{ environmentOrderData.granD_VAL }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+      </div>
+      <div class="card mt-1" style="background-color: #f8f9fc">
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label class="input-group-text sm-height" for="inputField1">Total Paid:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="43" type="text" class="form-control sm-height" style="font-weight: 500; width: 10rem"
+              id="totalpaid" value="{{ environmentOrderData.paid }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label class="input-group-text side-input-dia sm-height" for="inputField1">Remaining Balance:</label>
+          </div>
+          <div class="float-right">
+            <input [tabIndex]="44" type="text" class="form-control sm-height" style="font-weight: 500; width: 10rem"
+              id="remainingbalance" value="{{ environmentOrderData.rmng }}" [disabled]="!isDisabled" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1">
+          <div>
+            <!-- <button id="BtnShowIssueInvoice" class="btn page-btn btn-outline-dark mb-1"><i class="ri-money-dollar-box-fill"></i>
+                Issue Invoice</button> -->
+            <label class="input-group-text sm-height" for="inputField1">Payment Type:</label>
+          </div>
+          <div class="float-right">
+            <select [tabIndex]="45" style="width: 10rem; font-weight: 500" class="form-control sm-height" id="paytp"
+              value="{{ environmentOrderData.paytp }}" [(ngModel)]="environmentOrderData.paytp">
+              <option value="1">Cash</option>
+              <option value="2">Credit</option>
+              <option value="3">Visa</option>
+              <option value="4">Span</option>
+              <option value="5">Cheque</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- </div> -->
+    <!-- App body ends -->
+
+    <!-- The Modal Start -->
+
+    <div class="modal fade modal-alert rounded-3" id="tcodeModal" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="bg-primary modal-header" style="color: white">
+            Search Test
+          </div>
+
+          <div class="modal-body p-4 text-left">
+            <div class="col-md-12 m-0"></div>
+            <label class="form-label" for="abc3">Enter Test Code/Name</label>
+            <div class="input-group">
+              <input type="hidden" class="form-control" id="rowTestCode" value="0" />
+              <input type="text" class="form-control" id="InpTestCode" placeholder="Test Code"
+                (keyup)="BindSearchTDTable()" />
+              <button class="btn btn-outline-secondary" type="button" (click)="BindSearchTDTable()">
+                <i class="ri-search-line"></i>
+              </button>
+            </div>
+
+            <br />
+            <!--<table class="table table-hover table-striped truncate m-0" id="TableTestCollection">-->
+            <table class="table table-bordered data" id="TableTestCollection">
+              <thead>
+                <tr>
+                  <th>Test Code</th>
+                  <th>Full Name</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let td_gt of evTd">
+                  <td>{{ td_gt.tcode }}</td>
+                  <td>{{ td_gt.fulL_NAME }}</td>
+                  <td>{{ td_gt.uprice }}</td>
+                  <td>{{ td_gt.dscntg }}</td>
+                  <td>
+                    <button class="btn btn-primary btn-icon btn-sm mb-1" data-bs-dismiss="modal"
+                      (click)="addTD(td_gt, $event)">
+                      <i class="ri-send-plane-line"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--The Modal End-->
+
+    <!-- </form> -->
+  </div>
+
+  <!-- Modal 1 -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-primary modal-header">
+          <h5 class="modal-title text-white" id="exampleModalToggleLabel">
+            Issue Invoice
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-close-line pr-1"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column">
+            <div class="col-md-12">
+              <div class="card mt-1">
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label>Print Cancelled Orders</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" [(ngModel)]="printOptions.vatInvoice" />
+                  <label>VAT Invoice</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label>Print Client Notes</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" [(ngModel)]="printOptions.paymentStatus" />
+                  <label>Print Payment Status</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" [(ngModel)]="printOptions.pageHeader" />
+                  <label>Print Page Header</label>
+                </div>
+                <div class="mx-3">
+                  <input type="checkbox" />
+                  <label>Electronic Signature</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="card mt-1">
+                <div class="d-flex flex-column justify-content-end">
+                  <div class="input-group col-md-10">
+                    <label class="input-group-text side-input-dia">Signed By:</label>
+                    <select id="SignedUser" class="form-control float-right" [(ngModel)]="selectedUserId">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let user of userAllData" [value]="user.useR_ID">
+                        {{ user.useR_ID }} - {{ user.sigN_LINE1 }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="d-flex flex-wrap mt-3 mx-2">
+                    <button type="button" class="btn page-btn btn-outline-dark w-25" (click)="onPrint()"
+                      [disabled]="!selectedUserId">
+                      <i class="ri-printer-line pr-1"></i>Print
+                    </button>
+                    <iframe #reportFrame width="0" height="0" style="display: none;"></iframe>
+                    <button data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal"
+                      [disabled]="!selectedUserId" class="btn page-btn btn-outline-dark mb-1">
+                      <i class="ri-printer-cloud-line"></i> Multi-Invoice
+                    </button>
+                    <!-- <button id="BtnShowIssueInvoice" class="btn page-btn btn-outline-dark mb-1">
+                      <i class="ri-discount-percent-line"></i> Extra Discount
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+            <i class="ri-close-line pr-1"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+    tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-primary modal-header">
+          <h5 class="modal-title text-white" id="exampleModalToggleLabel2">
+            Mult-Invoice Reporting
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-close-line pr-1"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="input-group">
+                <label class="input-group-text" for="sinceDate">Since</label>
+                <input type="date" class="form-control" id="SinceDate" placeholder="" [disabled]="isReadOnly" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark" (click)="evMultiInvoice()">
+              <i class="ri-restart-line pr-1"></i>Refresh
+            </button>
+          </div>
+          <div class="card">
+            <div class="table-veritical-sm">
+              <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+                style="font-size: 11.5px" id="tableTestOrder">
+                <thead class="table-head-fix">
+                  <tr>
+                    <th width="5%">Sn</th>
+                    <th width="10%">Sample</th>
+                    <th width="10%">Invoice</th>
+                    <th width="15%">Sample Date</th>
+                    <th width="40%">Sample Name</th>
+                    <th width="15%">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="bodyList" class="bodyList">
+                  <tr *ngFor="let res of _responsePlus">
+                    <td>
+                      <input [tabIndex]="40" type="checkbox" id="chktablesn" [checked]="res.checked"
+                        [(ngModel)]="res.checked" value="{{res.checked}}" (change)="checkChange($event)" />
+                    </td>
+                    <td>{{res.paT_ID}}</td>
+                    <td>{{ res.vC_NO }}</td>
+                    <td>{{ res.inV_DATE }}</td>
+                    <td>{{ res.fulL_NAME }}</td>
+                    <td>{{ res.uprice }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="custom-input" style="width: 7rem">
+              <div class="input-group">
+                <label class="input-group-text" for="abc3">selected</label>
+                <input [tabIndex]="18" type="text" class="form-control" id="tselectedckeckboxs" placeholder=""
+                  [value]="checkedCount" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark" (click)="selectAll()">
+              {{ SelectAll }}
+            </button>
+            <button type="button" class="btn btn-outline-dark" [disabled]="!selectedUserId"
+              (click)="onPrintMultiInvoice()">
+              <i class="ri-printer-line pr-1"></i>Print
+            </button>
+            <button type="button" class="btn btn-outline-dark">
+              <i class="ri-printer-line pr-1"></i>Generate QR
+            </button>
+            <div class="col-md-3 ml-auto">
+              <div class="input-group">
+                <h6 class="pr-2" style="padding-top: 0.4rem;">Total</h6>
+                <input style="font-size: 0.95rem;font-weight:500;" [tabIndex]="18" type="text" class="form-control"
+                  id="tabletotal" placeholder="" [(ngModel)]="tabletotalFormatted" [disabled]="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+            <i class="ri-close-line pr-1"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade modal-alert rounded-3" id="modalCancelReason" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="bg-danger modal-header" style="color: white">
+          Warning! You about to cancel the Order.
+          <label id="LblARTID" style="font-weight: bold"></label>
+        </div>
+
+        <div class="modal-body p-4 text-left">
+          <h5 class="text-danger">Order Cancellation:</h5>
+          <input type="hidden" id="hfIndex" value="0">
+          <div class="m-0">
+            <label class="form-label" for="abc1">Code</label>
+            <input type="text" class="form-control" id="InputCode" value="Disabled Field" disabled="" />
+            <input type="hidden" class="form-control" id="InputSect" />
+          </div>
+          <div class="m-0">
+            <label class="form-label" for="abc1">Full Name</label>
+            <input type="text" class="form-control" id="InputFullName" value="Disabled Field" disabled="" />
+          </div>
+
+          <hr />
+
+          <div class="col-md-12 m-0">
+            <label class="form-label" for="abc3">Order Type</label>*
+            <div class="input-group">
+              <ng-select class="form-select" id="cmbCancelReason" aria-label="Default select Cancel Reason"
+                style="min-width: 100%" [(ngModel)]="cancelReason">
+                <ng-option selected="">Select Cancel Reason</ng-option>
+                <ng-option *ngFor="let creason of evCancelReason" [ngValue]="creason">{{ creason.cc }} | {{
+                  creason.reason }} |
+                  {{ creason.descrip }}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-12">
+            <div class="mb-3">
+              <label class="form-label" for="a9">Message</label>
+              <textarea class="form-control" id="AreaNOTES" placeholder="Enter message" rows="6"
+                style="height: auto !important"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button (click)="cancelOrder()" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+            <strong><i class="ri-save-line"></i> Submit</strong>
+          </button>
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+            <i class="ri-arrow-go-back-line"></i> Abort
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade modal-alert rounded-1" style="left: 40%; width: 20%" id="barCodeModal"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="bg-primary modal-header" style="color: white">
+          Barcode
+          <button type="button" class="btn btn-outline-dark cancelation" (click)="printBarCode()">print</button>
+        </div>
+
+        <div class="modal-body p-2 text-left">
+          <div id="divBarcode">
+            <span>
+              <h3>{{ accnPatId }}</h3>
+            </span><!-- <br /> -->
+            <span>
+              <h5>{{ this.environmentOrderData.paT_NAME }}</h5>
+            </span>
+            <img [src]="imageSource" alt="Image Source" /><br /><br />
+            <table>
+              <tr>
+                <td>
+                  <h5>{{accnBarcode}}</h5>
+                </td>
+                <td style="padding-left: 40px;">
+                  <h5>{{ this.environmentOrderData.tel }}</h5>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer mt-1">
+            <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade modal-alert rounded-1" style="left: 30%; width: 30%" id="ExtraDiscountModal"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div style="align-content: Center;">
+          <div class="bg-primary modal-header" style="color: white">
+            Issue Extra Discount
+          </div>
+
+          <div class="modal-body p-2 text-left">
+
+            <div style="background-color: #f8f9fc">
+              <div class="d-flex justify-content-end mx-1">
+                <div>
+                  <label class="input-group-text" for="inputField1">Subtotal:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="36" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                    value="{{ subtotal }}" id="subtotalED" value="{{ environmentOrderData.toT_VALUE }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="d-flex pr-1">
+                  <label for="inputField1" class="input-group-text">Discount %:</label>
+                  <input [tabIndex]="37" class="form-control" style="width: 3.7rem; font-weight: 500" placeholder=""
+                    type="text" value="{{ discountPercentage }}" id="discountPercentageED"
+                    value="{{ environmentOrderData.totdscnt }}" (blur)="calculateDiscountByPercentED()"
+                    [disabled]="!isDisabled" />
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="38" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                    type="text" id="discountED" value="{{ discount }}" value="{{ environmentOrderData.dscamnt }}"
+                    (blur)="calculateDiscountByRiyalED()" [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div>
+                  <label for="inputField1" class="input-group-text">Total After Discount:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="39" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                    type="text" value="{{ discountedprice }}" id="discountedpriceED"
+                    value="{{ environmentOrderData.neT_VALUE }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                  <input [tabIndex]="40" type="checkbox" id="chkVATED" (change)="vatCheckED()" [checked]="true" />
+                  <label for="inputField1">15% VAT:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="41" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                    type="text" id="vatED" value="{{ environmentOrderData.vat }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div>
+                  <label for="inputField1" class="input-group-text">Grand Total:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="42" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                    type="text" id="grandtotalED" value="{{ environmentOrderData.granD_VAL }}"
+                    [disabled]="!isDisabled" />
+                </div>
+              </div>
+            </div>
+            <div class="card mt-1" style="background-color: #f8f9fc">
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div>
+                  <label class="input-group-text" for="inputField1">Total Paid:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="43" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                    id="totalpaidED" value="{{ environmentOrderData.paid }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div>
+                  <label class="input-group-text side-input-dia" for="inputField1">Remaining Balance:</label>
+                </div>
+                <div class="float-right">
+                  <input [tabIndex]="44" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                    id="remainingbalanceED" value="{{ environmentOrderData.rmng }}" [disabled]="!isDisabled" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1">
+                <div>
+                  <!-- <button id="BtnShowIssueInvoice" class="btn page-btn btn-outline-dark mb-1"><i class="ri-money-dollar-box-fill"></i>
+                  Issue Invoice</button> -->
+                  <label class="input-group-text" for="inputField1">Payment Type:</label>
+                </div>
+                <div class="float-right">
+                  <select [tabIndex]="45" style="width: 10rem; font-weight: 500" class="form-control" id="paytpED"
+                    value="{{ environmentOrderData.paytp }}" [(ngModel)]="environmentOrderData.paytp">
+                    <option value="1">Cash</option>
+                    <option value="2">Credit</option>
+                    <option value="3">Visa</option>
+                    <option value="4">Span</option>
+                    <option value="5">Cheque</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer mt-1">
+              <button type="button" class="btn btn-outline-dark" (click)="SubmitDiscount()"
+                data-bs-dismiss="modal">Submit</button>
+              <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal extra discount -->
+  <div class="modal fade" id="exampleModalToggle4" aria-hidden="true" aria-labelledby="exampleModalToggleLabel4"
+    tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-primary modal-header">
+          <h5 class="modal-title text-white" id="exampleModalToggleLabel4">
+            Extra Discount
+          </h5>
+          <button style="background: transparent;border: none !important;color:#fff" type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close">
+            <i class="ri-close-line pr-1"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column">
+            <div class="col-12 d-flex">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="d-flex justify-content-end mx-1">
+                    <div>
+                      <label class="input-group-text" for="inputField1">Item Subtotal:</label>
+                    </div>
+                    <div class="float-right">
+                      <input [tabIndex]="36" class="form-control" style="font-weight: 500; width: 10rem"
+                        placeholder="" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="d-flex pr-1">
+                      <label for="inputField1" class="input-group-text">Discount %:</label>
+                      <input [tabIndex]="37" class="form-control" style="width: 3.7rem; font-weight: 500" placeholder=""
+                        type="text" />
+                    </div>
+                    <div class="float-right">
+                      <input [tabIndex]="38" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                        type="text" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div>
+                      <label for="inputField1" class="input-group-text">Net Value:</label>
+                    </div>
+                    <div class="float-right">
+                      <input [tabIndex]="39" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                        type="text" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div class="mx-3">
+                      <label for="inputField1">VAT:</label>
+                    </div>
+                    <div class="float-right">
+                      <input [tabIndex]="41" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                        type="text" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mx-1 mt-1">
+                    <div>
+                      <label for="inputField1" class="input-group-text">Grand Total:</label>
+                    </div>
+                    <div class="float-right">
+                      <input [tabIndex]="42" class="form-control" style="font-weight: 500; width: 10rem" placeholder=""
+                        type="text" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mt-1" style="background-color: #f8f9fc">
+                  <div class="row" style="margin-bottom: 2px">
+                    <div class="mx-auto">
+                      <h6>
+                        Original Value
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start mx-1 mt-1">
+                    <div>
+                      <input [tabIndex]="43" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                        disabled />
+                    </div>
+                    <div class="float-right mx-1">
+                      <input [tabIndex]="43" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start mx-1 mt-1">
+                    <div class="float-right">
+                      <input [tabIndex]="44" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start mx-1 mt-1">
+                    <div class="float-right">
+                      <input [tabIndex]="44" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-start mx-1 mt-1">
+                    <div class="float-right">
+                      <input [tabIndex]="44" type="text" class="form-control" style="font-weight: 500; width: 10rem"
+                        disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-dark cancelation">
+            <i class="ri-close-line pr-1"></i>Close
+          </button>
+          <button class="btn-save" data-bs-dismiss="modal" aria-label="save" class="btn btn-outline-dark">
+            <i class="ri-save-line pr-1"></i>Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Multiple Search-->
+  <div class="modal fade modal-alert rounded-3" id="modalMulipleSearch" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="bg-info modal-header" style="color: white">
+          Orders Search
+          <label id="LblIssueInvoice_OrdNo" style="font-weight: bold"></label>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-3 col-3">
+              <div class="card pb-1">
+                <div class="card-body">
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpSubtotal" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">ID Number</label>
+                      <input type="text" class="form-control" id="inpMIDNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpDiscount" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">Tel No</label>
+                      <input type="text" class="form-control" id="inpMTelNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpTotalAfterDiscount" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">Patient No</label>
+                      <input type="text" class="form-control" id="inpMPatID" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpTotalAfterDiscount" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">Patient Name</label>
+                      <input type="text" class="form-control" id="inpMPatName" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpTotalAfterDiscount" class="input-group-text"
+                        style="margin-bottom: 5px; height: 36px">DOB</label>
+                      <input type="date" class="form-control" id="inpMDOB" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label class="input-group-text" for="SEX">Sex</label>
+                      <select ng-disabled="btnDisabled" id="selMSEX" aria-label="Select sex" style="
+                    min-width: 79.8%;
+                    height: 33px;
+                    border-color: #ced4da !important;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                  ">
+                        <option value="">Select Gneder</option>
+                        <option value="M">Male</option>
+                        <option value="F">Fermale</option>
+                        <option value="U">Unknown</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt-1">
+                    <div class="input-group">
+                      <label for="inpGrandTotal" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">Order No</label>
+                      <input type="text" class="form-control" id="inpMOrdNo" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpGrandTotal" class="input-group-text"
+                        style="width: 39%; margin-bottom: 5px; height: 36px">Accession No</label>
+                      <input type="text" class="form-control" id="inpMAccn" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpTotalAfterDiscount" class="input-group-text"
+                        style="margin-bottom: 5px; height: 36px">Date From</label>
+                      <input type="date" [(ngModel)]="fromDate" class="form-control" id="inpMDateFrom" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-group">
+                      <label for="inpTotalAfterDiscount" class="input-group-text"
+                        style="margin-bottom: 5px; height: 36px">Date To</label>
+                      <input type="date" [(ngModel)]="toDate" class="form-control" id="inpMDateTo" />
+                    </div>
+                  </div>
+                  <div class="col-md-12 my-2 d-flex justify-content-between">
+                    <button id="BtnModalMultipleSearch" (click)="GetMultipleSearch()" type="button"
+                      class="btn btn-outline-dark">
+                      <strong><i class="ri-search-line"></i> Search</strong>
+                    </button>
+                    <button type="button" class="btn btn-outline-dark">
+                      <i class="ri-arrow-go-back-line"></i> Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-9 col-9">
+              <div class="row">
+                <div class="col-sm-12 col-12">
+                  <h6 class="text-info">Patients list</h6>
+                  <div class="card pb-1 mt-2" style="height: 15.3rem; overflow-y: scroll">
+                    <div class="table-veritical">
+                      <table class="table table-bordered data" id="TableMultipleSearchPR">
+                        <thead class="table-head-fix">
+                          <tr>
+                            <th>Patient Name</th>
+                            <th>Patient ID</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>NID</th>
+                            <th>Tel. No.</th>
+                            <th style="width:7rem">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let multupleSearchList of multupleSearchList">
+                            <td>{{ multupleSearchList.paT_NAME }}</td>
+                            <td>{{ multupleSearchList.paT_ID }}</td>
+                            <td>{{ multupleSearchList.sex == "M"? "Male": "Female"}}</td>
+                            <td>{{ multupleSearchList.dob | date : "dd/MM/yyyy" }}</td>
+                            <td>{{ multupleSearchList.idnt }}</td>
+                            <td>{{ multupleSearchList.tel }}</td>
+                            <td>
+                              <button class="btn btn-primary btn-icon btn-sm mb-1" style="
+                            height: 1.7rem;
+                            width: 2rem;
+                            padding: 0rem 0rem;
+                            margin-bottom: 0rem !important; " (click)="
+                          GetMultipleSearchOrders( multupleSearchList.paT_ID)">
+                                <i class="ri-send-plane-line"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-12 mt-2">
+                  <h6 class="text-info">Orders List</h6>
+                  <div class="card pb-1">
+                    <div class="card-body">
+                      <div class="mb-3" style="height: 15.3rem; overflow-y: scroll">
+                        <table class="table table-bordered data" id="TableMultipleSearchOrders">
+                          <thead class="table-head-fix">
+                            <tr>
+                              <th>Site No</th>
+                              <th>Order No</th>
+                              <th>Accession No</th>
+                              <th>Client</th>
+                              <th>Location</th>
+                              <th>Doctor</th>
+                              <th style="width:7rem">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let multupleSearchOrdersList of multupleSearchOrdersList">
+                              <td>{{ multupleSearchOrdersList.sitE_NO }}</td>
+                              <td>{{ multupleSearchOrdersList.orD_NO }}</td>
+                              <td>{{ multupleSearchOrdersList.accn }}</td>
+                              <td>{{ multupleSearchOrdersList.cn }}-{{multupleSearchOrdersList.client}}</td>
+                              <td>{{ multupleSearchOrdersList.loc }}-{{multupleSearchOrdersList.descrp}}</td>
+                              <td>{{ multupleSearchOrdersList.drno }}-{{multupleSearchOrdersList.doctor}}</td>
+                              <td>
+                                <button class="btn btn-primary btn-icon btn-sm mb-1" style="
+                              height: 1.7rem;
+                              width: 2rem;
+                              padding: 0rem 0rem;
+                              margin-bottom: 0rem !important;" data-bs-dismiss="modal">
+                                  <i class="ri-send-plane-line"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+            <i class="ri-close-line"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

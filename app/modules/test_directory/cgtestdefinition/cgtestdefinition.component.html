@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space"></div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="addcgtestdefinition" data-tab-target="tab-content-1"
+            (click)="goToCgTestDefinition('addcgtestdefinition')"
+            [class.is-active]="selected === 'addcgtestdefinition'">
+            Data Entry
+          </button>
+          <button data-tab-target="tab-content-2" id="cgtestdefinitionProfile"
+            (click)="goToCgTestDefinition('cgtestdefinitionProfile')"
+            [class.is-active]="selected === 'cgtestdefinitionProfile'">
+            Profile
+          </button>
+          <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Cytogenetics Orders</h6>
+
+        </nav>
+        <app-default></app-default>
+      </div>
+    </section>
+  </div>
+</div>

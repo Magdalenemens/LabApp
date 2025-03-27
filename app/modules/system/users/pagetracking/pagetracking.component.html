@@ -1,0 +1,67 @@
+
+<div class="col-md-3 float-right">
+
+    <div>
+      <div class="input-group">
+        <div class="w-100">
+            <div class="search-container">
+      <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText"
+      (input)="onSearch()">
+      <span class="search-icon"></span>
+    </div>
+</div>
+      </div>
+    </div>
+  
+  </div>
+<!-- Add-division -->
+<button class="add-btn add-row mb-2" type="button" [disabled]="true"><i class="ri-list-view pr-1"></i>&nbsp;&nbsp;
+    View Page Tracking</button>
+<div class="tab-target  mt-0" id="tab-content-2" >
+    <div>
+        <!-- <bar-chart></bar-chart> -->
+    </div>
+    <div class="col-md-12" style="overflow-x:auto">
+        <div class="card table-responsive-lg" style="overflow-x:scroll">
+        <table class="table table-bordered data" id="editableTable" >
+            <thead class="table-head-fix">
+                <tr>
+
+                    <th (click)="sortData('useR_ID')">UserId<i class="material-icons sort-icon" [ngClass]="getSortIconClass('useR_ID')">{{ getSortIcon('useR_ID') }}</i></th>
+                    <th>Full Name</th>
+                    <th (click)="sortData('pagE_NAME')">Page Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('pagE_NAME')">{{ getSortIcon('pagE_NAME') }}</i></th>
+                    <th (click)="sortData('modulE_NAME')">Module Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('modulE_NAME')">{{ getSortIcon('modulE_NAME') }}</i></th>
+                    <!-- <th>URL</th> -->
+                    <th (click)="sortData('sessioN_START_TIME')">Session Start Time<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sessioN_START_TIME')">{{ getSortIcon('sessioN_START_TIME') }}</i></th>
+                    <th (click)="sortData('sessioN_END_TIME')">Session End Time<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sessioN_END_TIME')">{{ getSortIcon('sessioN_END_TIME') }}</i></th>
+                    <th style="width:12rem" (click)="sortData('sessioN_DURATION_SECONDS')">Session Duration<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sessioN_DURATION_SECONDS')">{{ getSortIcon('sessioN_DURATION_SECONDS') }}</i></th>
+
+                    <!-- <th>Actions </th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let item of userList">
+                    <td><span>{{ item.useR_ID }}</span></td>
+                    <td><span>{{ item.fulL_NAME }}</span></td>
+                    <td><span>{{ item.pagE_NAME }}</span></td>
+                    <td><span>{{ item.modulE_NAME }}</span></td>
+                    <!-- <td style="max-width: 12rem;" class="tooltip-cell" appTooltip="{{item.url}}"><span>{{ item.url}}</span></td> -->
+                    <td><span>{{ item.sessioN_START_TIME | date:'dd-MM-yyyy' }}&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ item.sessioN_START_TIME | date:'HH:mm:ss':'UTC+3' }}</span></td>
+                    <td><span>{{ item.sessioN_END_TIME | date:'dd-MM-yyyy' }}&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ item.sessioN_END_TIME | date:'HH:mm:ss':'UTC+3' }}</span></td>
+                    <td><span>{{ convertSecondsToTime(item.sessioN_DURATION_SECONDS) }}</span></td>
+                    <!-- <td>
+                        <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit"
+                            (click)="Edit(item.useR_ID)">View</button>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+        <!-- Pagination Component -->
+        <!-- <app-pagination [totalItems]="userList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+            (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+        </app-pagination> -->
+    </div>
+    </div>
+</div>
