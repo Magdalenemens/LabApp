@@ -1,0 +1,316 @@
+<div class="row section-top-space" style="margin-left: -3.5rem;">
+    <div class="col-md-3">
+        <div class="card mt-1">
+            <div class="card-body px-4">
+                <div class="text-center">
+                    <div class="d-inline-block auth-logo">
+                        <img src="./../../../assets/images/dx-care-logo2.png" alt="logo" height="60" />
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <form (ngSubmit)="login()" #loginForm="ngForm">
+                        <h4 class="text-dark">Login</h4>
+                        <div class="mb-2 mt-2 inputWithIcon">
+                            <label for="username" class="form-label">Username</label>
+                            <input [(ngModel)]="username" name="username" type="text" id="username"
+                                maxlength="25" placeholder="Enter username" [disabled]="isFieldsDisabled"
+                                [ngClass]="{'disabled-input': isFieldsDisabled}" required />
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label" for="password-input">Password</label>
+                          <div class="inputWithIcon">
+                            <input 
+                              [type]="isPasswordVisible ? 'text' : 'password'" 
+                              [(ngModel)]="password" 
+                              name="password" 
+                              id="password"
+                              maxlength="50" 
+                              placeholder="Password" 
+                              [disabled]="isFieldsDisabled"
+                              [ngClass]="{'disabled-input': isFieldsDisabled}" 
+                              required 
+                            />
+                            <i 
+                              class="eye-icon" 
+                              [ngClass]="isPasswordVisible ? 'ri-eye-line' : 'ri-eye-off-line'" 
+                              (click)="togglePasswordVisibility()"
+                            ></i>
+                            <div class="text-danger" id="password-error"></div>
+                          </div>
+                        </div>
+                        
+                        <div class="mb-2" style="margin-top: 1.5rem;">
+
+                            <button id="loginButton" type="submit" class="submit-btn w-100 py-2"
+                                [disabled]="loginForm.invalid || isFieldsDisabled"
+                                [ngClass]="{'disabled-button': isFieldsDisabled}">Login</button>
+                        
+                          </div>
+                    </form>
+                    
+                    <!-- site-selection -->
+                    <div *ngIf="isSiteSelectionVisible" class="mt-3">
+                        <form [formGroup]="siteForm">
+                        
+                            <div class="form-group mt-4">
+                                <label for="site-selection" class="form-label">Please select a site to log
+                                    in</label>
+                                <ng-select id="site-selection" placeholder="Select" formControlName="reF_SITE">
+                                    <ng-option [value]="obj.sitE_NO + ' - ' + obj.reF_SITE_NAME"
+                                        *ngFor="let obj of siteDropDown">
+                                        {{ obj.sitE_NO + ' - ' + obj.sitE_NAME }}
+                                    </ng-option>
+                                </ng-select>
+                                <div *ngIf="siteForm.get('reF_SITE').invalid && siteForm.get('reF_SITE').touched"
+                                    class="text-danger">
+                                    Site selection is required.
+                                </div>
+                            </div>
+                            <div class="form-group d-flex" style="margin-top: 1.6rem;">
+                                <button type="button" class="cancel-btn w-50 py-2"
+                                    (click)="cancel()">Cancel</button>
+                                <button type="button" class="submit-btn w-50 py-2" [disabled]="siteForm.invalid"
+                                    (click)="onSubmitSite()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- site-selection -->
+                </div>
+            </div>
+            <!-- card body -->
+        </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="d-flex flex-wrap not-clickable">
+        <!-- Lab Orders and Collection -->
+        <div class="col-md-6 mt-1">
+          <div class="card p-0">
+            <div class="card-header">
+              <img class="mr-2" src="../../../assets/icons/Orders-Specimens-Collection-icon.png" alt="logo" width="24px"
+                height="24px" />
+              Orders and Specimens Collection
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+  
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/orders/AddOrderentry" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/clinical-orders-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Clinical Orders</h6>
+  
+                </a>
+              </div>
+  
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/environmentalorders/AddEnvironmentalOrder" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/environmental-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Environmental</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/masters/underconst" class="nav__dropdown-item"><img
+                    src="../../../assets/icons/specimen-collection-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Specimens Collection</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/cytogenetics-login" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Cytogenetics</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Lab Orders and Collection -->
+        <!-- Specimens Receiving -->
+        <div class="col-md-6 mt-1">
+          <div class="card p-0">
+  
+            <div class="card-header">
+              <img class="mr-2" src="../../../assets/icons/Specimens-Receiving-icon.png" alt="logo" width="24px"
+                height="24px" />
+              Specimens Receiving
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/orders-receiving/OrderReceiving" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/central-recieving-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Central Receiving</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/pre-analytical-receiving" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/progressing-area-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Processing Area</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/ap-receiving" class="nav__dropdown-item" routerLinkActive="active"><img
+                    src="../../../assets/icons/anatomic-pathology-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Anatomic Pathology</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/orderprocessing/cytogenetics-login" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Cytogenetics</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Specimens Receiving -->
+        <!-- <div class="col-md-1"></div> -->
+        <!-- Clinical Reporting -->
+        <div class="col-md-12 mt-2">
+          <div class="card p-0">
+  
+            <div class="card-header">
+              <img class="mr-2" src="../../../assets/icons/Clinical-Reporting-icon.png" alt="logo" width="24px"
+                height="24px" />
+              Clinical Reporting
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+              <div class="card cards-width my-1">
+                <a routerLink="/clinical-module/GeneralResults/addgeneralresults" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/general-lab-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">General Lab</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/clinical-module/MicroBiology/addmicrobiology" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/microbiology-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Microbiology</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/clinical-module/Anatomic/addanatomic" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/anatomic-pathology-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Anatomic Pathology</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/clinical-module/Cytogenetics/addcytogenetics" class="nav__dropdown-item"
+                  routerLinkActive="active"> <img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Cytogenetics</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/clinical-module/ClinicalEnvironmental/addClinicalEnvironmental"
+                  class="nav__dropdown-item"> <img src="../../../assets/icons/environmental-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Environmental</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Clinical Reporting -->
+        <!-- <div class="col-md-1"></div> -->
+        <!-- Finance and Accounting -->
+        <div class="col-md-4 mt-2">
+          <div class="card p-0">
+            <div class="card-header">
+              <img class="mr-2" src="../../../assets/icons/billing-accounting-icon.png" alt="logo" width="24px"
+                height="24px" />
+              Billing and Accounting
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+              <div class="card cards-width my-1">
+                <a routerLink="/finance/Biling/bills-generation" class="nav__dropdown-item">
+                  <img src="../../../assets/icons/billing-module-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Billing Module</h6>
+                </a>
+              </div>
+  
+              <div class="card cards-width my-1">
+                <a routerLink="/finance/client-account/addclientAccount" class="nav__dropdown-item">
+                  <img src="../../../assets/icons/client-account-icon.png" alt="logo" class="logo-dia-cards my-3" />
+  
+                  <h6 class="py-1 cards-text">Client Accounting</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Finance and Accounting -->
+        <!-- Facts Tables -->
+        <div class="col-md-6 mt-2">
+          <div class="card p-0">
+            <div class="card-header">
+              <img class="mr-2" src="../../../assets/icons/common-files-icon.png" alt="logo" width="24px" height="24px" />
+              Common Files
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+              <div class="card cards-width my-1">
+                <a routerLink="/masters/clients/addclient" class="nav__dropdown-item" routerLinkActive="active"><img
+                    src="../../../assets/icons/client-file-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Client File</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/masters/doctors" class="nav__dropdown-item" routerLinkActive="active"><img
+                    src="../../../assets/icons/doctor-file-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Doctor File</h6>
+                </a>
+              </div>
+              <div class="card cards-width my-1">
+                <a routerLink="/test-directory/testdefinition/addtestdirectory" class="nav__dropdown-item"
+                  routerLinkActive="active"><img src="../../../assets/icons/test-directory-icon.png" alt="logo"
+                    class="logo-dia-cards my-3" />
+                  <h6 class="py-1 cards-text">Test Directory</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Facts Tables -->
+        <!-- exit -->
+        <div class="col-md-2 mt-2">
+          <div class="card p-0">
+            <div class="card-header">
+                <img class="mr-2" src="../../../assets/icons/logout-dash-icon.png" alt="logo" width="24px"
+                  height="24px" />
+                Logout
+            </div>
+            <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+              <div class="card cards-width my-1">
+              <a class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/logout-dash-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Logout</h6>
+              </a>
+            </div>
+            
+            </div>
+          </div>
+        </div>
+        <!-- exit -->
+        <!-- <div class="col-md-1"></div>
+  </div> -->
+      </div>
+    </div>
+  
+    <div class="footer row">
+      <div class="col-12 d-flex justify-content-between">
+        <div class="ml-5 pl-3">
+          <h6>Dx-Care, Coyright (c) 2024</h6>
+        </div>
+        <div>
+          <h6>Dx-Care Company Ltd</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+

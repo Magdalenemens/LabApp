@@ -1,0 +1,111 @@
+.btn-outline-danger {
+  color: #FC3A10 !important;
+  border-color: #FC3A10 !important;
+  background: #fff;
+}
+
+.btn-outline-danger:hover {
+  color: #fff !important;
+  border-color: #fff !important;
+  background: #FC3A10;
+}
+
+.input-group {
+  margin: 0.4rem 0rem;
+}
+
+.btn-rounded {
+  border-radius: 0.3rem;
+}
+
+.btn {
+  padding: 0rem 1rem;
+  height: 2.1rem;
+  border: 1.6px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.btn-outline-danger {
+  color: #dc4c64 !important;
+  border-color: #dc4c64 !important;
+  background: #fff;
+}
+
+.delete {
+  color: #dc4c64;
+  background-color: #fff;
+  border: 1px solid #dc4c64;
+  font-weight: 500;
+}
+
+.edit {
+  color: #51459E;
+  background-color: #fff;
+  border: 1px solid #51459E;
+  font-weight: 500;
+}
+
+.modal-table tr:nth-child(even) td {
+  background-color: #FFF;
+}
+
+.NgxEditor__Content p {
+  margin: 0 0 16rem !important;
+}
+
+.light-text {
+  color: #888;
+  /* Light color */
+}
+
+.dark-text {
+  color: #333;
+  /* Dark color */
+}
+
+.ng-arrow-wrapper {
+  display: none !important;
+}
+
+.ng-select-container {
+  height: 20rem;
+  overflow-y: auto;
+}
+
+.ProseMirror.NgxEditor__Content.NgxEditor__Content--Disabled {
+  height: 24.7rem;
+  overflow-y: scroll;
+}
+
+ngx-editor.ng-untouched.ng-dirty {
+  height: 24.6rem !important;
+  overflow-y: scroll !important;
+}
+
+.editor-scroll {
+  height: 27.3rem;
+  overflow-y: scroll;
+}
+
+.editor-scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+.editor-scroll::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.editor-scroll::-webkit-scrollbar-thumb {
+  background-color: #8A919B;
+}
+
+.custom {
+  width: '300px', ;
+  overflow: 'hidden';
+  text-overflow: 'ellipsis';
+  white-space: 'nowrap';
+}

@@ -1,0 +1,22 @@
+<div class="d-flex section-top-space pt-3">
+</div>
+<!-- back-link -->
+<!-- tabs -->
+<section class="section-wrapper">
+  <div>
+    <nav class="tab-nav">
+      <button id="btnaddMicrobiology" data-tab-target="tab-content-1" (click)="goToMicroBiology('addmicrobiology')"
+        [class.is-active]="selected === 'addmicrobiology'">
+        Data Entry
+      </button>
+      <button data-tab-target="tab-content-2" id="btnlist" (click)="goToMicroBiology('list')"
+        [class.is-active]="selected === 'list'">List</button>
+      <button data-tab-target="tab-content-3" id="btnspictures" (click)="goToMicroBiology('pictures')"
+        [class.is-active]="selected === 'pictures'">Slide Pictures</button>
+        <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Microbiology Results</h6>
+
+    </nav>
+    <app-default></app-default>
+
+  </div>
+</section>

@@ -1,0 +1,50 @@
+::ng-deep .ng-dropdown-panel {
+  z-index: 9999999 !important;
+}
+.sort-icon {
+  font-size: 16px;
+  vertical-align: middle;
+  width: 20px; 
+  display: inline-block;
+  text-align: center;
+  margin-top: -4px;
+  cursor: pointer;
+}
+.filter-icon{
+  cursor: pointer;
+}
+
+// .material-icons {
+//   font-size: 16px;
+//   margin-left: 5px;
+//   float: inline-end;
+//   margin-top: 5.5px;
+// }
+
+.table-veritical {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.table th {
+  white-space: nowrap !important;
+  text-align: center;
+  align-content: center;
+}
+ 
+.table td {
+  text-align: center;
+}
+
+.red{
+  color: red;
+}
+
+.orange{
+  color: orange;
+}
+
+.green{
+  color: green;
+}
+ 

@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+<!-- back-link -->
+
+<div class="d-flex section-top-space">
+</div>
+
+<!-- back-link -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-ar -->
+<button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+  Record</button>
+
+<!-- Add-ar -->
+<!-- Table -->
+<div class="card table-responsive-lg">
+
+
+  <table class="table table-bordered data" id="editableTable">
+
+    <thead class="table-head-fix">
+      <tr>
+        <th style="width:6rem" (click)="sortData('cd')">Ar CD <i class="material-icons sort-icon" [ngClass]="getSortIconClass('cd')">{{ getSortIcon('cd') }}</i></th>
+        <th (click)="sortData('response')">Response <i class="material-icons sort-icon" [ngClass]="getSortIconClass('response')">{{ getSortIcon('response') }}</i></th>
+        <th>Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of arList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.cd }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.response }}</span></td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required disabled="{{item.IsEdit?true:false}}"
+            class="form-control  {{required_cd}}" minlength="2" maxlength="2" id="txt_{{ item.cd }}" appAlphabetOnly
+            (keyup)="checkAlreadyExisting($event)" [(ngModel)]="item.cd" value="{{item.cd}}" noSpaces /></td>
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required class="form-control {{required_ar_desc}}"
+            id="txt_{{ item.response }}" [(ngModel)]="item.response" value="{{item.response}}" noSpaces />
+        </td>
+
+        <td>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" (click)="AddData(item)" class="add edit"><i
+              class="ri-save-line pr-1"></i>Save</button>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="cancel" (click)="CancelAddRow(item.aR_ID)"><i
+              class="ri-close-line pr-1"></i>Cancel</button>
+
+          <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+              class="ri-check-double-line pr-1"></i>Update</button>
+          <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.aR_ID)"><i
+              class="ri-close-line pr-1"></i>cancel</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.aR_ID)"><i
+              class="ri-pencil-line pr-1"></i>Edit</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" (click)="deleteRow(item.aR_ID)" class="delete"><i
+              class="ri-delete-bin-line pr-1"></i>Delete </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-pagination [totalItems]="arList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+    (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+
+  </app-pagination>
+</div>
+</div>
+</div>

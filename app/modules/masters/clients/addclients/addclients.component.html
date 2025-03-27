@@ -1,0 +1,605 @@
+<form #frmClient="ngForm" (ngSubmit)="onSubmit(frmClient)">
+
+    <div class="tab-content-0">
+        <div class="tab-target is-active" id="tab-content-1">
+
+            <div id="divform" [class.isDisabled]="isDisabled">
+
+                <div class="add-content">
+
+                    <div class="d-flex">
+                        <!-- First Section -->
+                        <div class="d-flex flex-column">
+                            <div class="custom-input" style="width: 10.8rem">
+                                <div class="card d-flex flex-column vertical-center pb-0">
+                                    <!-- Add Record Button -->
+                                    <div *ngIf="!isEditing">
+                                        <button *ngIf="!IsAdd" type="button" (click)="onAddRecord(frmClient)"
+                                            class="btn btn-outline-dark add-section mb-2">
+                                            <i class="ri-add-line pr-1"></i>Add Record
+                                        </button>
+
+                                        <!-- Edit Button -->
+                                        <button *ngIf="!IsAdd && IsEdit" type="button" style="width:93%"
+                                            class="btn btn-outline-dark order-section mb-2" (click)="onEditRecord()">
+                                            <i class="ri-pencil-line pr-2"></i>Edit
+                                        </button>
+
+                                        <!-- Delete Button -->
+                                        <button *ngIf="!IsAdd && IsEdit" type="button" style="width:93%"
+                                            class="btn btn-outline-dark cancelation mb-2"
+                                            (click)="deleteRow(client.clnT_FL_ID)">
+                                            <i class="ri-delete-bin-6-line pr-2"></i>Delete
+                                        </button>
+                                    </div>
+                                    <div *ngIf="isEditing" class="col-md-12">
+                                        <!-- Cancel Button -->
+                                        <button type="button" class="btn btn-outline-dark cancelation mb-2"
+                                            style="width:93%" type="button" (click)="onCancel()">
+                                            <i class="ri-close-line pr-1"></i>Cancel
+                                        </button>
+
+                                        <!-- Save Button -->
+
+                                        <button *ngIf="isAdding" type="button"
+                                            class="btn btn-outline-dark add-section mb-2" type="submit"
+                                            style="width:93%" (click)="AddData(client)">
+                                            <i class="ri-save-line pr-2"></i>Save
+                                        </button>
+
+                                        <!-- Update Button -->
+                                        <button *ngIf="!isAdding" type="button" class="btn btn-outline-dark add-section"
+                                            style="width:93%" type="submit" (click)="UpdateData(client)">
+                                            <i class="ri-check-double-line pr-2"></i>Update
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="card mt-1">
+                                    <div
+                                        style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+                                        <div class="d-flex flex-wrap justify-content-between navigation">
+
+                                            <button class="btn page-btn btn-outline-paginate px-1" id="first"
+                                                [disabled]="!isNavigationActive" (click)="getRecord('first',client.sno)"
+                                                tooltip="First">
+                                                <i class="ri-skip-left-line"></i>
+                                            </button>
+                                            <button class="btn page-btn btn-outline-paginate px-1" id="previous"
+                                                [disabled]="!isNavigationActive" (click)="getRecord('prev',client.sno)"
+                                                tooltip="Previous">
+                                                <i class="ri-arrow-left-double-line"></i>
+                                            </button>
+                                            <button class="btn page-btn btn-outline-paginate px-1" id="next"
+                                                [disabled]="!isNavigationActive" (click)="getRecord('next',client.sno)"
+                                                tooltip="Next">
+                                                <i class="ri-arrow-right-double-line"></i>
+                                            </button>
+                                            <button class="btn page-btn btn-outline-paginate px-1" id="last"
+                                                [disabled]="!isNavigationActive" (click)="getRecord('last',client.sno)"
+                                                tooltip="Last">
+                                                <i class="ri-skip-right-line"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- First Section -->
+
+                        <div style="flex:1 1 auto;">
+
+                            <div class="col-md-6 col-lg-6 col-6 pt-0">
+                                <div class="input-group">
+                                    <label style="height: 33px;" class="input-group-text side-input-dia">Client
+                                        No:</label>
+                                    <ng-select [items]="clientList" [bindLabel]="'clientId'" [trackBy]="'clientId'"
+                                        [searchFn]="customSearch" [clearable]="true" (search)="onSearch($event)"
+                                        (change)="onClientSelection($event, clientSelect)" #clientSelect>
+                                        <ng-template ng-option-tmp let-item="item">
+                                            {{ formatClientName(item) }}
+                                        </ng-template>
+                                    </ng-select>
+
+
+                                </div>
+                            </div>
+
+                            <div class="card mt-0">
+                                <div class="d-flex flex-wrap">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <label for="inputField1" class="input-group-text side-input-dia">Client
+                                                Number:</label>
+                                            <input class="form-control" placeholder="Enter Client Number"
+                                                [(ngModel)]="client.cn" type="text" id="txtcn" name="txtcn"
+                                                minlength="4" maxlength="4" [readonly]="isDisabled" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <label for="txtclientName" class="input-group-text side-input-dia">
+                                                Client Name:
+                                            </label>
+                                            <input class="form-control" placeholder="Enter Client Name" maxlength="60"
+                                                [(ngModel)]="client.client" type="text" #txtclientName="ngModel"
+                                                id="txtclientName" name="txtclientName" required
+                                                [ngClass]="{'is-invalid': txtclientName.invalid && (txtclientName.touched || submitted)}"
+                                                [readonly]="isReadonly" />
+                                        </div>
+
+                                        <!-- Validation Error Message -->
+                                        <small class="text-danger"
+                                            *ngIf="txtclientName.invalid && (txtclientName.touched || submitted)">
+                                            *
+                                        </small>
+                                    </div>
+                                    <div class="col-md-3 rtl-formate"
+                                        style="direction:rtl;float:right;text-align: right;">
+                                        <div class="input-group-ar">
+                                            <label for="aclient" class="input-group-text-ar side-input-dia">اسم
+                                                العميل:</label>
+                                            <input class="form-control" [(ngModel)]="client.aclient" maxlength="35"
+                                                placeholder="أدخل اسم العميل" type="text" id="aclient" name="aclient"
+                                                required [readonly]="isReadonly" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <label for="dropdown1" class="input-group-text side-input-dia">Site No/Site
+                                                Name
+                                                :</label>
+                                            <ng-select style="flex: 1 1 auto;" #selectedValue="ngModel" name="sitE_NO"
+                                                required="true" [readonly]="isReadonly" class="editable-dropdown"
+                                                placeholder="select" [(ngModel)]="client.sitE_NO"
+                                                [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+                                                <ng-option [value]="obj.sitE_NO" *ngFor="let obj of sp">
+                                                    {{ obj.sitE_NO + ' - ' + obj.sitE_NAME}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- first-card -->
+
+                            <!-- fourth-card -->
+
+                            <div class="card mt-2">
+                                <div class="d-flex">
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField3" class="input-group-text side-input-dia">Account
+                                                Manager
+                                                name:</label>
+                                            <ng-select style="flex: 1 1 auto;" #selectedValue="ngModel" name="acmngr"
+                                                required="true" [readonly]="isReadonly" class="editable-dropdown"
+                                                placeholder="select" [(ngModel)]="client.acmngr"
+                                                [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+
+                                                <ng-option [value]="obj.smc" *ngFor="let obj of accmanmodel">
+                                                    {{ obj.salesman}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1" class="input-group-text side-input-dia">Driver
+                                                Name:</label>
+                                            <ng-select style="flex: 1 1 auto;" #selectedValue="ngModel" name="drvrc"
+                                                required="true" [readonly]="isReadonly" class="editable-dropdown"
+                                                placeholder="select" [(ngModel)]="client.drvrc"
+                                                [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+
+                                                <ng-option [value]="obj.drvrc" *ngFor="let obj of driver">
+                                                    {{ obj.drvrc + ' - ' + obj.drvrname}}
+                                                </ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1" class="input-group-text side-input-dia">VAT
+                                                No:</label>
+                                            <input class="form-control" placeholder="Enter VAT No" maxlength="16"
+                                                [(ngModel)]="client.clntvat" type="text" #clntvat="ngModel" id="clntvat"
+                                                name="clntvat" required [readonly]="isReadonly" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1"
+                                                class="input-group-text side-input-dia">Contact:</label>
+
+                                            <input class="form-control" placeholder="Enter Contact No"
+                                                [(ngModel)]="client.contact" type="text" #txtContact="ngModel"
+                                                maxlength="25" id="txtContact" name="txtContact" required
+                                                [readonly]="isReadonly" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    <!-- second-row -->
+                                    <!-- <div class="col-md-3 col-sm-12" style="display: none;">
+                                <div class="input-group">
+                                    <label for="inputField1" class="input-group-text side-input-dia">Fax:</label>
+
+                                    <input class="form-control" placeholder="Enter Fax No" [(ngModel)]="client.fax"
+                                        type="text" #txtfax="ngModel" id="txtfax" name="txtfax" required />
+                                </div>
+                            </div> -->
+
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1"
+                                                class="input-group-text side-input-dia">Telephone:</label>
+
+                                            <input class="form-control" placeholder="Enter Telephone No" maxlength="15"
+                                                [(ngModel)]="client.tel" type="tel" #txttel="ngModel" id="txttel"
+                                                name="txttel" pattern="^((\\+91-?) |0)?[0-9]{10}$" minlength=10
+                                                maxlength=10 [readonly]="isReadonly" />
+                                        </div>
+                                        <small class="text-danger"
+                                            *ngIf="txttel.invalid && (txttel.touched || frmClient.submitted)">
+                                            Telephone No is
+                                            not valid</small>
+
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1"
+                                                class="input-group-text side-input-dia">Mobile:</label>
+
+                                            <input class="form-control" placeholder="Enter Mobile No" maxlength="12"
+                                                pattern="^((\\+91-?) |0)?[0-9]{10}$" [(ngModel)]="client.mobile"
+                                                type="text" #txtmobile="ngModel" id="txtmobile" name="txtmobile"
+                                                minlength=10 maxlength=10 [readonly]="isReadonly" />
+                                        </div>
+
+                                        <small class="text-danger"
+                                            *ngIf="txtmobile.invalid && (txtmobile.touched || frmClient.submitted)">
+                                            Mobile No
+                                            is not valid</small>
+
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1"
+                                                class="input-group-text side-input-dia">Email1:</label>
+                                            <input type="email" #txtEmail="ngModel" maxlength="40"
+                                                [class.is-invalid]="txtEmail.invalid && txtEmail.touched"
+                                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                                class="form-control" name="primaryEmail" [(ngModel)]="client.email"
+                                                [readonly]="isReadonly" />
+                                        </div>
+                                        <small class="text-danger"
+                                            *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)">
+                                            <div *ngIf="txtEmail.errors?.['pattern']"></div>
+                                            Email Id is not valid
+                                        </small>
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <div class="input-group">
+                                            <label for="inputField1"
+                                                class="input-group-text side-input-dia">Email2:</label>
+                                            <input type="email" #txtEmail2="ngModel" maxlength="40"
+                                                [class.is-invalid]="txtEmail2.invalid && txtEmail2.touched"
+                                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                                class="form-control" name="primaryEmail2" [(ngModel)]="client.emaiL2"
+                                                [readonly]="isReadonly" />
+                                        </div>
+                                        <small class="text-danger"
+                                            *ngIf="txtEmail2.invalid && (txtEmail2.dirty || txtEmail2.touched)">
+
+                                            <div *ngIf="txtEmail2.errors?.['pattern']"></div>
+                                            Email Id 2 is not valid
+                                        </small>
+
+                                    </div>
+
+                                    <!-- <div class="col-md-3 col-sm-12" style="display: none;">
+                                <div class="input-group">
+                                    <label for="inputField1" class="input-group-text side-input-dia">Email3:</label>
+                                    <input type="email" #txtEmail3="ngModel"
+                                        [class.is-invalid]="txtEmail3.invalid && txtEmail3.touched"
+                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" class="form-control"
+                                        name="primaryEmail3"   [readonly]="isReadonly" />
+                                </div>
+                                <small class="text-danger"
+                                    *ngIf="txtEmail3.invalid && (txtEmail3.dirty || txtEmail3.touched)">
+
+                                    <div *ngIf="txtEmail3.errors?.['pattern']"></div>
+                                    Email Id 3 is not valid
+                                </small>
+                            </div> -->
+                                    <!-- second-row -->
+
+
+                                </div>
+                            </div>
+                            <!-- fourth-card -->
+                            <!-- second-card -->
+                            <div style="display: none;"> <!--As per Rashid we ll add by popup -->
+
+                                <div class="card discounts-section mt-2">
+                                    <div class="d-flex justify-content-between mx-3">
+                                        <div class="pr-4">
+                                            <label for="inputField1" style="font-size: 14px;">Groups:</label>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center">
+                                            <div class=" circle-group">
+                                                <h6 class="text-center">1</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center">
+                                            <div class=" circle-group">
+                                                <h6 class="text-center">2</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center">
+                                            <div class=" circle-group">
+                                                <h6 class="text-center">3</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center">
+                                            <div class=" circle-group">
+                                                <h6 class="text-center">4</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 d-flex justify-content-center">
+                                            <div class=" circle-group">
+                                                <h6 class="text-center">5</h6>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2 mx-3">
+                                        <div>
+                                            <label for="inputField1" style="font-size: 14px;">Discount%:</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="9%" type="text" id="inputField1"
+                                                disabled />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="10%" type="text" id="inputField1"
+                                                disabled />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="11%" type="text" id="inputField1"
+                                                disabled />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="7%" type="text" id="inputField1"
+                                                disabled />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" placeholder="4%" type="text" id="inputField1"
+                                                disabled />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- second-card -->
+                            <!-- Third-card -->
+
+                            <div class="card mt-2" style="padding: 1.2rem 1rem 0rem 1rem;">
+                                <div class="d-flex flex-wrap mx-3">
+                                    <div class="mr-3 mb-3">
+                                        <!-- <input type="checkbox" id="cashs"  [checked]="client.cash" /> -->
+                                        <input type="checkbox" id="cash" name="cash" [(ngModel)]="client.cash"
+                                            [checked]="client.cash" [disabled]="isReadonly" />
+                                        <label for="cash">Cash Clients</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="crdtonly" name="crdtonly"
+                                            [(ngModel)]="client.crdtonly" [checked]="client.crdtonly"
+                                            [disabled]="isReadonly" />
+                                        <label for="crdtonly">Credit Only</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="cashonly" name="cashonly"
+                                            [(ngModel)]="client.cashonly" [checked]="client.cashonly"
+                                            [disabled]="isReadonly" />
+                                        <label for="cashonly">Cash Only</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="adscnt" name="adscnt" [(ngModel)]="client.adscnt"
+                                            [checked]="client.adscnt" [disabled]="isReadonly" />
+                                        <label for="adscnt">Allow Price/Discount Change</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="spcl" name="spcl" [(ngModel)]="client.spcl"
+                                            [checked]="client.spcl" [disabled]="isReadonly" />
+                                        <label for="spcl">Special Clients</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="zeroval" name="zeroval" [(ngModel)]="client.zeroval"
+                                            [checked]="client.zeroval" [disabled]="isReadonly" />
+                                        <label for="zeroval">Zero Value Prices</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="inactiv" name="inactiv" [(ngModel)]="client.inactv"
+                                            [checked]="client.inactv" [disabled]="isReadonly" />
+                                        <label for="inactv">In-Active Client</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="habn" name="habn" [(ngModel)]="client.habn"
+                                            [checked]="client.habn" [disabled]="isReadonly" />
+                                        <label for="inactiv">Highlight Abnormal Results</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="telreq" name="telreq" [(ngModel)]="client.telreq"
+                                            [checked]="client.telreq" [disabled]="isReadonly" />
+                                        <label for="telreq">Tel. Required For This Clients Patients</label>
+                                    </div>
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="reqnoreq" name="reqnoreq"
+                                            [(ngModel)]="client.reqnoreq" [checked]="client.reqnoreq"
+                                            [disabled]="isReadonly" />
+                                        <label for="reqnoreq">Req. No Required For This Client’s Patient</label>
+                                    </div>
+                                    <!-- <div class="mr-3 mb-3">
+                                <input type="checkbox" id="nofax" name="nofax" [(ngModel)]="client.nofax"
+                                    [checked]="client.nofax" [disabled]="isReadonly" />
+                                <label for="nofax">Stop Automatic Faxing</label>
+                            </div> -->
+                                    <div class="mr-3 mb-3">
+                                        <input type="checkbox" id="cu" name="cu" [(ngModel)]="client.cu"
+                                            [checked]="client.cu" [disabled]="isReadonly" />
+                                        <label for="cu">Use Conventional (old) units</label>
+                                    </div>
+                                    <!-- second-row -->
+                                </div>
+                            </div>
+                            <!-- Third-card -->
+
+                            <div class="card mt-2">
+                                <div class="col-md-12">
+                                    <!-- <label for="inputField1">Notes:</label> -->
+                                    <textarea class="form-control" id="textareaInput" rows="3" cols="50"
+                                        placeholder="Enter contact" name="textareaInput" maxlength="200"
+                                        [(ngModel)]="client.clnT_ADDRESS" [readonly]="isReadonly"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-1">
+                                <!-- period durations -->
+                                <!-- <div class="col-md-6 no-padding-left">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card pt-3">
+                                    <div class="card-head" id="headingOne">
+                                        <h2 style="font-size: 15px" class="mb-0 collapsed" data-toggle="collapse"
+                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Period Duration:
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <label for="inputField1">First Period:</label>
+                                                </div>
+                                                <div class="float-right d-flex">
+                                                    <div>
+                                                        <input class="form-control" placeholder="Enter Days" type="text"
+                                                            id="txtsp1" [(ngModel)]="client.sP1" required  [readonly]="isReadonly"/>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px;" class="px-1 pt-1">Days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <label for="inputField1">Second Period:</label>
+                                                </div>
+                                                <div class="float-right d-flex">
+                                                    <div>
+                                                        <input class="form-control" placeholder="Enter Days" type="text"
+                                                            id="txtsp2" value="{{client.sP3-client.sP1}}" required  [readonly]="isReadonly"/>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px;" class="px-1 pt-1">Days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1"
+                                                style="margin-bottom: 1.7rem;">
+                                                <div>
+                                                    <label for="txtsp3">Third Period(>):</label>
+                                                </div>
+                                                <div class="float-right d-flex">
+                                                    <div>
+                                                        <input class="form-control" placeholder="Enter Days" type="text"
+                                                            id="txtsp3" [(ngModel)]="client.sP3" required  [readonly]="isReadonly"/>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px;" class="px-1 pt-1">Days</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                                <!-- period durations -->
+                                <!-- total values -->
+                                <!-- <div class="col-md-6 no-padding-right">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card pt-3">
+                                    <div class="card-head" id="headingTwo">
+                                        <h2 style="font-size: 15px" class="mb-0 collapsed" data-toggle="collapse"
+                                            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                            Total Values:
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <label for="inputField1">Invoiced:</label>
+                                                </div>
+                                                <div class="float-right">
+                                                    <input class="form-control" placeholder="Enter Invoice No"
+                                                        type="text" id="txtsp1" required  [readonly]="isReadonly"/>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <div>
+                                                    <label for="inputField1">Paid:</label>
+                                                </div>
+                                                <div class="float-right">
+                                                    <input class="form-control" placeholder="Enter Amount" type="text"
+                                                        id="txtsp1" required  [readonly]="isReadonly"/>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <div>
+                                                    <label for="inputField1">Balance:</label>
+                                                </div>
+                                                <div class="float-right">
+                                                    <input class="form-control" placeholder="Enter Balance Amount"
+                                                        type="text" id="txtsp1" required  [readonly]="isReadonly"/>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <div>
+                                                    <label for="inputField1">Max Credit:</label>
+                                                </div>
+                                                <div class="float-right">
+                                                    <input class="form-control" placeholder="Enter Credit" type="text"
+                                                        id="txtsp1" required  [readonly]="isReadonly"/>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-outline-dark mt-0 p-1" style="width:10rem"><i
+                                                        class="ri-restart-line pr-2"></i>Refresh</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>

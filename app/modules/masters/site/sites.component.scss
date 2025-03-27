@@ -1,0 +1,161 @@
+
+// common-for-specific-screen
+.table td, .table th {
+    padding: 0.2rem 0.5rem;
+}
+b, strong {
+    font-weight: 500;
+}
+  .form-control {
+    padding: .1rem .3rem;
+  }
+  .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+.side-input-dia{
+  margin-bottom: 5px; 
+  height: 36px
+}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.accordion .card {
+  border: none;
+  margin-bottom: 0px;
+}
+// larger-fonts
+.input-group-text {
+  font-size: 0.93rem;
+  color: #58555e;
+}
+.form-control {
+  font-size: 0.93rem;
+}
+// larger-fonts
+@media only screen and (max-width: 1300px) {
+  .col-md-6{
+   width: 100% !important;
+   max-width: 100% !important;
+   flex: 0 0 100% !important;
+  }
+  .col-md-4{
+   flex: 0 0 50%;
+  max-width: 50%;
+  }
+  .col-md-2{
+   flex: 0 0 25%;
+   max-width: 25%;
+  }
+}
+// common-for-specific-screen
+
+
+/*------------------------------
+			//toggle
+------------------------------*/
+.toggle {
+	display: block;
+	position: relative;
+	background: none;
+	margin: 0 0 0.5em 0;
+}
+
+.toggle input[type="checkbox"] {
+	opacity: 0 !important;
+}
+
+.toggle input[type="checkbox"] + label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding-left: 2.5em;
+	color: #000;
+}
+
+.toggle input[type="checkbox"] + label:before {
+	-webkit-transition: background-color 0.4s ease;
+	-moz-transition: background-color 0.4s ease;
+	transition: background-color 0.4s ease;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	position: absolute;
+	top: 4px;
+	left: 0;
+	content: '';
+	width: 2.25rem;
+	height: 1.25rem;
+	background-color: #adabab;
+	border-radius: 1.5rem;
+}
+
+.toggle input[type="checkbox"]:checked + label:before {
+	background-color: green;
+}
+
+.toggle input[type="checkbox"] + label:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	-webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75),;
+	-moz-transition: -moz-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+	transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+	position: absolute;
+	top: 4px;
+	left: -0.25rem;
+	width: 1.25rem;
+	height: 1.25rem;	
+	content: '';
+	font-size: 0.75em;
+	background-color: #fff;
+	border-radius: 500rem;
+	border: 2px solid #adabab;
+}
+
+.toggle input[type="checkbox"]:checked + label:after {
+	transform: translateX(1.5rem);
+	border: 2px solid green;
+}
+
+.toggle.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.multiselect-dropdown[_ngcontent-ng-c692748064] .dropdown-btn[_ngcontent-ng-c692748064] .selected-item-container[_ngcontent-ng-c692748064] .selected-item[_ngcontent-ng-c692748064] {
+  border: 1px solid #5C64CB;
+  margin-right: 4px;
+  background: #5C64CB;
+  padding: 0 5px;
+  color: #fff;
+  border-radius: 2px;
+  float: left;
+  max-width: 100px;
+}
+.multiselect-dropdown[_ngcontent-ng-c692748064] .dropdown-btn[_ngcontent-ng-c692748064] {
+  display: inline-block;
+  border: 1px solid #adadad;
+  width: 100%;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  height: auto !important;
+  padding: 0.1rem 0.3rem !important;
+  font-size: 0.93rem !important;
+  color: #495057;
+}
+.dropdown-btn[_ngcontent-ng-c692748064] span{
+  font-size: 0.93rem !important;
+}

@@ -1,0 +1,98 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <div class="d-flex section-top-space">
+    </div>
+    <!-- back-link -->
+    <div class="col-md-3 float-right">
+
+      <div>
+        <div class="input-group">
+          <div class="w-100">
+            <div class="search-container">
+        <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+        <span class="search-icon"></span>
+      </div>
+    </div>
+        </div>
+      </div>
+    
+    </div>
+    <button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+      Record</button>
+    <div class="card table-responsive-lg">
+      <table class="table table-bordered data" id="editableTable">
+        <thead class="table-head-fix">
+          <tr>
+            <th style="width:9rem" (click)="sortData('sect')">Section No<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sect')">{{ getSortIcon('sect') }}</i></th>
+            <th style="width:7rem">Abrv</th>
+            <th (click)="sortData('div')">Division No/Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('div')">{{ getSortIcon('div') }}</i></th>
+            <th (click)="sortData('descrip')">Section Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('descrip') }}</i></th>
+            <th>Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of sectionList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+            <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.sect }}</span></td>
+            <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.abrv }}</span></td>
+            <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.div }}</span></td>
+            <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.descrip }}</span></td>
+
+            <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required disabled="{{item.IsEdit?true:false}}"
+                class="form-control {{required_sec_no}}" (keypress)="numberOnly($event)"
+                (blur)="checkAlreadyExisting($event)" minlength="3" maxlength="3" id="txt_{{ item.sect }}"
+                [(ngModel)]="item.sect" value="{{item.sect}}" />
+            </td>
+ 
+
+            <td *ngIf="item.IsEdit || item.IsAdd">
+              <input type="text" required class="form-control {{required_sec_abrv}}" id="txt_{{ item.abrv }}"
+                [(ngModel)]="item.abrv" value="{{item.abrv}}" noSpaces />
+            </td>
+
+            <td *ngIf="item.IsEdit || item.IsAdd">
+              <span>
+                <ng-select #selectedValue="ngModel" required="true" class="editable-dropdown {{required_div_no}}"
+                  placeholder="select" [(ngModel)]="item.div"
+                  [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+                  <ng-option [value]="obj.div" *ngFor="let obj of sectionDropDown">
+                    {{ obj.div + ' - ' + obj.descrip}}
+                  </ng-option>
+                </ng-select>
+                <div *ngIf="selectedValue.invalid" class="invalid-feedback">
+                  Dropdown selection is required.
+                </div>
+              </span>
+            </td>
+
+
+            <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required class="form-control {{required_sec_desc}}"
+                id="txt_{{ item.descrip }}" [(ngModel)]="item.descrip" value="{{item.descrip}}" noSpaces /> </td>
+
+            <td>
+              <button *ngIf="item.IsAdd&&!item.IsEdit" class="add edit" (click)="AddData(item)"><i
+                  class="ri-save-fill"></i>Save</button>
+              <button *ngIf="item.IsAdd&&!item.IsEdit" class="cancel" (click)="CancelAddRow(item.laB_SECT_ID)"><i
+                  class="ri-close-line pr-1"></i>Cancel</button>
+
+              <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+                  class="ri-check-double-line pr-1"></i>Update</button>
+              <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.laB_SECT_ID)"><i
+                  class="ri-close-line pr-1"></i>cancel</button>
+              <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.laB_SECT_ID)"><i
+                  class="ri-pencil-line pr-1"></i>Edit</button>
+              <button *ngIf="!item.IsEdit&&!item.IsAdd" class="delete" (click)="deleteRow(item.laB_SECT_ID)"><i
+                  class="ri-delete-bin-line pr-1"></i>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination Component -->
+      <app-pagination [totalItems]="sectionList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

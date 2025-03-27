@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+<div class="col-md-10 col-lg-10 col-xl-10">
+<!-- back-link -->
+<div class="d-flex section-top-space">
+  <!-- <div class="d-flex">
+    <a style="color:#000000">
+      <h6 class=" py-1 mt-1 header-font">Master</h6>
+    </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+    <a style="color:#000000">
+      <h6 class=" py-1 mt-1 header-font">Divisions</h6>
+    </a>
+  </div> -->
+</div>
+
+<!-- back-link -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Add-division -->
+<button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+  Record</button>
+
+<!-- Add-division -->
+<!-- Table -->
+<div class="card table-responsive-lg">
+  <table class="table table-bordered data" id="editableTable">
+
+    <thead class="table-head-fix">
+      <tr>
+        <th style="width:9rem" (click)="sortData('div')">Division No<i class="material-icons sort-icon" [ngClass]="getSortIconClass('div')">{{ getSortIcon('div') }}</i></th>
+        <th style="width:7rem">Abrv</th>
+        <th (click)="sortData('descrip')">Division Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('descrip') }}</i></th>
+        <th>Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of divisionList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.div }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.abrv }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.descrip }}</span></td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required disabled="{{item.IsEdit?true:false}}"
+            class="form-control  {{required_div_no}}" (keypress)="numberOnly($event)" minlength="2" maxlength="2"
+            id="txt_{{ item.div }}" (blur)="checkAlreadyExisting($event)" [(ngModel)]="item.div"
+            value="{{item.div}}" /></td>
+            <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" maxlength="3" required
+              class="form-control {{required_div_abrv}}" id="txt_{{ item.abrv }}" [(ngModel)]="item.abrv"
+              value="{{item.abrv}}" noSpaces />
+          </td>
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" maxlength="35" required
+            class="form-control {{required_div_desc}}" id="txt_{{ item.descrip }}" [(ngModel)]="item.descrip"
+            value="{{item.descrip}}" noSpaces />
+        </td>
+
+        <td>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" (click)="AddData(item)" class="add edit"><i
+              class="ri-save-line pr-1"></i>Save</button>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="cancel" (click)="CancelAddRow(item.laB_DIV_ID)"><i
+              class="ri-close-line pr-1"></i>Cancel</button>
+
+          <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+              class="ri-check-double-line pr-1"></i>Update</button>
+          <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.laB_DIV_ID)"><i
+              class="ri-close-line pr-1"></i>cancel</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.laB_DIV_ID)"><i
+              class="ri-pencil-line pr-1"></i>Edit</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" (click)="deleteRow(item.laB_DIV_ID)" class="delete"><i
+              class="ri-delete-bin-line pr-1"></i>Delete </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination Component -->
+  <app-pagination [totalItems]="divisionList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+    (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
+</div>
+</div>
+</div>

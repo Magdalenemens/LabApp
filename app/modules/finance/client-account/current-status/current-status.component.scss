@@ -1,0 +1,31 @@
+.sort-icon {
+    font-size: 16px;
+    vertical-align: middle;
+    width: 20px; 
+    display: inline-block;
+    text-align: center;
+    margin-top: -4px;
+    cursor: pointer;
+  }
+  .table th {
+    white-space: nowrap !important;
+    text-align: center;
+    align-content: center;
+  }
+  .table td {
+    text-align: center;
+  }
+  .card-title {
+    font-size: 20px !important;
+    color: #000;
+    font-weight: 480 !important;
+    background: #f5f5f5;
+    padding: 5px 20px !important;
+    width: -moz-fit-content;
+    width: fit-content;
+    border: 1px solid #10a504;
+} 
+.table-veritical {
+  height: 60vh;
+  overflow-y: scroll;
+}

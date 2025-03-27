@@ -1,0 +1,275 @@
+<div class="tab-target is-active mt-2" id="tab-content-1">
+
+    <!-- <div class="d-flex">
+        <div class="d-flex">
+          <a style="color:#000000">
+            <h6 class=" py-1 header-font">Clinical Modules-Microbiology</h6>
+          </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+          <a style="color:#000000">
+            <h6 class=" py-1 header-font">List</h6>
+          </a>
+        </div>
+      </div> -->
+    <div class="row g3">
+      <div class="col-md-3">
+        <div class="input-group">
+          <label for="validationCustom01" class="input-group-text side-input-dia  head-search">Order Date from:</label>
+          <input type="date" placeholder="MM/DD/YYYY" class="form-control  head-search" 
+           [(ngModel)]="order_FDatetime" value="{{order_FDatetime}}" />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label for="validationCustom01" class="input-group-text side-input-dia  head-search">Order Date To:</label>
+          <input type="date" placeholder="MM/DD/YYYY" class="form-control  head-search" [(ngModel)]="order_TDatetime" 
+          value="{{order_TDatetime}}">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for="validationCustom01" class="input-group-text side-input-dia head-search">Site No:</label>
+          <input type="text" placeholder="Site No" class="form-control head-search" [(ngModel)]="siteno">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for="validationCustom01" class="input-group-text side-input-dia head-search ">Client No:</label>
+          <input type="text" placeholder="Client No" class="form-control head-search" [(ngModel)]="clientno">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <button class="btn btn-outline-primary" (click)="fillMBAllList()"><i class="ri-save-line pr-1"></i>Search</button>
+          <button class="btn btn-outline-primary" (click)="getBatchQR()"><i class="ri-save-line pr-1"></i>Generate Batch QR</button>
+          <button class="btn btn-outline-primary" (click)="getCodePDF()"><i class="ri-save-line pr-1"></i>Generate QR Sequence</button>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="card mt-2">
+      <table class="table table-bordered data" id="mbListTable">
+        <thead>
+          <tr>
+            <th>Site No.</th>
+            <th>Accession No</th>
+            <th>Test Code</th>
+            <th>Patient Id</th>
+            <th>Client No</th>
+            <th>Doc.No</th>
+            <th>Order Date/Time</th>
+            <th>Collection Date/Time</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of microBiologyListData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+            <td><span>{{ item.sitE_NO }}</span></td>
+            <td><span>{{ item.accn }}</span></td>
+            <td><span>{{ item.reQ_CODE }}</span></td>
+            <td><span>{{ item.paT_ID }}</span></td>
+            <td><span>{{ item.cn}}</span> </td>
+            <td><span>{{ item.drno}}</span> </td>
+            <td><span>{{ item.ordeR_DTTMSTR}}</span> </td>
+            <td><span>{{ item.coL_DTTM}}</span> </td>
+            <td><span>{{ item.duration}}</span> </td>
+            <td><span>{{ item.sts}}</span></td>
+            <td><span>{{ item.descrip}}</span></td>
+            <td>
+              <button class="add save btn-rounded" (click)="View(item.arF_ID)"><i class="View"></i>VIEW</button>
+              <button class="add edit btn-rounded" (click)="showPatient(item.arF_ID)" data-toggle="modal" data-target="#myModal"><i
+                  class="View"></i>DETAILS</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination Component -->
+      <app-pagination [totalItems]="microBiologyListData.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+    </div>
+  
+    <div class="modal fade modal-alert rounded-3 mt-3" id="patientModal" data-bs-backdrop="static"
+      data-bs-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+  
+          <div class="bg-primary modal-header" style="color:white;">
+            Patient Information
+          </div>
+  
+          <div class="modal-body p-4 text-left">
+            <div class="col-md-12">
+              <div>
+                <div class="mt-2">
+                  <h6>Details:</h6>
+                </div>
+                <div class="card">
+                  <!-- code -->
+                  <div class="d-flex flex-wrap">
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Patient Id:</label>
+                        <label class="form-control highligter" readonly="true" type="text"
+                          id="inputField1"><b>{{microbiologyData.paT_ID}}</b></label>
+                      </div>
+                    </div>
+                    <div class="col-md-9 col-lg-9 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Patient Name:</label>
+                        <label class="form-control highligter" readonly="true" type="text"
+                          id="inputField1"><b>{{microbiologyData.paT_NAME}}</b></label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Accession No:</label>
+                        <label class="form-control highligter" (input)="(microbiologyData.accn)" type="text" id="inputField1"
+                          readonly="true"> <b>{{microbiologyData.accn}}</b></label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Code:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.reQ_CODE}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Gender</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.sex}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">DOB:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.dob}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Test Name:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.tname}}</label>
+                      </div>
+                    </div>
+                   
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Age:</label>
+                        <label class="form-control" readonly="true" type="number" id="inputField1"> {{
+                          microbiologyData.dob ? calculateAge(microbiologyData.dob) : 'N/A' }} </label>
+                          <label class="form-control" readonly="true" type="number" id="inputField1">xxx
+                          </label>
+                      </div>
+                    </div>                 
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Client Id:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.cn}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Client Name:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.client}}</label>
+                      </div>
+                    </div>
+  
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Doctor Id:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.drno}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Doctor Name:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.doctor}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Ref No:</label>
+                        <label class="form-control" type="text" id="inputField1" readonly="true"></label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Loc:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.loc}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Collected:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.drawN_DTTM | date: 'dd/MM/yyyy HH:mm'}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Verified:</label>
+                        <label class="form-control" readonly="true" type="text"
+                          id="inputField1">{{microbiologyData.veR_DTTM | date: 'dd/MM/yyyy HH:mm'}}</label>
+                      </div>
+                    </div>
+  
+                  </div>
+                  <!-- doctor -->
+  
+                </div>
+  
+  
+                <div class="col-md-6 no-padding-left no-padding-right" style="display: none;">
+                  <div class="card mt-2 ">
+                    <label>Remarks:</label>
+                    <textarea class="form-control" id="textareaInput" rows="2" cols="50"
+                      placeholder="Enter text"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+
+
+  <div class="modal fade modal-alert rounded-1" style="left:40%;width:20%" id="barCodeModal" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="bg-primary modal-header" style="color:white;">
+          Batch QR code
+        </div>
+        <div class="modal-body p-2 text-left">
+          <img [src]="imageSource" alt="Image Source">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

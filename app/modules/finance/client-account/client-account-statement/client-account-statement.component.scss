@@ -1,0 +1,64 @@
+.btn-outline-dark {
+    color: #000 !important;
+    border-color: #fff;
+    background: #fff;
+    border: 1px solid #10a504;
+    font-size: 1rem;
+    font-weight: 480;
+  }
+  .btn-outline-dark:disabled {
+  color: #58555e !important;
+  background-color: #fff !important;
+  font-weight: 480;
+  }
+  .btn-outline-dark:hover {
+  color: #fff !important;
+  border-color: #10a504 !important;
+  background: #10a504 !important;
+  }
+  .btn-outline-dark.focus, .btn-outline-dark:focus {
+    box-shadow: none;
+    background: #10a504 !important;
+    color: #fff !important;
+  }
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(232, 246, 253, 0.9) !important;
+  }
+  tr:nth-child(even) td {
+    background-color: #fff !important;
+  }
+  .table-veritical-sm {
+    height: 55vh;
+    overflow-y: scroll;
+}
+.card-title {
+  font-size: 18px !important;
+  color: #000;
+  font-weight: 480 !important;
+  background: #f5f5f5;
+  padding: 5px 20px !important;
+  width: fit-content;
+  border: 1px solid #10a504;
+}
+.table-fixed {
+    table-layout: fixed;
+    width: 100%;
+    position: relative;
+}
+
+.table-fixed tfoot {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff; /* Optional: Ensure the footer has a background */
+    z-index: 1; /* Keeps it above other content */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for better visibility */
+}
+[aria-disabled="true"] {
+    background-color: #f8f9fc;; /* Mild grey background color */
+    cursor: not-allowed; /* Optional: Show a 'not-allowed' cursor */
+    pointer-events: none; /* Prevent interaction */
+    opacity: 0.7; /* Optional: Make it semi-transparent */
+}
+::ng-deep .highlighted-row {
+  color: #10a504 !important;
+}

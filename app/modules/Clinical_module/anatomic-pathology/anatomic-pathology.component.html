@@ -1,0 +1,30 @@
+<div class="d-flex section-top-space pt-4">
+  <!-- <div class="d-flex">
+      <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+        <h6 class="py-1 mt-1 header-font">Clinical Modules</h6>
+      </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+      <a style="color: #000000" href="#">
+        <h6 class="py-1 mt-1 header-font">Add Anatomic Pathology</h6>
+      </a>
+    </div> -->
+</div>
+<!-- back-link -->
+<!-- tabs -->
+<section class="section-wrapper">
+  <div>
+    <nav class="tab-nav">
+      <button id="btnaddpathology" data-tab-target="tab-content-1" (click)="goToAnatomy('addanatomic')"
+        [class.is-active]="selected === 'addanatomic'">
+        Data Entry
+      </button>
+      <button data-tab-target="tab-content-2" id="btnlist" (click)="goToAnatomy('list')"
+        [class.is-active]="selected === 'list'">List</button>
+      <button data-tab-target="tab-content-3" id="btnspictures" (click)="goToAnatomy('pictures')"
+        [class.is-active]="selected === 'pictures'">Slide Pictures</button>
+      <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Anatomic Pathology Reports</h6>
+
+    </nav>
+    <app-default></app-default>
+
+  </div>
+</section>

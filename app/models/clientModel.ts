@@ -1,0 +1,56 @@
+export class clientModel {
+    sno?: number = 0;
+    clnT_FL_ID: number = 0;
+    cn: string = '';
+    cmpnY_NO: string = '';
+    client: string = '';
+    aclient: string = '';
+    ctgrY_CD: string = '';
+    clntvat: string = '';
+    acmngr: string = '';
+    drvrc: string = '';
+    dscnt: number = 0.0;
+    dscnT_2: number = 0.0;
+    dscnT_3: number = 0.0;
+    dscnT_4: number = 0.0;
+    dscnT_5: number = 0.0;
+    sitE_NO: string = '';
+    tel: string = '';
+    contact: string = '';
+    mobile: string = '';
+    email: string = '';
+    emaiL2: string = '';
+    emaiL3: string = '';
+    clnT_ADDRESS: string = '';
+    grp: string = '';
+    cnclient: string = '';
+    reqnoreq: boolean = false;
+    cash: boolean = false;
+    crdtonly: boolean = false;
+    cashonly: boolean = false;
+    adscnt: boolean = false;
+    spcl: boolean = false;
+    nofax: boolean = false;
+    zeroval: boolean = false;
+    ytD_DEBIT: number = 0.0;
+    ytD_CREDIT: number = 0.0;
+    balance: number = 0.0;
+    maxcrdt: number = 0.0;
+    lsT_BAL: number = 0.0;
+    lsT_ST_DT: Date;
+    lsT_ST_NO: string = ''; 
+    habn: boolean = false;
+    telreq: boolean = false;
+    cu: boolean = false;
+    inactv: boolean = false;
+    notes: string = '';
+    aC_NO: string = '';
+    sP1: number = 0.0;
+    sP3: number = 0.0;
+    clnT_TP: string = '';
+    IsEdit: boolean = false;
+    IsAdd: boolean = false;
+    search: string = '';
+ 
+}
+

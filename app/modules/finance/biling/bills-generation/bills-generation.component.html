@@ -1,0 +1,245 @@
+<section class="section-wrapper">
+  <div class="tab-target is-active" id="tab-content-1">
+
+    <div class="app-body mt-1">
+      <!-- add-section -->
+      <div class="add-content">
+        <div class="d-flex mt-1">
+
+          <div class="d-flex flex-column">
+            <div class="custom-input" style="width: 10.8rem">
+              <div class="card d-flex flex-column vertical-center">
+                 <button class="btn page-btn btn-outline-dark mb-2" (click)="InvokeInvoice()">
+                  <i class="ri-check-double-line pr-1"></i>Issue All
+                </button>       
+                <button class="btn page-btn btn-outline-dark mb-0" (click)="DeleteInvoice()">
+                  <i class="ri-delete-bin-6-line pr-1"></i>Delete All
+                </button>
+              </div>
+              <div class="card mt-1">
+                <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+                <div class="d-flex flex-wrap justify-content-between navigation">
+               <button class="btn page-btn btn-outline-paginate px-1" id="first" (click)="getRecord('first',cnData.sno)" tooltip="First"><i class="ri-skip-left-line"
+                ></i></button>
+             <button class="btn page-btn btn-outline-paginate px-1" id="previous" (click)="getRecord('prev',cnData.sno)" tooltip="previous"><i class="ri-arrow-left-double-line"
+               ></i></button>
+             <button class="btn page-btn btn-outline-paginate px-1" id="next" (click)="getRecord('next',cnData.sno)" tooltip="next"><i
+                 class="ri-arrow-right-double-line"></i></button>
+             <button class="btn page-btn btn-outline-paginate px-1" id="last" (click)="getRecord('last',cnData.sno)" tooltip="last"><i
+                 class="ri-skip-right-line"></i></button>
+            </div>
+             </div>
+             </div>
+            </div>
+          </div>
+
+          <div class=" mt-0" style="flex:1 1 auto">
+
+            <div class="col-md-4">
+
+              <div class="pr-0">
+                <div class="input-group">
+                <label
+                style="height: 33px;"
+                class="input-group-text side-input-dia"
+                >Client No:</label>
+                <ng-select placeholder="Search Invoice...">
+                  <!-- Template for no search results -->
+                  <ng-template #noResults>
+                    <div>No results found</div>
+                  </ng-template>
+                </ng-select>
+                </div>
+              </div>
+      
+            </div>
+
+        <!-- first-card -->
+        <div class="card">
+          <div class="d-flex flex-wrap">
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Invoice No:</label>
+                <input class="form-control" placeholder="Enter Invoice No" minlength="3" maxlength="3" type="text" [(ngModel)]="cnData.vC_NO" />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Client No:</label>
+                <input class="form-control" placeholder="Enter Client No" type="text" [(ngModel)]="cnData.cn"  />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia">Inv date:</label>
+                <input class="form-control" placeholder="Enter Inv date" type="text" id="inputField1" maxlength="10"  [(ngModel)]="cnData.inV_DTTM" />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >From:</label>
+                <input class="form-control" placeholder="From" type="text"  [(ngModel)]="cnData.sT_DATE"  />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="inputField1" class="input-group-text side-input-dia" >To:</label>
+                <input class="form-control" placeholder="To" type="text" [(ngModel)]="cnData.enD_DATE"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- first-card -->
+        <!-- table-card -->
+        <div class="card mt-2">
+          <div class="table-veritical">
+          <table class="table table-bordered data mb-0">
+            <thead class="table-head-fix">
+              <tr>
+                <th style="width: 2rem">Seq</th>
+                <th style="width: 2rem">Date</th>
+                <th style="width: 2.5rem">Pat.No</th>
+                <!-- <th style="width: 2.5rem">Ref. No</th> -->
+                <!-- <th style="width: 2rem">Saudi</th> -->
+                <th style="width: 2rem">Accessions</th>
+                <th style="width: 2rem">Code</th>
+                <th style="width: 2rem">U/Price</th>
+                <th style="width: 2rem">DT</th>
+                <th style="width: 2rem">% Dsc</th>
+                <!-- <th style="width: 2rem">KP</th> -->
+                <th style="width: 2rem">D/Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bData of billingData; let i = index">
+                <td>{{bData.seq}}</td>
+                <td>{{bData.reQ_DATE}}</td>
+                <td class="tooltip-cell" appTooltip="{{bData.paT_NAME}}"><span>{{bData.paT_ID}}</span></td>
+                <!-- <td>{{bData.reF_NO}}</td>
+                <td>{{bData.saudi}}</td> -->
+                <td>{{bData.accn}}</td>
+                <td class="tooltip-cell" appTooltip="{{bData.fulL_NAME}}"><span>{{bData.reQ_CODE}}</span></td>
+                <td>{{bData.uprice}}</td>
+                <td>{{bData.dt}}</td>
+                <td>{{bData.dscnt}}</td>
+                <!-- <td>{{bData.kp}}</td> -->
+                <td>{{bData.dprice}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+        <!-- table-card -->
+      </div>
+      <!-- billing-section -->
+      <div class=" no-padding-left" style="flex:1 1 auto">
+        
+        <div class="d-flex" style="margin-top:2.5rem">
+          <!-- remote section -->
+          <!-- <div class="col-md-6 no-padding-left">
+            <div class="card" style="display: none;">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label
+                    for="inputField1"
+                    class="input-group-text side-input-dia"
+                    >Patient Name:</label
+                  >
+                  <input
+                    class="form-control"
+                    placeholder="Enter Patient Name"
+                    type="text"
+                    id="inputField1"
+                    maxlength="10"
+                  />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label for="inputField1" class="input-group-text side-input-dia" >Test:</label>
+                  <input
+                    class="form-control"
+                    placeholder="Enter Patient Name"
+                    type="text"
+                    id="inputField1"
+                    maxlength="10"
+                  />
+                </div>
+              </div>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
+          </div> -->
+          <!-- remote section -->
+          <!-- allow billing -->
+          <div class="col-md-12 no-padding-right">
+            <div class="card">
+              <div class="d-flex justify-content-end mx-1">
+                <div class="mx-3">
+                  <label for="inputField1">Item Subtotal:</label>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2"  [(ngModel)]="cnData.toT_VALUE" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="d-flex mx-3">
+                  <label for="inputField1" class="input-group-text side-input-dia" >Discount %:</label>
+                  <input style="width:4rem" class="form-control" placeholder="" type="text" maxlength="2"  [(ngModel)]="cnData.dscntp"/>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2"  [(ngModel)]="cnData.dscntamnt"/>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                  <label for="inputField1">Net Amount:</label>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2"  [(ngModel)]="cnData.neT_VALUE"/>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                    <input type="checkbox" id="checkbox1" />
+                  <label for="inputField1">15% VAT:</label>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2" [(ngModel)]="cnData.vat"/>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                  <label for="inputField1">Saudi VAT (-):</label>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2" [(ngModel)]="cnData.svat"/>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                  <label for="inputField1">Grand Total:</label>
+                </div>
+                <div class="float-right">
+                  <input style="width: 8rem;" class="form-control" placeholder="" type="text" maxlength="2" [(ngModel)]="cnData.granD_VAL"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- allow billing -->
+        </div>
+        </div>
+      <!-- billing-section -->
+
+        <!-- add-section -->
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>

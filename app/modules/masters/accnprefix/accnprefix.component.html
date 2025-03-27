@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+    <!-- back-link -->
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+          <a style="color:#000000">
+            <h6 class=" py-1 mt-1 header-font">System</h6>
+          </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+          <a style="color:#000000">
+            <h6 class=" py-1 mt-1 header-font">System Configuration</h6>
+          </a>
+        </div> -->
+    </div>
+
+    <!-- back-link -->
+
+    <div class="col-md-3 float-right">
+
+      <div>
+        <div class="input-group">
+          <div class="w-100">
+            <div class="search-container">
+        <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+        <span class="search-icon"></span>
+      </div>
+    </div>
+        </div>
+      </div>
+    
+    </div>
+    <!-- Add-division -->
+    <!-- <button class="add-btn add-row mb-2" type="button"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+        Record</button> -->
+    <button class="btn btn-outline-dark add-section" [disabled]="true">
+      <i class="ri-list-view pr-1"></i>View
+    </button>
+    <!-- Add-division -->
+    <!-- Table -->
+    <div class="card mt-2">
+      <table class="table table-bordered data" id="editableTable">
+
+        <thead>
+          <tr>
+            <th style="width:7rem" (click)="sortData('reF_SITE')">Ref. Site<i class="material-icons sort-icon" [ngClass]="getSortIconClass('reF_SITE')">{{ getSortIcon('reF_SITE') }}</i></th>
+            <th (click)="sortData('prfx')">PRFX<i class="material-icons sort-icon" [ngClass]="getSortIconClass('prfx')">{{ getSortIcon('prfx') }}</i></th>
+            <th style="width:10rem" (click)="sortData('descrip')">Description<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('descrip') }}</i></th>
+            <th style="width:12rem" (click)="sortData('nextaccn')">Next Accession<i class="material-icons sort-icon" [ngClass]="getSortIconClass('nextaccn')">{{ getSortIcon('nextaccn') }}</i></th>
+            <!--<th style="width:10rem" (click)="sortData('updt')">Update<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('updt') }}</i></th>
+            <th style="width:10rem" (click)="sortData('cuR_DATE')">Current Date<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('cuR_DATE') }}</i></th>-->           
+            <th style="width:10rem" (click)="sortData('cuR_YEAR')">Current Year<i class="material-icons sort-icon" [ngClass]="getSortIconClass('cuR_YEAR')">{{ getSortIcon('cuR_YEAR') }}</i></th>
+            <th style="width:10rem" (click)="sortData('dflT_SET')">Default Set<i class="material-icons sort-icon" [ngClass]="getSortIconClass('dflT_SET')">{{ getSortIcon('dflT_SET') }}</i></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of accnList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+            <td>{{item.reF_SITE}}</td>
+            <td>{{item.prfx}}</td>
+            <td>{{item.descrip}}</td>
+            <td>{{item.nextaccn}}</td>
+            <!-- <td>{{item.updt}}</td>
+            <td>{{item.cuR_DATE}}</td>-->
+            <td>{{item.cuR_YEAR}}</td>
+            <td style="text-align: left;">{{item.dflT_SET}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <app-pagination [totalItems]="accnList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+.table-veritical {
+  height: 67vh;
+  overflow-y: scroll;
+}
+
+.table th {
+  white-space: nowrap !important;
+  text-align: center;
+  align-content: center;
+}
+
+.table td {
+  text-align: center;
+}
+.sort-icon {
+  margin-top: 2px;
+  cursor: pointer;
+}
+.filter-icon{
+  cursor: pointer;
+}
+.right-card {
+  position: fixed;
+  flex: 1 1 auto;
+  height: auto;
+  /* Adjust height */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  /* Ensure it's above other elements */
+  border-radius: 0.5rem;
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2);
+  margin-left: -1rem;
+}
+
+.right-card button {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.right-card:after {
+  content: " ";
+  position: absolute;
+  left: -15px;
+  top: 4px;
+  border-top: 15px solid transparent;
+  border-right: 15px solid black;
+  border-left: none;
+  border-bottom: 15px solid transparent;
+}
+
+.right-card h6 {
+  padding: 0.7rem 1rem;
+  background-color: #f8f9fc;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 450;
+  color: rgb(17, 16, 16);
+  margin-bottom: 0;
+}
+
+.icons-styles {
+  font-weight: bold;
+}
+
+.blue-link {
+  color: #0079FE;
+  text-decoration: none;
+  border-bottom: 1px dotted #0079FE;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon-container {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.sort-icon,
+.filter-icon {
+  font-size: 16px;
+}
+
+/* Set a minimum width for ng-select */
+.ng-select {
+  min-width: 50px;
+  /* Adjust width based on your need */
+}
+
+/* Style the ng-select options */
+.ng-option {
+  display: flex;
+  align-items: center;
+}
+
+/* Increase spacing between checkbox and label */
+.ng-option input[type="checkbox"] {
+  margin-right: 8px;
+  /* Add space between the checkbox and text */
+}
+
+/* Optional: style the label for better readability */
+.ng-option label {
+  font-size: 14px;
+  color: #333;
+  /* Adjust color and size for better visibility */
+}
+
+.blur-text {
+  filter: blur(0.5px);
+  /* Adjust the blur level (e.g., 2px, 3px, etc.) */
+  color: #666;
+  /* Optional: Change the text color to a lighter shade */
+  opacity: 90;
+  /* Optional: Add a little transparency for more subtle effect */
+  text-align: center;
+}

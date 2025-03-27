@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space"></div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="addClinicalEnvironmental" data-tab-target="tab-content-1"
+            (click)="goToClinicalEnvironmental('addClinicalEnvironmental')"
+            [class.is-active]="selected === 'addClinicalEnvironmental'">
+            Data Entry
+          </button>
+          <button data-tab-target="tab-content-2" id="listClinicalEnvironmental"
+            (click)="goToClinicalEnvironmental('listClinicalEnvironmental')"
+            [class.is-active]="selected === 'listClinicalEnvironmental'">
+            Pending
+          </button>
+          <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Environmental Results</h6>
+          <!-- <div class="ml-auto" style="width: 15rem;">
+            <div class="input-group abbrv-text">
+              <label for="validationCustom01" class="input-group-text side-input-dia head-search">Environmental
+                Results:</label>
+              <input placeholder="" class="form-control head-search" readonly [(ngModel)]="abrv" />
+            </div>
+          </div> -->
+
+        </nav>
+        <app-default></app-default>
+      </div>
+    </section>
+  </div>
+</div>

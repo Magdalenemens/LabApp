@@ -1,0 +1,11 @@
+.tooltip-text {
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 5px 15px !important;
+    border-radius: 10px !important;
+    top: 50px !important;
+    margin-left: -2.5rem !important;
+    z-index: 999;
+    text-transform: capitalize;
+  }

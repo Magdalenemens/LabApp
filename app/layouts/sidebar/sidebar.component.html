@@ -1,0 +1,402 @@
+<div class="nav" [ngClass]="{'expanded': isSidebarExpanded}" id="navbar">
+    <nav class="nav__container">
+        <div>
+            <div class="d-flex mx-3 pt-2">
+                <img src="../../../assets/images/scope-design.png" alt="logo" class="side-logo-sb">
+                <h5 class="logo-name" style="padding-left:15.7px">
+                    <!-- <img  src="./Assets/images/logo.svg" alt="logo" width="120" height="45"> -->
+                    Dx-Care
+                </h5>
+            </div>
+
+            <div class="nav__list">
+                <div class="nav__items">
+
+                    <a>
+                        <img class="mx-1 mb-2" [ngClass]="{'rotated': isSidebarExpanded}" (click)="toggleSidebar()"
+                            src="../../../assets/icons/right-arrows-theme.png" alt="logo" width="16" height="18">
+
+                    </a>
+                    <a class="nav__link" routerLink="/dashboard">
+                        <!-- <i class='bx bx-home nav__icon' ></i> -->
+                        <img src="../../../assets/icons/Menu-theme.png" alt="logo" class="dash-dia-sb mr-3">
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+                    <!-- order-processing -->
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <img style="pointer-events: none;" class="mr-3"
+                                src="../../../assets/icons/order-processing-theme.png" alt="logo" width="24"
+                                height="24">
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+                                        <span class="nav__name">Order Processing</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+                                    <a routerLink="/orderprocessing/ordersnew/AddOrderentryNew"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Order Entry New</a>
+                                    <a routerLink="/orderprocessing/orders/AddOrderentry" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Order Entry</a>
+                                    <!--<a href="#" class="nav__dropdown-item">Test Orders</a>-->
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Speciman Collection</a>
+                                    <a routerLink="/orderprocessing/orders-receiving/OrderReceiving"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Central Receiving</a>
+                                    <a routerLink="/orderprocessing/pre-analytical-receiving" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Pre-Analytical
+                                        Receiving</a>
+                                    <a routerLink="/orderprocessing/cytogenetics-login" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Cytogenetics Receiving</a>
+                                    <a routerLink="/orderprocessing/cytogenetics-Orders" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Cytogenetics Orders</a>
+                                    <a routerLink="/orderprocessing/ap-receiving" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">AnatomicPathology
+                                        Receiving</a>
+                                    <a routerLink="/orderprocessing/environmentalorders/AddEnvironmentalOrder"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Environmental Order</a>
+                                    <a routerLink="/orderprocessing/customer-quotationComponent"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Customer Quotation</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- order-processing -->
+                    <!-- Clinical Modules -->
+                    <div class="d-flex">
+                        <div>
+                            <img class="mr-3" src="../../../assets/icons/clinical-module-theme.png" alt="logo"
+                                width="24" height="24">
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div
+                                        [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+                                        <span class="nav__name">Clinical Modules</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+
+                                    <a routerLink="/clinical-module/GeneralResults/addgeneralresults"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">General
+                                        Lab</a>
+                                    <a routerLink="/clinical-module/MicroBiology/addmicrobiology"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Microbiology</a>
+
+                                    <a routerLink="/clinical-module/Anatomic/addanatomic" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Anatomic Pathology</a>
+
+                                    <a routerLink="/clinical-module/Cytogenetics/addcytogenetics"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Cytogenetics</a>
+                                    <a routerLink="/clinical-module/ClinicalEnvironmental/addClinicalEnvironmental"
+                                        class="nav__dropdown-item" (click)="collapseSidebar()">Environmental</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Clinical Modules -->
+
+                    <!-- Test Directory -->
+                    <div class="d-flex">
+                        <div>
+                            <img class="mr-3" src="../../../assets/icons/test-directory-theme.png" alt="logo" width="24"
+                                height="24">
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div [ngClass]="{'disabled-header': !moduleBasedActionModel.testDirectoryIsAllow}">
+                                        <span class="nav__name">Test Directory</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.testDirectoryIsAllow}">
+                                    <a routerLink="/test-directory/testdefinition/addtestdirectory"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">GL Test Definition</a>
+
+                                    <a routerLink="/test-directory/apTestDefinition/addapTestDefinition"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">AP Test Definition</a>
+
+                                    <a routerLink="/test-directory/evtestdefinition/addevtestdefinition"
+                                        class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">EV Test Definition</a>
+
+
+                                        <a routerLink="/test-directory/cgtestdefinition/addcgtestdefinition" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">CG Test Definition</a>
+
+                                        <a routerLink="/test-directory/mbtestdefinition/addmbtestdefinition" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">MB Test Definition</a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Test Directory -->
+
+                    <!-- Finance -->
+                    <div class="d-flex">
+                        <div>
+                            <img class="mr-3" src="../../../assets/icons/finance-theme.png" alt="logo" width="24"
+                                height="24">
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div [ngClass]="{'disabled-header': !moduleBasedActionModel.financeIsAllow}">
+                                        <span class="nav__name">Finance</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.financeIsAllow}">
+                                    <a routerLink="/finance/SalesPrices/price-master-list" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Sales Prices</a>
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Clients</a>
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Account Managers</a>
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Contracts</a>
+                                    <!-- <a routerLink="/clinical-module/MicroBiology/addmicrobiology" 
+                                class="nav__dropdown-item" routerLinkActive="active" (click)="collapseSidebar()">Microbiology</a> -->
+                                    <a routerLink="/finance/Biling/bills-generation" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Billing</a>
+                                    <a routerLink="/finance/client-account/addclientAccount" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Client Account</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Test Directory -->
+                    <!-- Master Setup -->
+                    <div class="d-flex">
+                        <div>
+
+                            <img class="mr-3" src="../../../assets/icons/settings-theme.png" alt="logo" width="24"
+                                height="24">
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div [ngClass]="{'disabled-header': !moduleBasedActionModel.masterSetupIsAllow}">
+                                        <span class="nav__name">Master Setup</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content" style="height: 12rem;"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.masterSetupIsAllow}">
+                                    <a routerLink="/masters/divisions" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Lab Divisions</a>
+                                    <a routerLink="/masters/sections" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Lab Sections</a>
+                                    <a routerLink="/masters/workcenters" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Work Centres</a>
+                                    <a routerLink="/masters/testsites" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Test Sites</a>
+                                    <a routerLink="/masters/annprefix" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Accession Prefix</a>
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Result Types</a>
+
+                                    <a routerLink="/masters/specimentypes" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Specimen Types</a>
+                                    <a routerLink="/masters/specimensites" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Specimen Sites</a>
+                                    <a routerLink="/masters/resultstemplates" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Results Templates</a>
+
+                                    <a routerLink="/masters/EV-Sample-test" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">EV Sample Test</a>
+                                    <a routerLink="/masters/ar" class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Alpha
+                                        Response</a>
+                                    <a routerLink="/masters/mn" class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Medical
+                                        Nomenclature</a>
+                                    <a routerLink="/masters/mni" class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Organisms Codes</a>
+                                    <a routerLink="/masters/cnlcd" class="nav__dropdown-item" routerLinkActive="active"
+                                        (click)="collapseSidebar()">Cancellation Reasons</a>
+
+
+                                    <a routerLink="/masters/reportmainheader" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Reports Main Headers</a>
+                                    <a routerLink="/masters/reportsubheader" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Reports Sub Headers</a>
+                                    <a routerLink="/masters/accountmanagers" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Account Managers</a>
+                                    <!-- <a routerLink="/masters/drivers" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Drivers</a> -->
+
+                                    <a routerLink="/masters/clients/addclient" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Clients</a>
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Special Prices</a>
+
+                                    <a routerLink="/masters/doctors" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Doctors</a>
+
+
+                                    <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Clinics</a>
+
+                                    <a routerLink="/masters/company" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Company</a>
+
+                                    <!-- <a routerLink="/masters/underconst" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Phlebotomist</a> -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Master Setup -->
+                    <!-- Finance -->
+
+                    <div class="d-flex">
+                        <div>
+                            <img class="mr-3" src="../../../assets/icons/system-icon-2-theme.png" alt="logo" width="24"
+                                height="24">
+
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div [ngClass]="{'disabled-header': !moduleBasedActionModel.systemIsAllow}">
+                                        <span class="nav__name">System</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.systemIsAllow}">
+                                    <!-- <a routerLink="/masters/sites" class="nav__dropdown-item"
+                                        routerLinkActive="active">Lab Sites</a> -->
+                                    <a routerLink="/system/users/adduser" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Users Definition</a>
+
+                                    <a routerLink="/system/Labsites/addData" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Lab Sites</a>
+                                    <a routerLink="/system/System-Configuration" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">System Configuration</a>
+                                    <!-- <a routerLink="/system/Archiving" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Archiving</a>
+                                    <a routerLink="/system/Manual-Backup" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Manual Backup</a> -->
+                                    <!-- <a routerLink="/system/Login-track" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Login track</a> -->
+                                    <a routerLink="/system/Roles-And-Permissions" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Roles & Permissions</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- Finance -->
+                    <!-- management-reports -->
+                    <div class="d-flex">
+                        <div>
+                            <img style="margin-left: -2px;" class="mr-3"
+                                src="../../../assets/icons/management-reports-icon-theme.png" alt="logo" width="25"
+                                height="25">
+
+                        </div>
+                        <div class="nav__dropdown" onclick="ToggleOption(this);">
+                            <a class="nav__link">
+                                <div class="d-flex justify-content-between" style="width: 14rem;">
+                                    <div
+                                        [ngClass]="{'disabled-header': !moduleBasedActionModel.managementReportingIsAllow}">
+                                        <span class="nav__name">Management Reports</span>
+                                    </div>
+                                    <div>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon mt-1'></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content"
+                                    [ngClass]="{'disabled-header': !moduleBasedActionModel.managementReportingIsAllow}">
+                                    <a routerLink="/management-reports/Finance" class="nav__dropdown-item"
+                                        routerLinkActive="active" (click)="collapseSidebar()">Finance</a>
+                                    <a routerLink="/management-reports/Processing" class="nav__dropdown-item"
+                                        (click)="collapseSidebar()">Processing</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- management-reports -->
+                </div>
+
+            </div>
+        </div>
+
+        <div>
+            <a href="#" class="nav__link nav__logout d-flex" (click)="logoutAndUpdate($event)">
+                <img class="mr-3" src="../../../assets/icons/logout-theme.png" alt="logo" width="24" height="24">
+                <span class="nav__name">Log Out</span>
+            </a>
+
+            <!-- <i class="ri-arrow-right-double-line" [ngClass]="{'rotated': isSidebarExpanded}" (click)="toggleSidebar()"></i> -->
+        </div>
+
+    </nav>
+</div>

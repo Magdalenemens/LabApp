@@ -1,0 +1,98 @@
+
+  // .sm-field{
+    .table-veritical{
+      height:69vh;
+      overflow-y: scroll;
+    }
+  b, strong {
+    font-weight: 500;
+  }
+  @media only screen and (max-width: 1300px) {
+  .col-md-6{
+   width: 100% !important;
+   max-width: 100% !important;
+   flex: 0 0 100% !important;
+  }
+  .col-md-4{
+   flex: 0 0 50%;
+  max-width: 50%;
+  }
+  .col-md-2{
+   flex: 0 0 25%;
+   max-width: 25%;
+  }
+  }
+  // common-for-specific-screen
+  ngx-editor.ng-untouched.ng-dirty {
+    height: 14.6rem;
+    overflow-y: scroll;
+  }
+
+  .table td, .table th {
+    padding: 0rem 0.2rem;
+}
+.table>tbody>tr>td {
+   font-size: 14px;
+}
+.edit, .delete, .cancel {
+  font-size: 12px;
+  width: 3.7rem;
+}
+td input[type=text], td select {
+  height: 27px !important;
+  padding: 2px 8px !important;
+}
+
+.editor {
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+
+  .NgxEditor__MenuBar {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .NgxEditor {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: none;
+  }
+
+  .CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+    margin-bottom: 0.7rem;
+
+    pre {
+      white-space: pre !important;
+    }
+  }
+}
+
+.tooltip-text {
+  padding:1rem !important
+}
+.search-container {
+  position: relative;
+  width: 100%; /* Adjust width as needed */
+}
+
+.search-input-icon {
+  text-align: left;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  padding-right: 35px; /* Create space for the icon */
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust distance from the right */
+  transform: translateY(-50%);
+  width: 16px; /* Icon size */
+  height: 16px;
+  background-image: url('./../../../../../assets/icons/search.png'); /* Replace with the search icon path */
+  background-repeat: no-repeat;
+  background-size: contain;
+}

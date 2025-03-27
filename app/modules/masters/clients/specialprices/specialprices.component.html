@@ -1,0 +1,277 @@
+<div class="tab-target   mt-3" id="tab-content-3">
+  <form #frmcopyfrom="ngForm" (ngSubmit)="frmcopyfrom.form.valid">
+    <!-- Add-division -->
+    <button data-toggle="modal" *ngIf="!isDisabled" id="btncopy" data-target="#copy-from-clients"
+      class="btn btn-outline-dark  copy-row my-2"><i class="ri-file-copy-line pr-2"></i>Copy From Other Client</button>
+    <button data-toggle="modal" *ngIf="!isDisabled" id="btnselecttest" type="submit" data-target="#selectTests"
+      class="btn btn-outline-dark my-2" (click)="ShowTests()"><i class="ri-file-list-line pr-2"></i>Select
+      Tests</button>
+    <!-- Add-division -->
+    <button class="add-btn add-row my-3" type="submit" *ngIf="showadd" type="button" (click)="addTable()"><i
+        class="ri-add-line"></i>&nbsp;&nbsp;Add
+      Record</button>
+    <button class="btn btn-outline-dark cancelation" *ngIf="showadd" type="button"
+      (click)="ResetForm();frmEmployee.resetForm()"><i class="ri-close-line pr-1"></i>Cancel</button>
+    <div class="card table-responsive-lg">
+
+      <table class="table table-bordered data" id="spclienttable">
+        <thead>
+          <tr>
+            <th style="width: 10%;" (click)="sortData('cn')">C.N<i class="material-icons sort-icon" [ngClass]="getSortIconClass('cn')">{{ getSortIcon('cn') }}</i></th>
+            <th style="width: 10%;" (click)="sortData('code')">Req Code<i class="material-icons sort-icon" [ngClass]="getSortIconClass('code')">{{ getSortIcon('code') }}</i></th>
+            <th style="width: 30%;" (click)="sortData('name')">Test Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('name')">{{ getSortIcon('name') }}</i></th>
+            <th style="width: 10%;" (click)="sortData('uprice')">U/Price<i class="material-icons sort-icon" [ngClass]="getSortIconClass('uprice')">{{ getSortIcon('uprice') }}</i></th>
+            <th style="width: 14%;" (click)="sortData('dt')">DT<i class="material-icons sort-icon" [ngClass]="getSortIconClass('dt')">{{ getSortIcon('dt') }}</i></th>
+            <th style="width: 10%;" (click)="sortData('dscnt')">Discount%<i class="material-icons sort-icon" [ngClass]="getSortIconClass('dscnt')">{{ getSortIcon('dscnt') }}</i></th>
+            <th style="width: 10%;" (click)="sortData('dprice')">D/Price<i class="material-icons sort-icon" [ngClass]="getSortIconClass('dprice')">{{ getSortIcon('dprice') }}</i></th>
+            <!-- <th style="width: 10%;" >F/Price</th> -->
+            <th style="width: 10%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itemList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+
+            <!-- <td><span>{{ item.tcode }}</span></td> -->
+            <!-- <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.cn }}</span></td> -->
+
+            <td><span>{{ item.cn }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.code }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.name }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.uprice }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.dt }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.dscnt }}</span></td>
+            <td *ngIf="(!item.IsEdit&&!item.IsAdd)"><span>{{ item.dprice }}</span></td>
+
+            <td *ngIf="(item.IsEdit||item.IsAdd)"><input type="text" #reqcodeselected="ngModel" appAlphabetOnly required
+                [readOnly]="!isCodeEditable" class="form-control {{required_dscnt}}"
+                id="txt_reQ_CODE_{{ item.clnT_SP_ID }}" maxlength="10"
+                [ngClass]="(reqcodeselected.invalid && (reqcodeselected.dirty|| frmcopyfrom.submitted))?'is-invalid':''"
+                (blur)="checkAlreadyExisting($event,item.clnT_SP_ID)" name="txt_reQ_CODE_{{ item.clnT_SP_ID }}"
+                [(ngModel)]="item.code" value="{{item.code}}" /> </td>
+
+            <td *ngIf="(item.IsEdit||item.IsAdd)"><input type="text" #billnameselected="ngModel" appAlphabetOnly
+                required [readOnly]="true" class="form-control {{required_dscnt}}" id="txt_name_{{ item.clnT_SP_ID }}"
+                name="txt_name_{{ item.clnT_SP_ID }}"
+                [ngClass]="(billnameselected.invalid && (billnameselected.dirty|| frmcopyfrom.submitted))?'is-invalid':''"
+                [(ngModel)]="item.name" value="{{item.name}}" /> </td>
+
+
+            <td *ngIf="(item.IsEdit||item.IsAdd)"><input type="number" #upriceselected="ngModel" required
+                class="form-control {{required_dscnt}}" id="txt_uprice_{{ item.clnT_SP_ID }}" maxlength="10"
+                name="txt_uprice_{{ item.clnT_SP_ID }}"
+                [ngClass]="(upriceselected.invalid && (upriceselected.dirty|| frmcopyfrom.submitted))?'is-invalid':''"
+                (change)="changeunitprice($event,item.clnT_SP_ID)" [(ngModel)]="item.uprice" value="{{item.uprice}}" />
+            </td>
+
+
+            <td *ngIf="(item.IsEdit||item.IsAdd)">
+              <select id="dropdown1" class="form-control {{required_dt}}"
+                (change)="changedropdowndt($event,item.clnT_SP_ID)" id="txt_{{ item.dt }}" [(ngModel)]="item.dt"
+                value="{{item.dt}}">
+                <option value="P">P</option>
+                <option value="S">S</option>
+              </select>
+              <!-- <input type="text" required class="form-control {{required_dt}}"
+              id="txt_{{ item.dt }}" [(ngModel)]="item.dt" value="{{item.dt}}" /> -->
+            </td>
+            <td *ngIf="(item.IsEdit||item.IsAdd)"><input type="number" disabled="{{item.IsDt_p}}" required
+                class="form-control {{required_dscnt}}" id="txt_dscnt_{{ item.clnT_SP_ID }}" min="0" max="100"
+                onkeyup=enforceMinMax(this) name="txt_dscnt_{{ item.clnT_SP_ID }}"
+                (change)="changediscountpercentage($event,item.clnT_SP_ID)" [(ngModel)]="item.dscnt"
+                value="{{item.dscnt}}" /> </td>
+
+            <td *ngIf="(item.IsEdit||item.IsAdd)"><input type="number" disabled="{{item.IsDt_s}}" required
+                class="form-control {{required_dprice}}" id="txt_dprice_{{ item.clnT_SP_ID }}" min="0"
+                max="{{ item.uprice }}" onkeyup=enforceMinMax(this) name="txt_dprice_{{ item.clnT_SP_ID }}"
+                (change)="changediscountprice($event,item.clnT_SP_ID)" [(ngModel)]="item.dprice" maxlength="6"
+                value="{{item.dprice}}" /> </td>
+
+            <!-- <td *ngIf="(!item.IsEdit||!item.IsAdd)" style="display: none;"><input type="number" disabled="{{item.IsDt_s}}" required
+                class="form-control " id="txt_dprice_{{ item.clnT_SP_ID }}" min="0"
+                max="{{ item.dprice }}" onkeyup=enforceMinMax(this) name="txt_dprice_{{ item.clnT_SP_ID }}"
+                [(ngModel)]="item.dprice"
+                value="{{item.dprice}}" /> </td> -->
+
+            <td> <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.clnT_SP_ID)"><i
+                  class="ri-pencil-line pr-1"></i>Edit</button>
+              <button *ngIf="item.IsAdd" class="delete" (click)="deleteRow(item.clnT_SP_ID)"><i
+                  class="ri-delete-bin-line pr-1"></i>Delete</button>
+              <button *ngIf="item.IsEdit" class="cancel" (click)="CancelRow(item.clnT_SP_ID)"><i
+                  class="ri-close-line pr-1"></i>cancel</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination Component -->
+      <app-pagination [totalItems]="itemList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+        (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </app-pagination>
+      <div class="tab-navigation-buttons d-flex justify-content-between mt-2">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6" style="float: right;">
+          <button type="submit" class="btn btn-outline-dark" id="first" style="float: right;" [disabled]="disabled"
+            (click)="AddData(true)"><i class="ri-save-line pr-2"></i>Submit</button>
+
+        </div>
+
+      </div>
+
+      <!-- <div id="jsGrid"></div> -->
+    </div>
+  </form>
+</div>
+<!--Select tests Modal -->
+<div class="modal fade" id="selectTests" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="selectTestsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="selectTestsLabel">Select Tests</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="d-flex flex-wrap mb-2">
+        <div class="col-md-3">
+          <label for="inputField1">CN:</label>
+          <input class="form-control" placeholder="Enter CN" type="text" id="inputField1" required disabled />
+        </div>
+        <div class="col-md-3">
+          <label for="inputField1">Div NO:</label>
+          <select id="dropdown1" class="form-control">
+            <option value="option1">Select</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </div>
+      </div>
+      <!-- <div class="modal-title">
+        <div class="row">
+        <div class="col-md-2" style="margin-left: 2%">
+          <label>CN:</label>
+         
+        </div>
+        <div class="col-md-2">
+          <label>Div No:</label>
+          <span>
+            <ng-select #selectedValue="ngModel" name="fromdiv" required="true" class="editable-dropdown"
+              placeholder="select" [(ngModel)]="fromclientId"
+              [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+              <ng-option [value]="0" [innerText]="'Select Division'">
+
+              </ng-option>
+              <ng-option [value]="obj.div" *ngFor="let obj of testList">
+                {{ obj.div}}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="selectedValue.invalid" class="invalid-feedback">
+              Dropdown selection is required.
+            </div>
+          </span>
+        </div>        
+      </div>
+    </div> -->
+      <div class="modal-body">
+        <table class="table table-bordered data my-4" id="selectTests">
+          <thead>
+            <tr>
+              <!-- <th>Div No.</th> -->
+              <th>Code</th>
+              <th>Full Name</th>
+              <th>TT</th>
+              <th>Bill No</th>
+              <th>Bill</th>
+              <th>U/Price</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of testList">
+
+
+              <!-- <td ><span>{{ item.div }}</span></td> -->
+              <td><span>{{ item.code }}</span></td>
+              <td><span>{{ item.name }}</span></td>
+              <td><span>{{ item.tt }}</span></td>
+              <td><span>{{ item.b_NO }}</span></td>
+              <td><span>{{ item.bill }}</span></td>
+              <td><span>{{ item.uprice }}</span></td>
+
+
+              <td> <input type="checkbox" /> </td>
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark px-4" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Select tests Modal -->
+<!--copy-client Modal -->
+<div class="modal fade" #childModal id="copy-from-clients" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="copyFromClientsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <form #frmEmployee="ngForm" (ngSubmit)="frmEmployee.form.valid">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="copyFromClients">Copy From Existing Clients</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="col-md-12">
+            <label for="inputField1">From:</label>
+            <ng-select #selectedValue="ngModel" name="fromclientId" required="true" class="editable-dropdown"
+              placeholder="select" [(ngModel)]="fromclientId"
+              [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+              <ng-option [value]="0" [innerText]="'Select Client'">
+
+              </ng-option>
+              <ng-option [value]="obj.cn" *ngFor="let obj of clientList">
+                {{ obj.client}}
+              </ng-option>
+            </ng-select>
+            <small class="text-danger" *ngIf="selectedValue.invalid && (selectedValue.touched|| frmEmployee.submitted)">
+              From Client is required</small>
+
+
+          </div>
+          <div class="col-md-12 pb-2">
+            <label for="inputField1">To:</label>
+            <ng-select #selectedValue2="ngModel" name="toclientId" required="true" class="editable-dropdown"
+              placeholder="select" [(ngModel)]="toclientId"
+              [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+              <ng-option [value]="0" [innerText]="'Select Client'">
+
+              </ng-option>
+              <ng-option [value]="obj.cn" *ngFor="let obj of clientList">
+                {{ obj.client}}
+              </ng-option>
+            </ng-select>
+            <small class="text-danger"
+              *ngIf="selectedValue2.invalid && (selectedValue2.touched|| frmEmployee.submitted)"> To Client is
+              required</small>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark cancelation px-4" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-dark px-4" data-dismiss="modal"
+            *ngIf="selectedValue2.valid&&selectedValue.valid" (click)="ShowData()">Ok</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+<!--copy-client Modal -->

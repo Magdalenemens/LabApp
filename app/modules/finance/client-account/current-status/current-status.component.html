@@ -1,0 +1,63 @@
+<h6 class="card-title text-center mt-3 mb-2 w-auto bg-white" style="border-radius: 5px">
+    <!-- Cross-Check Orders Invoices With Client Account -->
+     Client Account Current status
+   </h6>
+ 
+ <div class="card mt-2 pb-0">
+     <div class="table-veritical" style="position: relative;">
+     <table class="table table-bordered data" id="mbListTable">
+       <thead class="table-head-fix">
+         <tr>
+           <th style="width:10rem" (click)="sortData('cn')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('client')">{{ getSortIcon('client')}}</i>Client No
+           <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('cn')"></i></th>
+           <th style="width:25rem" (click)="sortData('client')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('client-name')">{{ getSortIcon('client-name')}}</i>Client name
+           <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('client')"></i></th>
+           <th (click)="sortData('totdebit')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('Total-Debit')">{{ getSortIcon('Total-Debit')}}</i>Total Debit
+           <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('totdebit')"></i></th>
+           <th (click)="sortData('totcredit')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('Total-Credit')">{{ getSortIcon('Total-Credit')}}</i>Total Credit
+           <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('totcredit')"></i></th>
+           <th (click)="sortData('totbalance')"><i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('Balence')">{{ getSortIcon('Balence')}}</i>Balance
+             <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('totbalance')"></i></th>
+         </tr>
+         <tr *ngIf="isFilterVisible()" class="custom-filter-row">
+          <td>
+            <input *ngIf="filterVisibility.cn" type="text" class="form-control"
+              placeholder="Filter client No" [(ngModel)]="cnFilter" (input)="applyFilters()" />
+          </td>
+          <td>
+            <input *ngIf="filterVisibility.client" type="text" class="form-control"
+              placeholder="Filter client Name" [(ngModel)]="clientFilter" (input)="applyFilters()" />
+          </td>
+          <td>
+            <input *ngIf="filterVisibility.totdebit" type="text" class="form-control"
+              placeholder="Filter invoice value" [(ngModel)]="totalDebitFilter" (input)="applyFilters()" />
+          </td>
+          <td>
+            <input *ngIf="filterVisibility.totcredit" type="text" class="form-control"
+              placeholder="Filter account value" [(ngModel)]="totalCreditFilter" (input)="applyFilters()" />
+          </td>
+          <td>
+            <input *ngIf="filterVisibility.totbalance" type="text" class="form-control"
+              placeholder="Filter difference" [(ngModel)]="totalBalanceFilter" (input)="applyFilters()" />
+          </td>
+        </tr>
+       <tbody>
+         <tr  *ngFor="let item of currentStatusList" >
+           <td>{{item.cn}}</td>
+           <td class="tooltip-cell"
+           style="max-width: 10rem; cursor: pointer"
+           appTooltip="{{item.client}}">{{item.client}}</td>
+           <td>{{item.totdebit}}</td>
+           <td>{{item.totcredit}}</td>
+           <td>{{item.totbalance}}</td>
+         </tr>
+       </tbody>
+     </table>
+     </div>
+   </div>
+ 
+   <div class="card mt-2">
+    <div class="dataTables_info d-flex justify-content-start" style="font-size: 14px !important;">
+      Total Records: {{ currentStatusList.length }}
+    </div>
+  </div>

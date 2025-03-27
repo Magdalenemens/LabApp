@@ -1,0 +1,390 @@
+<div class="row section-top-space pt-3 mb-5">
+  <div class="col-md-3 mt-1">
+    <div class="card p-0" style="height: 100%;">
+      <div class="card-header">
+        <img class="img-dia mr-4 my-3" src="../../../assets/images/dx-care-logo2.png" alt="logo" />
+      </div>
+      <div class="card-header">
+        <div class="data-names">
+          <h6 class="data-label">User Full Name/ Id:</h6>
+          <h6 class="data-value"> {{fullName}}{{'('+userId+')'}} </h6>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="data-names">
+          <h6 class="data-label">Signed at Site:</h6>
+          <h6 class="data-value">{{siteName}}</h6>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="data-names">
+          <h6 class="data-label">Signed on:</h6>
+          <h6 class="data-value"> {{loginTime | defaulttimezone}}</h6>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="data-names">
+          <h6 class="data-label">Reference Lab:</h6>
+          <h6 class="data-value">{{refLab}}</h6>
+        </div>
+      </div>
+      <div class="card-header">
+        <div class="data-names">
+          <button id="saveButton" type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+            data-bs-target="#changepassword">
+            Change Password
+          </button>
+        </div>
+      </div>
+      <div class="card-body p-2">
+      </div>
+    </div>
+  </div>
+
+  <!-- All-sections -->
+  <div class="col-md-9">
+    <div class="d-flex flex-wrap">
+      <!-- Lab Orders and Collection -->
+      <div class="col-md-6 mt-1">
+        <div class="card p-0">
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/Orders-Specimens-Collection-icon.png" alt="logo" width="24px"
+              height="24px" />
+            Orders and Specimens Collection
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/orders/AddOrderentry" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/clinical-orders-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Clinical Orders</h6>
+
+              </a>
+            </div>
+
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/environmentalorders/AddEnvironmentalOrder" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/environmental-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Environmental</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/cytogenetics-Orders" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Cytogenetics</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/masters/underconst" class="nav__dropdown-item"><img
+                  src="../../../assets/icons/specimen-collection-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Specimens Collection</h6>
+              </a>
+            </div>
+            <!-- <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/cytogenetics-Orders" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Cytogenetics</h6>
+              </a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- Lab Orders and Collection -->
+      <!-- Specimens Receiving -->
+      <div class="col-md-6 mt-1">
+        <div class="card p-0">
+
+          <div class="card-header" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+            <img class="mr-2" src="../../../assets/icons/Specimens-Receiving-icon.png" alt="logo" width="24px"
+              height="24px" />
+            Specimens Receiving
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/orders-receiving/OrderReceiving" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/central-recieving-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Central Receiving</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/pre-analytical-receiving" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/progressing-area-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Processing Area</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/ap-receiving" class="nav__dropdown-item" routerLinkActive="active"><img
+                  src="../../../assets/icons/anatomic-pathology-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Anatomic Pathology</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.ordersIsAllow}">
+              <a routerLink="/orderprocessing/cytogenetics-login" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Cytogenetics</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Specimens Receiving -->
+      <!-- <div class="col-md-1"></div> -->
+      <!-- Clinical Reporting -->
+      <div class="col-md-12 mt-2">
+        <div class="card p-0">
+
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/Clinical-Reporting-icon.png" alt="logo" width="24px"
+              height="24px" />
+            Clinical Reporting
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+              <a routerLink="/clinical-module/GeneralResults/addgeneralresults" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/general-lab-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">General Lab</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+              <a routerLink="/clinical-module/MicroBiology/addmicrobiology" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/microbiology-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Microbiology</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+              <a routerLink="/clinical-module/Anatomic/addanatomic" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/anatomic-pathology-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Anatomic Pathology</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+              <a routerLink="/clinical-module/Cytogenetics/addcytogenetics" class="nav__dropdown-item"
+                routerLinkActive="active"> <img src="../../../assets/icons/cytogenetics.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Cytogenetics</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.clinicalModulesIsAllow}">
+              <a routerLink="/clinical-module/ClinicalEnvironmental/addClinicalEnvironmental"
+                class="nav__dropdown-item"> <img src="../../../assets/icons/environmental-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Environmental</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Clinical Reporting -->
+      <!-- <div class="col-md-1"></div> -->
+      <!-- Finance and Accounting -->
+      <div class="col-md-4 mt-2">
+        <div class="card p-0">
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/billing-accounting-icon.png" alt="logo" width="24px"
+              height="24px" />
+            Billing and Accounting
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.financeIsAllow}">
+              <a routerLink="/finance/Biling/bills-generation" class="nav__dropdown-item">
+                <img src="../../../assets/icons/billing-module-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Billing Module</h6>
+              </a>
+            </div>
+
+            <div class="card cards-width my-1" [ngClass]="{'disabled-header': !moduleBasedActionModel.financeIsAllow}">
+              <a routerLink="/finance/client-account/addclientAccount" class="nav__dropdown-item">
+                <img src="../../../assets/icons/client-account-icon.png" alt="logo" class="logo-dia-cards my-3" />
+
+                <h6 class="py-1 cards-text">Client Accounting</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Finance and Accounting -->
+      <!-- Facts Tables -->
+      <div class="col-md-6 mt-2">
+        <div class="card p-0">
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/common-files-icon.png" alt="logo" width="24px" height="24px" />
+            Common Files
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.masterSetupIsAllow}">
+              <a routerLink="/masters/clients/addclient" class="nav__dropdown-item" routerLinkActive="active"><img
+                  src="../../../assets/icons/client-file-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Client File</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.masterSetupIsAllow}">
+              <a routerLink="/masters/doctors" class="nav__dropdown-item" routerLinkActive="active"><img
+                  src="../../../assets/icons/doctor-file-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Doctor File</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1"
+              [ngClass]="{'disabled-header': !moduleBasedActionModel.testDirectoryIsAllow}">
+              <a routerLink="/test-directory/testdefinition/addtestdirectory" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/test-directory-icon.png" alt="logo"
+                  class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Test Directory</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Facts Tables -->
+      <!-- exit -->
+      <div class="col-md-2 mt-2">
+        <div class="card p-0">
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/logout-dash-icon.png" alt="logo" width="24px" height="24px" />
+            Logout
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1">
+              <a class="nav__dropdown-item" (click)="logoutAndUpdate($event)" routerLinkActive="active"><img
+                  src="../../../assets/icons/logout-dash-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Logout</h6>
+              </a>
+            </div>
+            <!-- <a href="#" > -->
+            <!-- <div class="card cards-width my-1">
+              <a href="#" class="nav__link nav__logout d-flex" (click)="logoutAndUpdate($event)">
+                <img src="../../../assets/icons/logout-dash-icon.png" alt="logo" class="logo-dia-cards my-3" />
+                <h6 class="py-1 cards-text">Logout</h6>
+              </a>
+            </div> -->
+            <!-- </a> -->
+          </div>
+        </div>
+      </div>
+      <!-- exit -->
+      <!-- <div class="col-md-1"></div>
+</div> -->
+    </div>
+  </div>
+  <!-- All-sections -->
+
+  <!-- specific-sections -->
+  <div class="col-md-9" style="display:none">
+    <div class="card mt-1 lab-lines-bg">
+      <div class="col-md-9 m-3">
+        <div class="card p-0">
+          <div class="card-header">
+            <img class="mr-2" src="../../../assets/icons/Order_Collect.jpg" alt="logo" width="24px" height="24px" />
+            Cytogenetics
+          </div>
+          <div class="card-body p-2 d-flex flex-wrap justify-content-around">
+            <div class="card cards-width my-1">
+              <a routerLink="/orderprocessing/orders/AddOrderentry" class="nav__dropdown-item"
+                routerLinkActive="active"><img src="../../../assets/icons/Lab_Orders.png" alt="logo"
+                  class="logo-dia-cards my-3 mt-4" />
+                <h6 class="py-1 cards-text mb-4">Cytogenetics Orders</h6>
+              </a>
+            </div>
+            <div class="card cards-width my-1">
+              <a routerLink="/masters/underconst" class="nav__dropdown-item"><img
+                  src="../../../assets/icons/Sample_Collection.png" alt="logo" class="logo-dia-cards my-3 mt-4" />
+                <h6 class="py-1 cards-text mb-4">Cytogenetics Reports</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- specific-sections -->
+
+  <div class="footer row">
+    <div class="col-12 d-flex justify-content-between">
+      <div class="ml-5 pl-3">
+        <h6>Dx-Care, Coyright (c) 2024</h6>
+      </div>
+      <div>
+        <h6>Dx-Care Company Ltd</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<form #chnagePasswordForm="ngForm">
+  <div class="modal fade" id="changepassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm ">
+      <div class="modal-content">
+        <div class="bg-primary modal-header" style="color: white;">
+          Change Password
+        </div>
+        <div class="modal-body">
+
+          <div class="mb-2">
+            <label class="form-label" for="password-input">Old Password</label>
+            <div class="inputWithIcon">
+              <input [(ngModel)]="oldPassword" (blur)="validatePasswords()" type="password" class="form-control"
+                id="oldPassword" maxlength="12" placeholder="Old Password" required
+                [ngClass]="{'is-invalid': oldPasswordInvalid}" />
+              <div *ngIf="oldPasswordInvalid" class="text-danger">
+                {{ oldPasswordError }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label" for="password-input">New Password</label>
+            <div class="inputWithIcon">
+              <input [(ngModel)]="newPassword" (blur)="validatePasswords()" type="password" class="form-control"
+                id="Newpassword" maxlength="12" placeholder="New Password" required
+                [ngClass]="{'is-invalid': newPasswordInvalid}" />
+              <div *ngIf="newPasswordInvalid" class="text-danger">
+                {{ newPasswordError }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label" for="confirm-password-input">Confirm Password</label>
+            <div>
+              <input [(ngModel)]="confirmPassword" (blur)="validatePasswords()" type="password" class="form-control"
+                id="Confirmpassword" maxlength="12" placeholder="Confirm Password" required
+                [ngClass]="{'is-invalid': confirmPasswordInvalid}" />
+              <div *ngIf="confirmPasswordInvalid" class="text-danger">
+                {{ confirmPasswordError }}
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button id="saveButton" type="button" class="btn btn-outline-dark" [disabled]="isSavesDisabled"
+            (click)="onChangePassword()">
+            Save
+          </button>
+
+          <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

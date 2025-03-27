@@ -1,0 +1,60 @@
+
+.btn-rounded {
+  border-radius: 0.3rem;
+}
+.btn {
+  padding: 0rem 1rem;
+  height: 2.1rem;
+  border: 1.6px solid transparent;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+  // common-for-specific-screen
+  .table-veritical{
+    height:21rem;
+    overflow-y: scroll;
+  }
+  .table-veritical-sm{
+    height:10rem;
+    overflow-y: scroll;
+  }
+
+ .modal-table tr:nth-child(even) td {
+    background-color: #FFF;
+}
+
+  @media only screen and (max-width: 1300px) {
+  .col-md-6{
+   width: 100% !important;
+   max-width: 100% !important;
+   flex: 0 0 100% !important;
+  }
+  .col-md-4{
+   flex: 0 0 50%;
+  max-width: 50%;
+  }
+  .col-md-2{
+   flex: 0 0 25%;
+   max-width: 25%;
+  }
+  }
+  // common-for-specific-screen
+  ngx-editor.ng-untouched.ng-dirty {
+    height: 10.6rem !important;
+    overflow-y: scroll !important;
+  }
+  .editor-scroll{
+    height: 19rem;
+    overflow-y: scroll;
+  }
+  .edit, .delete, .cancel {
+    font-size: 12px;
+    width: 3.7rem;
+  }
+  td input[type=text], td select {
+    height: 27px !important;
+    padding: 2px 8px !important;
+  }
+ 

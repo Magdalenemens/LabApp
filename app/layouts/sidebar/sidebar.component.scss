@@ -1,0 +1,31 @@
+.disabled-header {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+#navbar {
+    width: 68px;
+    transition: width 0s;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+#navbar.expanded {
+    width: 310px;
+    background-color: #f7f7f7;
+}
+
+.rotated {
+    transform: rotate(180deg) !important;
+    transition: transform 0.3s;
+    margin-left: 14.6rem !important
+}
+
+main>section,
+body {
+    transition: margin-left 0s;
+}
+
+app-root {
+    transition: margin-left 0.3s;
+}

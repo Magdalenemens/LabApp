@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dx-Care</title>
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.1.0/remixicon.css" integrity="sha512-dUOcWaHA4sUKJgO7lxAQ0ugZiWjiDraYNeNJeRKGOIpEq4vroj1DpKcS3jP0K4Js4v6bXk31AAxAxaYt3Oi9xw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+      <!-- table-pagination -->
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/date-uk.js"></script>
+  <script src="https://cdn.datatables.net/plug-ins/1.11.5/sorting/date-eu.js"></script>
+      <!-- table-pagination -->
+       <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Carme&family=Carter+One&family=Reem+Kufi&display=swap" rel="stylesheet">
+  <!-- fonts -->
+   <!-- Add JSGrid CSS -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" rel="stylesheet">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" rel="stylesheet">
+ 
+  <!-- external-css -->
+  <link rel="stylesheet" href="../../../assets/css/index.css">
+  <link rel="stylesheet" href="../../../assets/css/master.css">
+  <link rel="stylesheet" href="../../../assets/css/clients.css">
+  <script src="../../../assets/js/sidebar.js" crossorigin ></script>
+   <!-- external-css -->
+
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+  <style>
+    a {
+      text-decoration: none;
+    }
+    button
+    {
+      margin-right: 1%;
+    }
+    .icon{
+      font-size: 20px;
+    }
+    
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+  border: 0px solid #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    border: 1px solid #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    outline: none;
+    background-color: #fff !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #fff !important;
+    background: #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: 0em 0em !important;
+  background-color: 1px solid rgb(204, 203, 203) !important;
+}
+
+div.dataTables_filter{
+  width: 55% !important;
+ /* position: relative; */
+  margin-right: 1%;
+}
+
+body{
+  background-color: #f5f5f5;
+  font-family: 'Poppins', sans-serif !important;
+}
+table th{
+font-weight:400 !important;
+}
+.table>thead>tr>th:last-child
+{
+  text-align: center;
+}
+ 
+input[type="text"]:focus, input[type="textArea"]:focus, .form-control:focus {
+  border-color: #BCBEC0;
+  box-shadow: 0 0 8px 0 #BCBEC0;
+}
+.ng-dropdown-panel.ng-select-top {
+  top:100% !important;
+  bottom: 0% !important;
+}
+.ng-dropdown-panel .scroll-host {
+  height: 12rem !important;
+}
+div.dataTables_filter label {  width: 100%  !important;}
+div.dataTables_filter input {  width: 100%  !important;}
+
+.angular-editor-toolbar[_ngcontent-ng-c2806981616] .angular-editor-toolbar-set[_ngcontent-ng-c2806981616]:not([style*="display:none"]):not([style*="display: none"]) {
+  display: inline-flex !important;
+}
+.ae-font.ae-picker {
+    float: none !important;
+}
+.ae-font.ae-expanded {
+    display: flex !important;
+}
+
+/* Bold */
+.angular-editor-button[title="Bold"]::before {
+  content: '\f032'; /* Font Awesome Bold */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Italic */
+.angular-editor-button[title="Italic"]::before {
+  content: '\f033'; /* Font Awesome Italic */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Underline */
+.angular-editor-button[title="Underline"]::before {
+  content: '\f0cd'; /* Font Awesome Underline */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* StrikeThrough */
+.angular-editor-button[title="Strikethrough"]::before {
+  content: '\f0cc'; /* Font Awesome Strikethrough */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Font Size */
+.angular-editor-button[title="Font Size"]::before {
+  content: '\f034'; /* Font Awesome Text Height */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Text Color */
+.angular-editor-button[title="TextColor"]::before {
+  content: '\f1fc'; /* Font Awesome Font Color */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Background Color */
+.angular-editor-button[title="BackgroundColor"]::before {
+  content: '\f043'; /* Font Awesome Paint Brush */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Justify Left */
+.angular-editor-button[title="Justify Left"]::before {
+  content: '\f036'; /* Font Awesome Align Left */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Justify Center */
+.angular-editor-button[title="Justify Center"]::before {
+  content: '\f037'; /* Font Awesome Align Center */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Justify Right */
+.angular-editor-button[title="Justify Right"]::before {
+  content: '\f038'; /* Font Awesome Align Right */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Justify Full */
+.angular-editor-button[title="Justify Full"]::before {
+  content: '\f039'; /* Font Awesome Align Justify */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Ordered List */
+.angular-editor-button[title="Ordered List"]::before {
+  content: '\f0cb'; /* Font Awesome List Numbered */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Unordered List */
+.angular-editor-button[title="Unordered List"]::before {
+  content: '\f0ca'; /* Font Awesome List Bulleted */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Insert Link */
+.angular-editor-button[title="Insert Link"]::before {
+  content: '\f0c1'; /* Font Awesome Link */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Unlink */
+.angular-editor-button[title="Unlink"]::before {
+  content: '\f127'; /* Font Awesome Unlink */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Insert Image */
+.angular-editor-button[title="Insert Image"]::before {
+  content: '\f03e'; /* Font Awesome Image */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Insert Video */
+.angular-editor-button[title="Insert Video"]::before {
+  content: '\f03d'; /* Font Awesome Video */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Undo */
+.angular-editor-button[title="Undo"]::before {
+  content: '\f0e2'; /* Font Awesome Undo */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Redo */
+.angular-editor-button[title="Redo"]::before {
+  content: '\f01e'; /* Font Awesome Redo */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+/* Subscript */
+.angular-editor-button[title="Subscript"]::before {
+  content: '\f12c'; /* Font Awesome Subscript */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Superscript */
+.angular-editor-button[title="Superscript"]::before {
+  content: '\f12b'; /* Font Awesome Superscript */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Indent */
+.angular-editor-button[title="Indent"]::before {
+  content: '\f03c'; /* Font Awesome Indent */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Outdent */
+.angular-editor-button[title="Outdent"]::before {
+  content: '\f03b'; /* Font Awesome Outdent */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Text Color */
+.angular-editor-button[title="Text Color"]::before {
+  content: '\f1fc'; /* Font Awesome Font */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Background Color */
+.angular-editor-button[title="Background Color"]::before {
+  content: '\f043'; /* Font Awesome Paint Brush */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Horizontal Line */
+.angular-editor-button[title="Horizontal Line"]::before {
+  content: '\f068'; /* Font Awesome Horizontal Line */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* Clear Formatting */
+.angular-editor-button[title="Clear Formatting"]::before {
+  content: '\f12d'; /* Font Awesome Eraser */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* HTML Code */
+.angular-editor-button[title="HTML Code"]::before {
+  content: '\f121'; /* Font Awesome Code */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+/* .angular-editor-button svg {
+  display: none;
+} */
+
+
+  </style>
+  <base href="/">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body app-root=""
+  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-aside--minimize mat-typography">
+  <app-root></app-root>
+<script >
+ 
+    
+</script>
+</body>
+
+</html>
+<!-- <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DeltacareApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+</head>
+<body>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> -->

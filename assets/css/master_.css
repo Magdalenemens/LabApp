@@ -1,0 +1,187 @@
+/*===== division-section =====*/
+
+.common-bg{
+    background-color: var(--white );
+}
+.add-btn{
+  background-color: var(--dark-bg );
+  color: var(--white );
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: 0px;
+  border:2px solid var(--white );
+}
+.add-btn:hover{
+  border:2px solid var(--dark-bg );
+  color:var(--dark-bg );
+  background-color: var(--white );
+}
+.cancel-btn{
+    background-color: var(--white );
+    color: var(--grey );
+    padding: 7px 40px;
+    border-radius: 5px;
+    border: 2px solid var(--grey );
+}
+.cancel-btn:hover{
+    border:2px solid var(--white );
+    color:var(--white );
+    background-color: var(--grey );
+}
+.back-link{
+    background-color: var(--white );
+    width:3rem;
+    height:3rem;
+    border-radius: 2px;
+    cursor: pointer;
+}
+  .icons{
+    font-size: 18px;
+  }
+  /* .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12{
+    padding-right: 0px;
+    padding-left: 0px;
+  } */
+  .form-control {
+    height: 2.7rem;
+  }
+table tr th{
+    height:3rem;
+    font-weight: 500;
+}
+.table-striped>tbody>tr{
+    margin-top: 7px;
+}
+.table>tbody>tr>td{
+    color:#898888
+}
+.table>tbody>tr>td:first-child{
+    vertical-align: middle;
+}
+.table>thead>tr>th:last-child{
+    width:18rem
+}
+.search-container {
+    position: relative;
+  }
+  .search-icon {
+    position: absolute;
+    right: 15px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color:#898888
+  }
+  .search-input {
+    padding-right: 30px; /* Adjust according to the width of your icon */
+  }
+  .add, .edit, .save, .delete, .cancel{
+    outline: none;
+    background: none;
+    border: none;
+    border-radius: 3px;
+  }
+  
+  .edit, .save, .delete, .cancel {
+    text-align: center;
+    cursor: pointer;
+    width:5.7rem
+  }
+  button:focus {
+    outline: 0px dotted;
+    outline: 0px auto -webkit-focus-ring-color;
+}
+  /* .save {
+    display: none;
+  }
+  .cancel {
+    display: none;
+  } */
+  
+  .edit, .save, .delete, .cancel {
+    color: #7A7983 ;
+    border: 2px solid #7A7983 ;
+    font-weight: 500;
+    background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+    background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+  }
+  .edit:hover,  .cancel:hover, .delete:hover, .save:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+  }
+  body {
+    margin: 1rem 0rem !important;
+}
+  @media screen and (min-width: 768px){
+body {
+    padding: 0rem 1.5rem 0 6rem;
+}
+}
+/*===== division-section =====*/
+
+.button.button-small {
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 10px;
+}
+
+td input[type=text],
+td select {
+  width: 100%;
+  height: 30px;
+  margin: 0;
+  padding: 2px 8px;
+}
+
+th:last-child {
+  text-align: center;
+}
+
+td:last-child {
+  text-align: center;
+}
+
+td:last-child .button {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-right: 5px;
+  background-color: #FFF;
+}
+
+td:last-child .button .fa {
+  line-height: 30px;
+  width: 30px;
+}
+/* table */
+.page-item.active .page-link {
+  background-color: var(--dark-bg);
+  border-color: var(--dark-bg);
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: var(--dark-bg) !important;
+  color: white;
+}
+/* table */
+.section-top-space{
+  margin-top: 5rem;
+}
+.yes-button {
+  background-color: transparent !important;
+  border: 2px solid #7A7983 !important; /* Set border to create outline effect */
+  color: #7A7983 !important; /* Set text color */
+}
+.no-button {
+  border: 2px solid #7A7983 !important; 
+  background-color: transparent !important;
+  color: #7A7983 !important; 
+}
+.custom-button {
+  padding: 6px 20px !important; /* Customize padding */
+}
+div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus {
+  box-shadow: none;
+}

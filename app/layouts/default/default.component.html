@@ -1,0 +1,80 @@
+
+
+<!-- <div *ngIf="authService.isLoggedIn(); else login"> -->
+    <div >
+<!--========== HEADER ==========-->
+<app-header></app-header>
+<!--========== NAV ==========-->
+<app-sidebar></app-sidebar>
+<!--========== CONTENTS ==========-->
+<main>
+    <section>
+        <!-- back-link -->
+        <router-outlet></router-outlet>
+    </section>
+</main>
+</div >
+
+<ng-template #login>
+<div class="auth-page-wrapper pt-3" style="overflow-x: hidden;" >
+    <!-- page bg -->
+    <!-- page content -->
+    <div class="auth-page-content">
+        <!-- <div class="container"> -->
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-8 col-xl-5">
+                    <div class="card mt-5 login-bg">
+                        <div class="card-body px-4">
+                            <div class="text-center">
+                                <div class="d-inline-block auth-logo">
+                                    <img src="./../../../assets/images/logo-clarity.png" alt="logo" height="60" />
+                                </div>
+                               
+                            </div>
+                            
+                            <div class="p-2 mx-5">
+                                <h3 class="text-dark mt-3">Login</h3>
+                                <div class="mb-3 mt-4 inputWithIcon">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input style="font-size: 16px !important;height: 2.6rem;" name="txtusername" type="text" id="txtusername" class="form-control" placeholder="Enter username" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="password-input">Password</label>
+                                    <!-- <div class="position-relative auth-pass-inputgroup mb-3">
+                                        <input name="txtpassword" type="password" id="txtpassword" class="form-control pe-5 password-input" placeholder="Enter password" />
+                                        <i class="ri-eye-off-line eye-icon"></i>
+                                    </div> -->
+                                    <div class="inputWithIcon">
+                                        <input name="password" type="password" id="password" placeholder="Password" autocomplete="password" class="valid" aria-invalid="false">
+                                        <i class="ri-eye-off-line eye-icon"></i>
+                                        <div class="text-danger" id="password-error"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <label class="form-label" for="password-input">Site Number</label>
+                                   <select style="font-size: 16px !important;height: 2.6rem;" class="form-control">
+                                    <option>Select Site Number</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                   </select>
+                                </div>
+
+                                <div class="mb-2" style="margin-top: 2.5rem;">
+                                    <input type="submit" name="btnlogin" value="Login" id="btnlogin" class="submit-btn w-100 py-2" (click)="logintriggered()"/>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        <!-- card body -->
+                    </div>
+                    <!-- card -->
+                </div>
+            </div>
+            <!-- row -->
+        <!-- </div> -->
+        <!-- container -->
+    </div>
+    <!-- end page content -->
+</div>
+</ng-template>

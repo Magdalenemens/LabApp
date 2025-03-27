@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+<!-- back-link -->
+
+<div class="d-flex section-top-space">
+</div>
+
+<!-- back-link -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-specimen site -->
+<button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+  Record</button>
+<!-- Add-specimen site -->
+<!-- Table -->
+<div class="card table-responsive-lg">
+  <table class="table table-bordered data" id="editableTable">
+
+    <thead class="table-head-fix">
+      <tr>
+        <th style="width:6rem" (click)="sortData('sno')">S.No<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sno')">{{ getSortIcon('sno') }}</i></th>
+        <th (click)="sortData('sP_SITE')">Specimen Site<i class="material-icons sort-icon" [ngClass]="getSortIconClass('sP_SITE')">{{ getSortIcon('sP_SITE') }}</i></th>
+        <th>Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of specimensiteList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.sno }}</span></td>
+        <!-- <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.sP_SITE_ID }}</span></td> -->
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.sP_SITE }}</span></td>
+
+        <td *ngIf="item.IsEdit || item.IsAdd">
+          <input type="text" class="form-control" [(ngModel)]="item.sno" value="{{item.sno}}" readonly />
+        </td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" maxlength="25" required
+            class="form-control {{required_sp_site}}" id="txt_{{ item.sP_SITE }}" [(ngModel)]="item.sP_SITE"
+            value="{{item.sP_SITE}}" noSpaces />
+        </td>
+
+        <td>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" (click)="AddData(item)" class="add edit"><i
+              class="ri-save-fill"></i>Save</button>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="cancel" (click)="CancelAddRow(item.sP_SITE_ID)"><i
+              class="ri-close-line pr-1"></i>Cancel</button>
+
+          <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+              class="ri-check-double-line pr-1"></i>Update</button>
+          <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.sP_SITE_ID)"><i
+              class="ri-close-line pr-1"></i>cancel</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.sP_SITE_ID)"><i
+              class="ri-pencil-line pr-1"></i>Edit</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" (click)="deleteRow(item.sP_SITE_ID)" class="delete"><i
+              class="ri-delete-bin-line pr-1"></i>Delete </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination Component -->
+  <app-pagination [totalItems]="specimensiteList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+    (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
+</div>
+</div>
+</div>

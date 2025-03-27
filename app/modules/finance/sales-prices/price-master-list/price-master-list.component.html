@@ -1,0 +1,256 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex justify-content-between pb-1">
+      <div class="col-md-6 d-flex flex-wrap pt-1">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="div" class="input-group-text side-input-dia">Code:</label>
+            <input class="form-control" type="text" id="inputField1" placeholder="Enter Test Code" [(ngModel)]="testTd"
+              (keyup)="loadTestTD($event)" required />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="div" class="input-group-text side-input-dia">Div:</label>
+            <select class="form-control" id="ddldiv" [(ngModel)]="div" value="{{div}}"
+              (change)="getSectionData($event)">
+              <option *ngFor="let item of divList" value="{{item.div}}">{{item.div}}-{{item.divdesc}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="div" class="input-group-text side-input-dia">Sect:</label>
+            <select class="form-control" id="ddlsec" [(ngModel)]="sect" value="{{sect}}"
+              (change)="getSectionDataFromDivision($event)">
+              <option value="0" selected>Select</option>
+              <option *ngFor="let item of sectList" value="{{item.sect}}">{{item.sect}}-{{item.sectdesc}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Template for no search results -->
+      <div class="col-md-6" style="text-align: right;">
+        <button class="add-btn add-row mb-0 mt-1" type="button" (click)="refresh()">
+          <i class="ri-refresh-line pr-2"></i>Refresh
+        </button>
+        <button class="add-btn add-row mb-0 mt-1" type="button" (click)="editPriceList()">
+          <i class="ri-pencil-line pr-2"></i>Edit
+        </button>
+        <button class="add-btn add-row mb-0 mt-1" type="button" (click)="cancelPriceList()">
+          <i class="ri-close-line pr-1"></i>Cancel
+        </button>
+        <button class="add-btn add-row mb-0 mt-1" type="button" (click)="saveNormalPrice()">
+          <i class="ri-save-line pr-2"></i>Save
+        </button>
+        <label>
+          <input class="mr-0" style="margin-top: -2px;" type="checkbox" [(ngModel)]="excludeZeroValues"
+            (change)="applyZeroValueFilter()" />
+          Exclude Zero Values
+        </label>
+        <!-- <input type="text" class="form-control search-style" placeholder="Search..." [(ngModel)]="searchText"
+          (input)="onSearch()" /> -->
+      </div>
+    </div>
+
+    <!-- right content -->
+
+
+
+    <!-- Table -->
+    <div class="col-md-12">
+      <div class="card">
+        <div class="table-veritical" style="position: relative;">
+          <table id="tableCentralReceiving" class="table table-bordered data" id="editableTable">
+            <thead class="table-head-fix">
+              <tr>
+                <th style="width:1rem !important;padding: 0px;" (click)="sortData('tesT_ID')">
+                  <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('tesT_ID')">{{ getSortIcon('tesT_ID')
+                    }}</i>
+                  Test ID
+                  <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('testId')"></i>
+                </th>
+                <th style="width: 3rem !important;padding: 0px;" (click)="sortData('tcode')">
+                  <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('tcode')">{{ getSortIcon('tcode')
+                    }}</i>
+                  Test Code
+                  <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('testCode')"></i>
+                </th>
+                <th style="width: 3rem" (click)="sortData('fulL_NAME')"><i class="material-icons sort-icon pr-2"
+                    [ngClass]="getSortIconClass('fulL_NAME')">{{ getSortIcon('fulL_NAME') }}</i>Full Name
+                  <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('fulL_NAME')"></i>
+                </th>
+                <th style="width: 4rem" (click)="sortData('ct')"><i class="material-icons sort-icon pr-2"
+                    [ngClass]="getSortIconClass('ct')">{{ getSortIcon('ct') }}</i>Type
+                  <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('ct')"></i>
+                </th>
+
+                <th style="width: 6rem" (click)="sortData('bill')"><i class="material-icons sort-icon pr-2"
+                    [ngClass]="getSortIconClass('bill')">{{ getSortIcon('bill') }}</i>Bill
+                  <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('bill')"></i>
+                </th>
+                <th style="width: 3rem;text-align: center;" (click)="sortData('oldNormalPrice')">
+                  <div class="d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('oldNormalPrice')">{{
+                        getSortIcon('oldNormalPrice') }}</i>
+                    </div>
+                    <div>
+                      Current<br /> Price
+                    </div>
+                  </div>
+                  <!-- <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('oldNormalPrice')"></i> -->
+                </th>
+
+                <th style="width: 4rem;text-align: center;" (click)="sortData('oldHomePrice')">
+                  <div class="d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('oldHomePrice')">{{
+                        getSortIcon('oldHomePrice') }}</i>
+                    </div>
+                    <div>
+                      Current <br /> Home <br /> Price
+                    </div>
+                  </div>
+                  <!-- <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('oldHomePrice')"></i> -->
+                </th>
+
+                <th style="width: 3rem;text-align: center;" (click)="sortData('uprice')">
+                  <div class="d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('uprice')">{{
+                        getSortIcon('uprice')
+                        }}</i>
+                    </div>
+                    <div>
+                      New <br /> Price
+                    </div>
+                  </div>
+                  <!-- <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('uprice')"></i> -->
+                </th>
+                <th style="width: 4rem;text-align: center;" (click)="sortData('uprice2')">
+                  <div class="d-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                      <i class="material-icons sort-icon pr-2" [ngClass]="getSortIconClass('uprice2')">{{
+                        getSortIcon('uprice2')
+                        }}</i>
+                    </div>
+                    <div>
+                      New <br /> Home <br /> Price
+                    </div>
+                  </div>
+                  <!-- <i class="filter-icon ri-filter-3-line pl-2" (click)="toggleFilter('uprice2')"></i> -->
+                </th>
+                <!-- <th style="width: 7rem">Actions</th> -->
+              </tr>
+              <tr *ngIf="isFilterVisible()" class="custom-filter-row">
+                <td>
+                  <input *ngIf="filterVisibility.testId" type="text" class="form-control" placeholder="Filter TestId"
+                    [(ngModel)]="testIdFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.testCode" type="text" class="form-control"
+                    placeholder="Filter Test Code" [(ngModel)]="testCodeFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.fulL_NAME" type="text" class="form-control"
+                    placeholder="Filter Full Name" [(ngModel)]="fullNameFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <ng-select *ngIf="filterVisibility.ct" [items]="ctLabOptions" bindLabel="name"
+                    [(ngModel)]="selectedCtLabs" placeholder="Select Type" [multiple]="true" [closeOnSelect]="false">
+
+                    <ng-template ng-option-tmp let-item="item">
+                      <!-- Custom template to include a checkbox -->
+                      <input type="checkbox" [(ngModel)]="item.selected" (ngModelChange)="onCtSelectionChange(item)" />
+                      {{ item.name }}
+                    </ng-template>
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select *ngIf="filterVisibility.bill" [items]="billOptions" bindLabel="name"
+                    [(ngModel)]="selectedbill" placeholder="Select Bill" [multiple]="true" [closeOnSelect]="false"
+                    (change)="applyFilters()">
+
+                    <ng-template ng-option-tmp let-item="item">
+                      <!-- Custom template to include a checkbox -->
+                      <input type="checkbox" [(ngModel)]="item.selected"
+                        (ngModelChange)="onBillSelectionChange(item)" /> {{ item.name }}
+                    </ng-template>
+                  </ng-select>
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.oldNormalPrice" type="text" class="form-control"
+                    placeholder="Filter Current Price" [(ngModel)]="oldNormalPriceFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.oldHomePrice" type="text" class="form-control"
+                    placeholder="Filter Home Visit Price" [(ngModel)]="oldHomePriceFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.uprice" type="text" class="form-control" placeholder="Filter New Price"
+                    [(ngModel)]="uPriceFilter" (input)="applyFilters()" />
+                </td>
+                <td>
+                  <input *ngIf="filterVisibility.uprice2" type="text" class="form-control"
+                    placeholder="Filter New Home Visit Price" [(ngModel)]="uPrice2Filter" (input)="applyFilters()" />
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let item of tdList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+ 
+                <td style="max-width:2rem !important">{{item.tesT_ID}}</td>
+                <td style="max-width:3rem !important">{{item.tcode}}</td>
+                <td style="max-width: 4rem;" class="tooltip-cell" appTooltip="{{item.fulL_NAME}}}">{{item.fulL_NAME}}
+                </td>
+                <td style="">{{ getDisplayType(item.ct) }}</td>
+ 
+                <td style="text-align: center;">
+                  <ng-container *ngIf="item.isEditing">
+                    <input type="text" [(ngModel)]="item.bill" class="form-control" (click)="editedRows(item)"
+                      placeholder="Enter UPrice" />
+                  </ng-container>
+                  <ng-container *ngIf="!item.isEditing">
+                    {{item.bill}}
+                  </ng-container>
+                </td>
+
+                <td class="blur-text">{{ item.oldNormalPrice }}</td>
+
+                <!-- Home Service Price -->
+                <td class="blur-text">{{ item.oldHomePrice }}</td>
+
+                <!-- Edit Mode for Normal Price -->
+                <td style="text-align: center;">
+                  <ng-container *ngIf="item.isEditing">
+                    <input type="number" [(ngModel)]="item.uprice" class="form-control" (click)="editedRows(item)"
+                      placeholder="Enter UPrice" />
+                  </ng-container>
+                  <ng-container *ngIf="!item.isEditing">
+                    {{item.uprice}}
+                  </ng-container>
+                </td>
+                <td style="text-align: center;">
+                  <ng-container *ngIf="item.isEditing">
+                    <input type="number" [(ngModel)]="item.upricE2" class="form-control" (click)="editedRows(item)"
+                      placeholder="Enter UPrice" />
+                  </ng-container>
+                  <ng-container *ngIf="!item.isEditing">
+                    {{item.upricE2}}
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <app-pagination [totalItems]="tdList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+            (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)">
+          </app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

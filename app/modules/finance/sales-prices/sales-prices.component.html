@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space">
+    </div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="price-master-list" data-tab-target="tab-content-1" (click)="goToSalesPrice('price-master-list')"
+            [class.is-active]="selected === 'price-master-list'">
+            Price Master List
+          </button>
+          <button data-tab-target="tab-content-2" id="master-list-two" (click)="goToSalesPrice('master-list-two')"
+            [class.is-active]="selected === 'master-list-two'">Master List Two</button>
+          <button data-tab-target="tab-content-3" id="master-list-three" (click)="goToSalesPrice('master-list-three')"
+            [class.is-active]="selected === 'master-list-three'">Master List Three</button>
+          <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Sales Prices</h6>
+
+        </nav>
+        <app-default></app-default>
+
+      </div>
+    </section>
+  </div>
+</div>

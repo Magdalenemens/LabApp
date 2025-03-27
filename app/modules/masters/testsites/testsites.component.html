@@ -1,0 +1,95 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+<div class="d-flex section-top-space">
+</div>
+<!-- back-link -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-testsite -->
+<button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+  Record</button>
+<!-- Add-testsite -->
+<!-- Table -->
+<div class="card table-responsive-lg">
+  <table class="table table-bordered data" id="editableTable">
+    <thead class="table-head-fix">
+      <tr>
+        <th style="width:9rem" (click)="sortData('ts')">Test Site No<i class="material-icons sort-icon" [ngClass]="getSortIconClass('ts')">{{ getSortIcon('ts') }}</i></th>
+        <th (click)="sortData('wc')">Work Center No/Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('wc')">{{ getSortIcon('wc') }}</i></th>
+        <th (click)="sortData('descrip')">Test Site Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('descrip')">{{ getSortIcon('descrip') }}</i></th>
+        <th>Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr tr
+        *ngFor="let item of testsiteList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.ts }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.wc }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.descrip }}</span></td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required disabled="{{item.IsEdit?true:false}}"
+            class="form-control {{required_ts_no}}" (keypress)="numberOnly($event)"
+            (blur)="checkAlreadyExisting($event)" minlength="3" maxlength="3" id="txt_{{ item.ts }}"
+            [(ngModel)]="item.ts" value="{{item.ts}}" />
+        </td>
+
+        <td *ngIf="item.IsEdit || item.IsAdd">
+          <span>
+            <ng-select #selectedValue="ngModel" required class="editable-dropdown {{required__wC_NO}}"
+              placeholder="select" [(ngModel)]="item.wc"
+              [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+
+              <ng-option [value]="obj.wc" *ngFor="let obj of workcenterDropDown">
+                {{ obj.wc + ' - ' + obj.descrip}}
+              </ng-option>
+            </ng-select>
+
+            <div *ngIf="selectedValue.invalid" class="invalid-feedback">
+              Dropdown selection is required.
+            </div>
+          </span>
+        </td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" maxlength="30" required
+            class="form-control {{required_desc}}" id="txt_{{ item.descrip }}" [(ngModel)]="item.descrip"
+            value="{{item.descrip}}" noSpaces /> </td>
+
+        <td>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="add edit" (click)="AddData(item)"><i
+              class="ri-save-line pr-1"></i>Save</button>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="cancel" (click)="CancelAddRow(item.laB_TS_ID)"><i
+              class="ri-close-line pr-1"></i>Cancel</button>
+
+          <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+              class="ri-check-double-line pr-1"></i>Update</button>
+          <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.laB_TS_ID)"><i
+              class="ri-close-line pr-1"></i>cancel</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.laB_TS_ID)"><i
+              class="ri-pencil-line pr-1"></i>Edit</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="delete" (click)="deleteRow(item.laB_TS_ID)"><i
+              class="ri-delete-bin-line pr-1"></i>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination Component -->
+  <app-pagination [totalItems]="testsiteList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+    (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
+</div>
+</div>
+</div>

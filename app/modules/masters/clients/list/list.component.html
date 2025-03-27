@@ -1,0 +1,45 @@
+<div class="tab-target  mt-2" id="tab-content-2">
+  <button class="btn btn-outline-dark add-section mb-1"><i class="ri-add-line pr-1"></i>Add Record</button>
+  <div class="card table-responsive-lg">
+    <table class="table table-bordered data" id="editableTable">
+      <thead>
+        <tr>
+
+          <th (click)="sortData('cn')">client Id<i class="material-icons sort-icon" [ngClass]="getSortIconClass('cn')">{{ getSortIcon('cn') }}</i></th>
+          <th (click)="sortData('client')">client Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('client')">{{ getSortIcon('client') }}</i></th>
+          <th (click)="sortData('mobile')">Mobile<i class="material-icons sort-icon" [ngClass]="getSortIconClass('mobile')">{{ getSortIcon('mobile') }}</i></th>
+          <th (click)="sortData('email')">Email<i class="material-icons sort-icon" [ngClass]="getSortIconClass('email')">{{ getSortIcon('email') }}</i></th>
+          <th (click)="sortData('acmngr')">Account Manager<i class="material-icons sort-icon" [ngClass]="getSortIconClass('acmngr')">{{ getSortIcon('acmngr') }}</i></th>
+
+          <th style="width:9rem">Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of clientList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+
+          <td><span>{{ item.cn }}</span></td>
+          <td><span>{{ item.client }}</span></td>
+          <td><span>{{ item.mobile }}</span></td>
+          <td><span>{{ item.email }}</span></td>
+          <td><span>{{ item.acmngr }}</span></td>
+
+          <!--                
+                <td *ngIf="item.IsEdit||item.IsAdd"><input  type="text" required class="form-control" id="txt_{{ item.cn }}" value="{{item.cn}}" /></td>
+                <td *ngIf="item.IsEdit||item.IsAdd"><input  type="text" required class="form-control" id="txt_{{ item.client }}" value="{{item.client}}"  /></td>
+                   -->
+          <td>
+
+            <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.clnT_FL_ID)">View</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Pagination Component -->
+    <app-pagination [totalItems]="clientList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+      (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-pagination>
+  </div>
+</div>

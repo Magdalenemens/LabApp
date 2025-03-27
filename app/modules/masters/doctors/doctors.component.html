@@ -1,0 +1,387 @@
+<main>
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-10 col-xl-10">
+      <form [formGroup]="form">
+        <section>
+          <!-- back-link -->
+
+          <div class="d-flex section-top-space">
+            <!-- <div class="d-flex">
+          <a style="color:#000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+            <h6 class=" py-1 mt-1 header-font">Master</h6>
+          </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+          <a style="color:#000000" href="#">
+            <h6 class=" py-1 mt-1 header-font">Doctors</h6>
+          </a>
+        </div> -->
+          </div>
+          <!-- back-link -->
+          <!-- tabs -->
+          <section class="section-wrapper">
+            <div class="tab-target is-active" id="tab-content-1">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-wrap w-75">
+                  
+                </div>
+                <div class="col-md-3 float-right">
+                  <div>
+                    <div class="input-group">
+                      <!-- <label
+                  style="height: 33px;"
+                  class="input-group-text side-input-dia"
+                  >Doctor ID / Name:</label> -->
+                      <ng-select class="custom" placeholder="Search...">
+                        <!-- Template for no search results -->
+                        <ng-template #noResults>
+                          <div>No results found</div>
+                        </ng-template>
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="app-body mt-1">
+                <!-- add-section -->
+                <div class="add-content">
+                  <div class="d-flex mt-0">
+                    <!-- First Section -->
+                    <div class="d-flex flex-column mt-1">
+                      <div class="custom-input m-auto" style="width: 10.8rem">
+                        <div class="card d-flex flex-column vertical-center">
+                          <button
+                    class="btn btn-outline-dark add-section mb-2"
+                    [disabled]="isAddBtnActive"
+                    (click)="onAddRecord()"
+                  >
+                    <i class="ri-add-line pr-1"></i>Add Record
+                  </button>
+                  <button
+                    class="btn btn-outline-dark add-section mb-2"
+                    [disabled]="isSaveBtnActive"
+                    (click)="onSubmit()"
+                  >
+                    <i class="ri-save-line pr-2"></i>Save
+                  </button>
+                  <button
+                    class="btn btn-outline-dark order-section mb-2"
+                    [disabled]="isEditBtnActive"
+                    (click)="onEditRecord()"
+                  >
+                    <i class="ri-pencil-line pr-2"></i>Edit
+                  </button>
+                  <button
+                    class="btn btn-outline-dark cancelation mb-2"
+                    [disabled]="isCancelBtnActive"
+                    (click)="onCancelRecord(doctorData.doC_FL_ID)"
+                  >
+                    <i class="ri-close-line pr-1"></i>Cancel
+                  </button>
+                  <button
+                    class="btn btn-outline-dark cancelation"
+                    [disabled]="isDeleteBtnActive"
+                    (click)="onDeleteRecord(doctorData.doC_FL_ID)"
+                  >
+                    <i class="ri-delete-bin-6-line pr-2"></i>Delete
+                  </button>
+                        </div>
+                        <div class="card mt-1">
+                          <div
+                            style="
+                              border: 1px solid #bff5bb;
+                              border-radius: 0.25rem;
+                              padding: 0.25rem 0.25rem;
+                            "
+                          >
+                            <div
+                              class="d-flex flex-wrap justify-content-between navigation"
+                            >
+                              <button
+                              class="btn page-btn btn-outline-paginate px-1"
+                              id="first" tooltip="First"
+                              [disabled]="isNavigationActive"
+                              (click)="getRecord('first', doctorData.sno)"
+                            >
+                              <i class="ri-skip-left-line"></i>
+                            </button>
+                            <button
+                              class="btn page-btn btn-outline-paginate px-1"
+                              id="previous" tooltip="previous"
+                              [disabled]="isNavigationActive"
+                              (click)="getRecord('prev', doctorData.sno)"
+                            >
+                              <i class="ri-arrow-left-double-line"></i>
+                            </button>
+                            <button
+                              class="btn page-btn btn-outline-paginate px-1"
+                              id="next" tooltip="next"
+                              [disabled]="isNavigationActive"
+                              (click)="getRecord('next', doctorData.sno)"
+                            >
+                              <i class="ri-arrow-right-double-line"></i>
+                            </button>
+                            <button
+                              class="btn page-btn btn-outline-paginate px-1"
+                              id="last" tooltip="last"
+                              [disabled]="isNavigationActive"
+                              (click)="getRecord('last', doctorData.sno)"
+                            >
+                              <i class="ri-skip-right-line"></i>
+                            </button>
+                            </div>
+                          </div>
+                          <div class="d-flex flex-wrap justify-content-center">
+                             {{ calculateCurrentIndex(doctorData.sno) }} /
+                            {{ doctorAllData.length }} 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <!-- first-card -->
+                      <div class="card mt-2">
+                        <div class="d-flex flex-wrap">
+                          <div style="width: 10rem" class="custom-input">
+                            <div class="input-group">
+                              <label
+                                for="inputField1"
+                                class="input-group-text side-input-dia"
+                                >Doctor ID:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Doctor ID"
+                                formControlName="txtdrno"
+                                type="text"
+                                [(ngModel)]="doctorData.drno"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtdrno'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField2"
+                                class="input-group-text side-input-dia"
+                                >Doctor Name:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Doctor Name"
+                                formControlName="txtdoctor"
+                                type="text"
+                                [(ngModel)]="doctorData.doctor"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    submitted && f['txtdoctor'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div style="width: 10rem" class="custom-input">
+                            <div class="input-group">
+                              <label
+                                for="inputField3"
+                                class="input-group-text side-input-dia"
+                                >Client ID:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Client ID"
+                                type="text"
+                                [(ngModel)]="doctorData.cn"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtcn'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField4"
+                                class="input-group-text side-input-dia"
+                                >Client Name:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Client Name"
+                                type="text"
+                                [(ngModel)]="doctorData.cn"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtcn'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div style="width: 10rem" class="custom-input">
+                            <div class="input-group">
+                              <label
+                                for="inputField5"
+                                class="input-group-text side-input-dia"
+                                >Clinic Code:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Clinic Code"
+                                type="text"
+                                [(ngModel)]="doctorData.cn"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtcn'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <div style="width: 14rem" class="custom-input">
+                            <div class="input-group">
+                              <label
+                                for="inputField6"
+                                class="input-group-text side-input-dia"
+                                >Clinic Name:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Clinic Name"
+                                type="text"
+                                [(ngModel)]="doctorData.cn"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtcn'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- first-card -->
+                      <!-- middle-card -->
+                      <div class="card mt-2">
+                        <div class="d-flex flex-wrap">
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField7"
+                                class="input-group-text side-input-dia"
+                                >Telephone:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Telephone"
+                                type="text"
+                                [(ngModel)]="doctorData.tel"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtTel'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField8"
+                                class="input-group-text side-input-dia"
+                                >Fax:</label
+                              >
+                              <input
+                                class="form-control"
+                                maxlength="5"
+                                placeholder="Enter Fax"
+                                type="text"
+                                [(ngModel)]="doctorData.fax"
+                                [ngClass]="{
+                                  'is-invalid': submitted && f['txtfax'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField9"
+                                class="input-group-text side-input-dia"
+                                >Mobile:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Mobile"
+                                type="text"
+                                [(ngModel)]="doctorData.mobile"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    submitted && f['txtMobile'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="input-group">
+                              <label
+                                for="inputField10"
+                                class="input-group-text side-input-dia"
+                                >Email:</label
+                              >
+                              <input
+                                class="form-control"
+                                placeholder="Enter Email"
+                                type="text"
+                                [(ngModel)]="doctorData.email"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    submitted && f['txtEmail'].errors
+                                }"
+                                required
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- middle-card -->
+                      <!-- note -->
+                      <div class="card mt-2">
+                        <div class="d-flex flex-wrap">
+                          <div class="col-md-12">
+                            <div class="input-group">
+                              <label
+                                for="inputField11"
+                                class="input-group-text side-input-dia"
+                                >Notes:</label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="textareaInput"
+                                rows="2"
+                                cols="50"
+                                placeholder="Enter Notes"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- note -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- add-section -->
+            </div>
+          </section>
+          <!-- tabs -->
+        </section>
+      </form>
+    </div>
+  </div>
+</main>

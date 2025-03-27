@@ -1,0 +1,880 @@
+<div class="d-flex justify-content-end">
+
+  <div>
+    <!--  <div class="d-flex">
+
+      <input type="text" formControlName="searchOrder" id="searchOrder" (change)="SearchOrderTrans()"
+        placeholder="Search..." class="btn search-style py-2" style="
+        text-align: left;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: 0;
+        width: 59%;
+        height: 2.2rem;
+      " />
+      <select formControlName="cmbSearch" id="cmbSearch" ng-model="Order No" ng-options="v for v in [0]"
+        [value]="0">
+        <option value="0">Order No</option>
+        <option value="1">Patient No</option>
+        <option value="2">Accession</option>
+      </select>
+      <button (click)="ShowMulipleSearch()" class="btn btn-outline-secondary" data-toggle="modal"
+        data-target="#myModal" type="button" style="
+        height: 34px;
+        padding: inherit;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      ">
+        <i class="ri-search-line"></i>
+      </button>
+    </div> 
+  </div>
+</div> -->
+    <div class="tab-target is-active" id="tab-content-1">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex flex-wrap w-75 mb-2">
+
+          <!-- <button class="btn " [disabled]="isDeleteReadOnly">
+        <i class="ri-delete-bin-6-line pr-2"></i>Delete</button> -->
+
+        </div>
+      </div>
+      <!-- add-section -->
+
+      <div class="add-content">
+        <div class="d-flex mt-0">
+          <!-- First Section -->
+
+          <!-- <div class="col-md-2 "> -->
+          <div class=" d-flex flex-column">
+            <div class="custom-input" style="width:10.8rem">
+              <div class="card d-flex flex-column vertical-center">
+                <button class="btn btn-outline-dark order-section mb-2"
+                  *ngIf="rolebaseaction.isModifyAccess; else noClick_Modify"
+                  (click)="onEditRecord(anatomicData.orD_NO)"><i class="ri-pencil-line pr-2"></i>Edit</button>
+                <ng-template #noClick_Modify>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Edit
+                  </button>
+                </ng-template>
+                <button class="btn btn-outline-dark add-section mb-2"
+                  *ngIf="rolebaseaction.isSaveAccess; else noClick_Submit" (click)="onSubmitStatus(1)"> <i
+                    class="ri-save-line pr-2"></i>Save
+                </button>
+                <ng-template #noClick_Submit>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Save
+                  </button>
+                </ng-template>
+                <button type="button" class="btn btn-outline-dark mb-2" data-toggle="modal" data-target="#exampleModal"
+                  *ngIf="rolebaseaction.isPrintAccess; else noClick_Print" (click)="onPrint()">
+                  <i class="ri-printer-line pr-1"></i>Print
+                </button>
+                <ng-template #noClick_Print>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Print
+                  </button>
+                </ng-template>
+                <iframe #reportFrame width="0" height="0" style="display: none;"></iframe>
+                <button class="btn btn-outline-dark cancelation mb-2"
+                  *ngIf="rolebaseaction.isCancelAccess; else noClick_Abort"
+                  (click)="onCancelRecord(anatomicData.orD_NO)">
+                  <i class="ri-close-line pr-1"></i>Cancel
+                </button>
+                <ng-template #noClick_Abort>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Cancel
+                  </button>
+                </ng-template>
+                <button class="btn page-btn btn-outline-dark mb-2"
+                  *ngIf="rolebaseaction.isVerifyAccess; else noClick_Verify" (click)="onSubmitStatus(2)">
+                  <i class="ri-check-double-line pr-2"></i>Verify
+                </button>
+                <ng-template #noClick_Verify>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Verify
+                  </button>
+                </ng-template>
+                <button class="btn page-btn btn-outline-dark mb-2"
+                  *ngIf="rolebaseaction.isValidateAccess; else noClick_Validate" (click)="onSubmitStatus(3)">
+                  <i class="ri-pass-valid-line pr-2"></i>Validate
+                </button>
+                <ng-template #noClick_Validate>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Validate
+                  </button>
+                </ng-template>
+                <button class="btn page-btn btn-outline-dark mb-2"
+                  *ngIf="rolebaseaction.isReleaseAccess; else noClick_Release" (click)="onSubmitStatus(4)">
+                  <i class="ri-inbox-unarchive-line pr-2"></i>Release
+                </button>
+                <ng-template #noClick_Release>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Release
+                  </button>
+                </ng-template>
+                <button class="btn page-btn btn-outline-dark" *ngIf="rolebaseaction.isAmendAccess; else noClick_Amend"
+                  (click)="onSubmitStatus(5)">
+                  <i class="ri-file-edit-line pr-2"></i>Amend
+                </button>
+                <ng-template #noClick_Amend>
+                  <button class="btn btn-outline-dark mb-2" disabled>
+                    Amend
+                  </button>
+                </ng-template>
+              </div>
+              <div class="card mt-1">
+                <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <button class="btn page-btn btn-outline-paginate px-1" id="first"
+                      (click)="onButtonClick('first', anatomicData.sno)" [disabled]="isNavigationActive"
+                      tooltip="First">
+                      <i class="ri-skip-left-line"></i>
+                    </button>
+                    <button class="btn page-btn btn-outline-paginate px-1" id="previous"
+                      (click)="onButtonClick('prev', anatomicData.sno)" [disabled]="isNavigationActive"
+                      tooltip="previous">
+                      <i class="ri-arrow-left-double-line"></i>
+                    </button>
+                    <button class="btn page-btn btn-outline-paginate px-1" id="next"
+                      (click)="onButtonClick('next', anatomicData.sno)" [disabled]="isNavigationActive" tooltip="next">
+                      <i class="ri-arrow-right-double-line"></i>
+                    </button>
+                    <button class="btn page-btn btn-outline-paginate px-1" id="last"
+                      (click)="onButtonClick('last', anatomicData.sno)" [disabled]="isNavigationActive" tooltip="last">
+                      <i class="ri-skip-right-line"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="dataTables_info d-flex justify-content-center" style="font-size: 14px !important;">
+                  {{currentIndex}} / {{ anatomicAllData.length }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- </div> -->
+
+          <div class="col-md-5 no-padding-left">
+
+            <div class="col-md-8 col-lg-8 col-12">
+              <div class="input-group">
+                <label style="height: 33px;" class="input-group-text side-input-dia">Search:</label>
+                <ng-select #patientSelect style="flex: 1 1 auto;" [items]="matchedPatients$ | async"
+                  bindLabel="combinedLabel" class="custom" [searchFn]="customSearch" [searchable]="true"
+                  (search)="onSearch($event)" (change)="onPatientSelection($event, patientSelect)"
+                  placeholder="Search..." (keypress)="numberOnly($event)">
+                  <!-- Template for no search results -->
+                  <ng-template #noResults>
+                    <div>No results found</div>
+                  </ng-template>
+                </ng-select>
+                <button (click)="ShowMulipleSearch()" tooltip="Multi Criteria" class="btn btn-outline-secondary"
+                  data-toggle="modal" data-target="#myModal" type="button" style="
+              height: 34px;
+              padding: inherit;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+            ">
+                  <i class="ri-search-line mx-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <div [formGroup]="form">
+
+              <div class="card">
+
+                <!-- code -->
+                <div class="d-flex flex-wrap">
+                  <div class="col-md-5 col-lg-5 col-12" style="min-width:11rem">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">PatientId/Name:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1"><b>{{anatomicData.paT_ID}}</b></label>
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-lg-7 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.paT_NAME}}</label>
+                    </div>
+                  </div>
+                  <div class="custom-input" style="width:6.5rem">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Gender:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.sex}}</label>
+                    </div>
+                  </div>
+                  <div class="custom-input" style="width:10.5rem">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">DOB:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.dob}}</label>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-3 col-lg-3 col-12">
+                <div class="input-group">
+                <label class="input-group-text side-input-dia">age:</label>
+            
+              </div>
+              </div> -->
+                  <div class="custom-input" style="width:9rem">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Age:</label>
+                      <label class="form-control" readonly="true" type="number" id="inputField1">
+                        {{ anatomicData.dob ? calculateAge(anatomicData.dob) : 'N/A' }} </label>
+
+                      <!-- <label class="form-control" readonly="true" type="number" id="inputField1">
+                  </label> -->
+                    </div>
+                  </div>
+                  <div class="custom-input" style="width:10rem">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Code:</label>
+                      <label class="form-control" style="color: blue;" readonly="true" type="text"
+                        (click)="viewOrderTrackingDetails()" id="inputField1">{{anatomicData.reQ_CODE}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">ClientId/Name:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.cn}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-8 col-lg-8 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.client}}</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">DoctorId/Name:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.drno}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.doctor}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Accession No:</label>
+                      <label class="form-control" (input)="formatAccn(anatomicData.accn)" type="text" id="inputField1"
+                        readonly="true"> <b>{{anatomicData.accn}}</b></label>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Ref No:</label>
+                      <label class="form-control" type="text" id="inputField1" readonly="true"></label>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Loc:</label>
+                      <label class="form-control" readonly="true" type="text"
+                        id="inputField1">{{anatomicData.loc}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Collected:</label>
+                      <label class="form-control" readonly="true" type="text" id="inputField1">{{anatomicData.drawN_DTTM
+                        |
+                        date: 'dd/MM/yyyy HH:mm'}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-lg-5 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Verified:</label>
+                      <label class="form-control" readonly="true" type="text" id="inputField1">{{anatomicData.veR_DTTM |
+                        date:
+                        'dd/MM/yyyy HH:mm'}}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-lg-4 col-12">
+                    <div class="input-group">
+                      <label class="input-group-text side-input-dia">Report Status:</label>
+                      <label class="form-control custom" readonly="true" type="text"
+                        id="inputField1">{{reportStatus}}</label>
+                    </div>
+                  </div>
+                  <!-- Added View Button to redirect -->
+                  <div class="w-auto">
+                    <div class="input-group">
+                      <button style="padding:0.4rem" class="add save btn-rounded" (click)="view(anatomicData.orD_NO)"><i
+                          class="View"></i>VIEW</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- doctor -->
+
+              </div>
+
+              <div class="col-md-12 no-padding-left no-padding-right">
+                <div class="card mt-2 ">
+                  <label>Remarks:</label>
+                  <textarea class="form-control" id="textareaInput" rows="2" cols="50"
+                    placeholder="Enter text"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- First Section -->
+          <!-- right content -->
+          <div class=" no-padding-left no-padding-right" style="flex:1 1 auto">
+
+            <div class="d-flex mb-1">
+              <label style="height: 33px;" class="input-group-text side-input-dia">Result template:</label>
+
+              <div style="width:40%">
+                <span>
+                  <ng-select [ngModelOptions]="{standalone: true}" #selectedValue="ngModel"
+                    [(ngModel)]="resultsTemplateData.tname" required="true" class="editable-dropdown"
+                    placeholder="Select a template" [readonly]="isTemplateReadOnly"
+                    [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched)) ? 'is-invalid' : ''"
+                    (click)="onValidateEditorData(anatomicData.notes)" (change)="onTemplateChange($event)">
+                    <div *ngIf="isddlEnable">
+                      <ng-option [value]="obj.rS_TMPLT_ID" *ngFor="let obj of resultTemplateAllData">{{ obj.tname
+                        }}</ng-option>
+                    </div>
+                  </ng-select>
+                </span>
+              </div>
+
+
+              <!-- multi-search -->
+              <!-- <div class="d-flex justify-content-end ml-auto">
+      <div>
+        <div class="d-flex">
+          <label
+          style="height: 33px;"
+          class="input-group-text side-input-dia"
+          >Multi Criteria:</label>
+          <input class="btn  py-2 w-100" style="text-align: left;border: 1px solid #ced4da;background-color: #fff;text-transform: capitalize;" type="text" id="searchOrder"
+           placeholder="Search...">
+          <button
+            class="btn btn-outline-secondary"
+            data-toggle="modal"
+            data-target="#myModal"
+            type="button"
+            style="
+
+              height: 34px;
+              padding: inherit;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+
+            ">
+                  <i class="ri-search-line mx-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+            multi-search -->
+
+
+            </div>
+            <!-- <div class="card">
+          <angular-editor [(ngModel)]="anatomicData.notes" [config]="config"></angular-editor>
+        </div> -->
+            <div class="card">
+              <div class="d-flex editor-styling">
+                <div>
+                  <angular-editor [(ngModel)]="anatomicData.notes" [config]="editorService.config"></angular-editor>
+                </div>
+
+                <div class="para-section line-spacing-styling">
+                  <select class="para-dropdown file-icon-dropdown" (change)="onLineSpacingChange($event)">
+                    <option value="" disabled selected></option>
+                    <option value="1">1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2">2</option>
+                  </select>
+                </div>
+              </div>
+              <!-- <editor
+          [init]="{
+            height: 395,
+            menubar: 'file edit view insert format tools table help',
+            plugins: [
+              'advlist autolink lists link image charmap print preview anchor',
+              'searchreplace visualblocks code fullscreen',
+              'insertdatetime media table paste code help wordcount',
+              'table emoticons codesample hr spellchecker visualchars',
+              'nonbreaking toc pagebreak'
+            ],
+            toolbar: 
+              'undo redo | bold italic underline strikethrough | formatselect | fontselect fontsizeselect | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist checklist | forecolor backcolor removeformat | emoticons | insertfile image media link anchor codesample | ltr rtl | table'
+          }"
+          [(ngModel)]="anatomicData.notes"
+        >
+        </editor> -->
+
+            </div>
+            <!-- <div class="card editor-scroll">
+          <div class="NgxEditor__Wrapper">
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+            <ngx-editor [toolbar]="toolbar" [editor]="editor" [(ngModel)]="anatomicData.notes"
+              [disabled]="isCKEditorReadOnly" placeholder="Enter text">
+            </ngx-editor>
+          </div>
+        </div> -->
+          </div>
+          <!-- right content -->
+        </div>
+
+
+        <!-- Add TAxis -->
+        <div class="row mt-1">
+          <!-- period durations -->
+          <div class="col-md-12">
+            <div class="card pt-3">
+              <div class="card-head" id="headingOne">
+                <h2 style="font-size: 15px" class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+                  <!-- <button (click) = "addTable()"   class="add-btn"><i class="ri-add-bin-line pr-1" ></i>Add Organism </button> -->
+
+
+                  <button (click)="findTAxis()" [disabled]="isAddTAxisReadOnly" class="btn btn-outline-dark add-section"
+                    data-toggle="modal" data-target="#myModal" type="button">
+                    <i class="ri-add-line pr-1"></i>Add T-Axis
+
+                  </button>
+                </h2>
+              </div>
+              <div class="card mt-2">
+                <div class="table-veritical-sm">
+                  <table class="table table-bordered data text-black mb-0" id="editableTable">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Accession</th>
+                        <th>T-Axis</th>
+                        <th>Description</th>
+                        <th>M-Axis</th>
+                        <th>Description</th>
+                        <!-- <th>Status</th> -->
+                        <th>Actions </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of clinicalAllData; let i = index">
+                        <td><span>{{ item.sno }} </span></td>
+                        <td><span>{{ item.accn }} </span></td>
+                        <td><span *ngIf="item.t_AX">{{ item.t_AX }}</span></td>
+                        <td><span>{{ item.t_Description }}</span></td>
+                        <td><span *ngIf="item.m_AX">{{ item.m_AX }} </span></td>
+                        <td><span>{{ item.m_Description }} </span></td>
+                        <td style="display: none;"><span>{{ item.clncfndG_ID }} </span></td>
+                        <!-- <td><span> </span></td> -->
+                        <td>
+                          <button (click)="findMAxis(item)" class="edit" data-toggle="modal" data-target="#myModal"
+                            type="button" style="width:auto">
+                            <i class="ri-pencil-line pr-1"></i>Add M-Axis</button>
+                          <button class="delete btn-rounded" style="width:auto" (click)="deleteRow(item.clncfndG_ID)"><i
+                              class="ri-delete-bin-line pr-1"></i>Delete </button>
+
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search TAxis -->
+        <div class="modal fade modal-alert rounded-3" id="taxismodel" data-bs-backdrop="static"
+          data-bs-keyboard="false">
+          <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+
+              <div class="bg-primary modal-header" style="color:white;">
+                Search TAxis Information
+              </div>
+
+              <div class="modal-body p-4 text-left">
+
+                <div class="col-md-7">
+                  <div class="input-group">
+                    <label style="height:36px !important" class="form-label input-group-text side-input-dia"
+                      for="abc3">Enter T Axis or Description</label>
+                    <input style="height:36px !important" type="text" class="form-control" id="searchAxis"
+                      placeholder="Axis Number / Description" [(ngModel)]="searchTerm" (input)="searchAllFindings()" />
+                    <div *ngIf="filteredList.length === 0">
+                      <p>No matching records found.</p>
+                    </div>
+                  </div>
+                </div>
+
+
+                <table class="table table-hover table-bordered modal-table truncate mt-3">
+
+                  <thead>
+                    <tr>
+                      <th style="width:5.9rem">Ax Number</th>
+                      <th>Description</th>
+                      <th style="width:9rem"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of pathAllData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+                      <td>{{item.aX_NMBR + ' - ' + item.seq}}</td>
+                      <td>{{item.descrip}}</td>
+                      <td>
+
+                        <button *ngIf="item.ax !== 'M'" class="rounded btn-primary btn-icon"
+                          (click)="inserclinicalData(item, 'T')" data-bs-dismiss="modal">
+                          <i class="ri-send-plane-line pr-2"></i>Add T-Axis
+                        </button>
+                        <button *ngIf="item.ax === 'M'" class="rounded btn-primary btn-icon"
+                          (click)="inserclinicalData(item, 'M')" data-bs-dismiss="modal">
+                          <i class="ri-send-plane-line pr-2"></i>Add M-Axis
+
+                        </button>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+
+
+                <!-- Pagination Component -->
+                <app-pagination [totalItems]="pathAllData.length" [itemsPerPage]="itemsPerPage"
+                  [currentPage]="currentPage" (pageChange)="goToPage($event)"
+                  (pageSizeChange)="onPageSizeChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+                </app-pagination>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark cancelation" data-bs-dismiss="modal"
+                  (click)="resetSearch()">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--View Order Transaction-->
+    <div class="modal fade modal-alert rounded-3" id="ViewCodeTrackingModal" data-bs-backdrop="static"
+      data-bs-keyboard="false">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+          <div class="bg-primary modal-header" style="color:white;">
+            Code Tracking list
+          </div>
+
+          <div class="modal-body p-4 text-left">
+            <div class="row">
+              <div class="col-4">
+                <div class="input-group">
+                  <label for="validationCustom01" class="input-group-text"
+                    style="width: 30%; margin-bottom: 5px; height: 36px">Order No</label>
+                  <label class="form-control" readonly="true" type="text" id="ordNo">{{anatomicData.orD_NO}}</label>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="input-group">
+                  <label for="validationCustom01" class="input-group-text"
+                    style="width: 30%; margin-bottom: 5px; height: 36px">Acc. No</label>
+                  <label class="form-control" readonly="true" type="text" id="accn_NO">{{anatomicData.accn}}</label>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="input-group">
+                  <label for="validationCustom01" class="input-group-text"
+                    style="width: 30%; margin-bottom: 5px; height: 36px">Code</label>
+                  <label class="form-control" readonly="true" type="text" id="reqcode">{{anatomicData.reQ_CODE}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <table class="table table-hover table-striped truncate m-0" id="TableBarcode">
+                <thead>
+                  <tr>
+                    <th>Status </th>
+                    <th>Action Datetime</th>
+                    <th>Site</th>
+                    <th>Action By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let orderTrackingList of codeTrackingList">
+                    <td>{{orderTrackingList.sts}}</td>
+                    <td>{{orderTrackingList.acT_DTTM | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td>{{orderTrackingList.sitE_NO}}-{{orderTrackingList.sitE_NAME}}</td>
+                    <td>{{orderTrackingList.u_ID}}-{{orderTrackingList.useR_NAME}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-dark" data-bs-dismiss="modal">
+              Close
+            </button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Multiple Search-->
+    <div class="modal fade modal-alert rounded-3" id="modalMulipleSearch" data-bs-backdrop="static"
+      data-bs-keyboard="false">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="bg-info modal-header" style="color: white">
+            Orders Search
+            <label id="LblIssueInvoice_OrdNo" style="font-weight: bold"></label>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-3 col-3">
+                <div class="card pb-1">
+                  <div class="card-body">
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpSubtotal" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">ID Number</label>
+                        <input type="text" class="form-control" id="inpMIDNo" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpDiscount" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">Tel No</label>
+                        <input type="text" class="form-control" id="inpMTelNo" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpTotalAfterDiscount" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">Patient No</label>
+                        <input type="text" class="form-control" id="inpMPatID" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpTotalAfterDiscount" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">Patient Name</label>
+                        <input type="text" class="form-control" id="inpMPatName" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpTotalAfterDiscount" class="input-group-text"
+                          style="margin-bottom: 5px; height: 36px">DOB</label>
+                        <input type="date" class="form-control" id="inpMDOB" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label class="input-group-text" for="SEX">Sex</label>
+                        <select ng-disabled="btnDisabled" id="selMSEX" aria-label="Select sex" style="
+                    min-width: 79.8%;
+                    height: 33px;
+                    border-color: #ced4da !important;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                  ">
+                          <option value="">Select Gender</option>
+                          <option value="M">Male</option>
+                          <option value="F">Fermale</option>
+                          <option value="U">Unknown</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12 mt-1">
+                      <div class="input-group">
+                        <label for="inpGrandTotal" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">Order No</label>
+                        <input type="text" class="form-control" id="inpMOrdNo" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpGrandTotal" class="input-group-text"
+                          style="width: 39%; margin-bottom: 5px; height: 36px">Accession No</label>
+                        <input type="text" class="form-control" id="inpMAccn" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpTotalAfterDiscount" class="input-group-text"
+                          style="margin-bottom: 5px; height: 36px">Date From</label>
+                        <input type="date" [(ngModel)]="fromDate" class="form-control" id="inpMDateFrom" />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="input-group">
+                        <label for="inpTotalAfterDiscount" class="input-group-text"
+                          style="margin-bottom: 5px; height: 36px">Date To</label>
+                        <input type="date" [(ngModel)]="toDate" class="form-control" id="inpMDateTo" />
+                      </div>
+                    </div>
+                    <div class="col-md-12 my-2 d-flex justify-content-between">
+                      <button id="BtnModalMultipleSearch" (click)="GetMultipleSearch()" type="button"
+                        class="btn btn-outline-dark">
+                        <strong><i class="ri-search-line"></i> Search</strong>
+                      </button>
+                      <button type="button" class="btn btn-outline-dark">
+                        <i class="ri-arrow-go-back-line"></i> Reset
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-9 col-9">
+                <div class="row">
+                  <div class="col-sm-12 col-12">
+                    <h6 class="text-info">Patients list</h6>
+                    <div class="card pb-1 mt-2" style="height: 15.3rem; overflow-y: scroll">
+                      <div>
+                        <table class="table table-bordered data" id="TableMultipleSearchPR">
+                          <thead class="table-head-fix">
+                            <tr>
+                              <th>Patient Name</th>
+                              <th>Patient ID</th>
+                              <th>Gender</th>
+                              <th>Date of Birth</th>
+                              <th>NID</th>
+                              <th>Tel. No.</th>
+                              <th style="width:7rem">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="
+                        let multupleSearchList of multupleSearchList
+                      ">
+                              <td>{{ multupleSearchList.paT_NAME }}</td>
+                              <td>{{ multupleSearchList.paT_ID }}</td>
+                              <td>
+                                {{
+                                multupleSearchList.sex == "M"
+                                ? "Male"
+                                : "Female"
+                                }}
+                              </td>
+                              <td>
+                                {{ multupleSearchList.dob | date : "dd/MM/yyyy" }}
+                              </td>
+                              <td>{{ multupleSearchList.idnt }}</td>
+                              <td>{{ multupleSearchList.tel }}</td>
+                              <td>
+                                <button class="btn btn-primary btn-icon btn-sm mb-1" style="
+                            height: 1.7rem;
+                            width: 2rem;
+                            padding: 0rem 0rem;
+                            margin-bottom: 0rem !important;
+                          " (click)="
+                            GetMultipleSearchOrders(
+                              multupleSearchList.paT_ID
+                            )
+                          ">
+                                  <i class="ri-send-plane-line"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-12 mt-2">
+                    <h6 class="text-info">Orders List</h6>
+                    <div class="card pb-1" style="height: 15.3rem; overflow-y: scroll">
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <table class="table table-bordered data" id="TableMultipleSearchOrders">
+                            <thead class="table-head-fix">
+                              <tr>
+                                <th>Site No</th>
+                                <th>Order No</th>
+                                <th>Accession No</th>
+                                <th>Client</th>
+                                <th>Location</th>
+                                <th>Doctor</th>
+
+                                <th style="width:7rem">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="
+                          let multupleSearchOrdersList of multupleSearchOrdersList
+                        ">
+                                <td>{{ multupleSearchOrdersList.sitE_NO }}</td>
+                                <td>{{ multupleSearchOrdersList.orD_NO }}</td>
+                                <td>{{ multupleSearchOrdersList.accn }}</td>
+                                <td>
+                                  {{ multupleSearchOrdersList.cn }}-{{
+                                  multupleSearchOrdersList.client
+                                  }}
+                                </td>
+                                <td>
+                                  {{ multupleSearchOrdersList.loc }}-{{
+                                  multupleSearchOrdersList.descrp
+                                  }}
+                                </td>
+                                <td>
+                                  {{ multupleSearchOrdersList.drno }}-{{
+                                  multupleSearchOrdersList.doctor
+                                  }}
+                                </td>
+
+                                <td>
+                                  <button class="btn btn-primary btn-icon btn-sm mb-1" style="
+                              height: 1.7rem;
+                              width: 2rem;
+                              padding: 0rem 0rem;
+                              margin-bottom: 0rem !important;
+                            " (click)="
+                              SearchOrderTransMultiple(
+                                multupleSearchOrdersList.orD_NO
+                              )
+                            " data-bs-dismiss="modal">
+                                    <i class="ri-send-plane-line"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button (click)="LoadPatient(NewPatId)" type="button" class="btn btn-outline-dark cancelation"
+              data-bs-dismiss="modal">
+              <i class="ri-close-line"></i> Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>

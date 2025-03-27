@@ -1,0 +1,363 @@
+<main>
+  <section>
+
+    <div class="row justify-content-center">
+      <div class="col-md-9 col-lg-9 col-xl-9"><!-- back-link -->
+        <div class="d-flex section-top-space">
+          <!-- <div class="d-flex">
+            <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+              <h6 class="py-1 mt-1 header-font">Master</h6>
+            </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+            <a style="color: #000000" href="#">
+              <h6 class="py-1 mt-1 header-font">Site Details</h6>
+            </a>
+          </div> -->
+        </div>
+        <section class="section-wrapper mt-2">
+          <form [formGroup]="form">
+            <div class="tab-target is-active" id="tab-content-1">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-wrap w-75">
+                  <button class="btn btn-outline-dark add-section" [disabled]="isAddBtnActive" (click)="onAddRecord()">
+                    <i class="ri-add-line pr-1"></i>Add Record
+                  </button>
+                  <button class="btn btn-outline-dark add-section" [disabled]="isSaveBtnActive" (click)="onSubmit()">
+                    <i class="ri-save-line pr-2"></i>Save
+                  </button>
+                  <button class="btn btn-outline-dark order-section" [disabled]="isEditBtnActive"
+                    (click)="onEditRecord()">
+                    <i class="ri-pencil-line pr-2"></i>Edit
+                  </button>
+                  <button class="btn btn-outline-dark add-section cancelation" [disabled]="isCancelBtnActive"
+                  (click)="onCancelRecord(siteData.sitE_DTL_ID)">
+                  <i class="ri-close-line pr-1"></i>Cancel
+                </button>
+                  <button class="btn btn-outline-dark cancelation" [disabled]="isDeleteBtnActive"
+                    (click)="onDeleteRecord(siteData.sitE_DTL_ID)">
+                    <i class="ri-delete-bin-6-line pr-2"></i>Delete
+                  </button>
+                  <button class="btn btn-outline-dark add-section cancelation">
+                    <i class="ri-close-line pr-1"></i>Close
+                  </button>
+                </div>
+                <div class="col-md-2">
+                  <ng-select [items]="matchedSites$ | async" bindLabel="sitE_NAME"
+                    class="custom search-style mb-2" [(ngModel)]="selectedSite" [searchFn]="customSearch"
+                    [searchable]="true" (search)="onSearch($event)" (change)="onSiteSelection($event)"
+                    placeholder="Search...">
+                    <!-- Template for no search results -->
+                    <ng-template #noResults>
+                      <div>No results found</div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+                
+                <!-- <ng-select [items]="matchedSites$ | async" bindLabel="sitE_NAME"
+                class="custom search-style mb-2" [(ngModel)]="selectedSite" [searchFn]="customSearch"
+                [searchable]="true" (search)="onSearch($event)" (change)="onSiteSelection($event)"
+                placeholder="Search...">
+     </ng-select>  -->
+
+              </div>
+              <!-- add-section -->
+              <div class="add-content">
+                <!-- first-card -->
+                <div class="card mt-2">
+                  <div class="d-flex flex-wrap">
+                    <div class="col-md-2 col-lg-2 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Site No:</label>
+                        <input type="text" appAutofocus required (keypress)="numberOnly($event)" class="form-control"
+                          minlength="3" maxlength="3" formControlName="sitE_NO" (keyup)="checkAlreadyExisting($event)"
+                          [readonly]="true" [ngClass]="{'is-invalid': submitted && f['sitE_NO'].errors}"
+                          placeholder="Enter Site No" id="siteNo" [(ngModel)]="siteData.sitE_NO" />
+                      </div>
+                      <div *ngIf="submitted && f['sitE_NO'].errors" class="invalid-feedback">
+                        <div *ngIf="f['sitE_NO'].errors['required']">required</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Site name:</label>
+                        <input class="form-control" formControlName="sitE_NAME" required
+                          [ngClass]="{'is-invalid': submitted && f['sitE_NAME'].errors}" placeholder="Enter Site name"
+                          type="text" id="siteName" [(ngModel)]="siteData.sitE_NAME" />
+                      </div>
+                      <div *ngIf="submitted && f['sitE_NAME'].errors" class="invalid-feedback">
+                        <div *ngIf="f['sitE_NAME'].errors['required']">required</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Short Name:</label>
+                        <input class="form-control" formControlName="shortname" placeholder="Enter Short Name"
+                          type="text" id="shortName" [(ngModel)]="siteData.shortname" maxlength="12" />
+                      </div>
+                    </div>
+                    <!-- <input class="form-control" formControlName="reF_SITE_NAME" 
+                    id="reF_SITE_NAME" [(ngModel)]="siteData.reF_SITE_NAME" style="display: none;"/> -->
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label class="input-group-text side-input-dia">Type:</label>
+                        <select id="type" class="form-control" formControlName="sitE_TP" [(ngModel)]="siteData.sitE_TP"
+                          (change)="onTypeChange()">
+                          <option value="CS">Collection Site </option>
+                          <option value="FS">Franchise Site</option>
+                          <option value="LS">Lab Site</option>
+
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                      <div class="dropdown-container">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Ref Lab:</label>
+                          <span *ngIf="!isDisableDropDownOnEdit()" class="w-50">
+                            <ng-select *ngIf="siteData.sitE_TP!='LS'" (keypress)="numberOnly($event)" maxlength="3"
+                              (change)="onSiteChange($event)" formControlName="reF_SITE" class="editable-dropdown"
+                              placeholder="select" [(ngModel)]="siteData.reF_SITE">
+                              <ng-option [value]="obj.reF_SITE" *ngFor="let obj of refDropDown">
+                                {{ obj.sitE_NO + ' - ' + obj.sitE_NAME}}
+                              </ng-option>
+                            </ng-select>
+                            <!-- <input *ngIf="siteData.sitE_TP=='LS' || operation==0" class="form-control" type="text"
+                      id="reF_SITE" [attr.disabled]="operation==1 || operation==2?'true':null"> -->
+                            <ng-select *ngIf="siteData.sitE_TP=='LS'" (keypress)="numberOnly($event)" maxlength="3"
+                              (change)="onSiteChange($event)" formControlName="reF_SITE" class="editable-dropdown"
+                              placeholder="select" [(ngModel)]="siteData.reF_SITE">
+                              <ng-option [value]="obj.reF_SITE" *ngFor="let obj of refDropDown">
+                                {{ obj.sitE_NO + ' - ' + obj.sitE_NAME}}
+                              </ng-option>
+                            </ng-select>
+                          </span>
+
+                          <span *ngIf="isDisableDropDownOnEdit()" class="w-50">
+                            <input class="form-control" type="text" id="reF_SITE" [(ngModel)]="siteData.reF_SITE"
+                              value="{{siteData.reF_SITE  + ' - ' + siteData.reF_SITE_NAME}}" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="card mt-2">
+                      <div class="d-flex flex-wrap">
+                    <div class="mt-1 col-md-6 col-lg-6 col-12">
+                      <div class="toggle">
+                        <input type="checkbox" name="group1" id="toggle1" 
+                               [checked]="siteData.rcvD_COL === 1" 
+                               (change)="toggleDefaultSpecimen($event)">
+                        <label for="toggle1" style="font-size: 0.8rem">Default Specimen Received Once Ordered</label>
+                    </div>
+                      <!-- <input type="checkbox" formControlName="rcvD_COL" id="defaultSpecimen"
+                        [checked]="siteData.rcvD_COL === 1" (change)="toggleDefaultSpecimen($event)" /> -->
+                      <!-- <label for="defaultSpecimen" style="font-size: 0.8rem">
+                        Default Specimen Received Once Ordered
+                      </label> -->
+                    </div>
+                   
+                    <!-- </div>
+              <div class="d-flex flex-wrap"> -->
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">City:</label>
+                        <input class="form-control" formControlName="city" placeholder="Enter City Name" type="text"
+                          id="city" [(ngModel)]="siteData.city" maxlength="30" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12 rtl-formate"
+                    style="direction: rtl; float: right; text-align: right">
+                    <div class="input-group-ar">
+                      <label class="input-group-text-ar side-input-dia">اسم المدينة: </label>
+                      <input class="form-control" formControlName="aR_SITE_NAME" placeholder="أدخل اسم المنظمة"
+                        type="text" id="arSiteName" [(ngModel)]="siteData.aR_SITE_NAME" />
+                    </div>
+                  </div>
+                    <div class="col-md-6 col-lg-6 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">Address:</label>
+                        <input class="form-control" formControlName="address" placeholder="Enter Address" type="text"
+                          id="address" [(ngModel)]="siteData.address" maxlength="60" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">Email:</label>
+                        <input class="form-control" placeholder="Enter Email" formControlName="email" type="text"
+                          id="email" [(ngModel)]="siteData.email" maxlength="35"
+                          [ngClass]="{'is-invalid': submitted && f['email'].errors}" />
+                      </div>
+                      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                        <!-- <div *ngIf="f['email'].errors['required']">Email is required</div> -->
+                        <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">Telephone:</label>
+                        <input (keypress)="numberOnly($event)" class="form-control" formControlName="tel"
+                          placeholder="Enter Telephone Number" type="text" id="telephone" [(ngModel)]="siteData.tel"
+                          maxlength="20" />
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                      <!-- <div class="input-group">
+                        <label for="dropdown1" class="input-group-text side-input-dia">Mobile:</label>
+                        <input (keypress)="numberOnly($event)" class="form-control" formControlName="mobile"
+                          placeholder="Enter Mobile Number" type="text" id="mobile" [(ngModel)]="siteData.mobile"
+                          maxlength="15" />
+                      </div> -->
+
+                      <div class="dropdown"
+                      >
+                      <!-- {{selectedQuarterList|json}} -->
+                      <div class="input-group">
+                        <label for="dropdown1" class="input-group-text side-input-dia">Mobile:</label>
+                      <ng-multiselect-dropdown style="flex:1 1 auto"
+                                [placeholder]="'Select Mobile Number'"
+                                [settings]="dropdownSettings"
+                                [data]="quarterList"
+                                [(ngModel)]="selectedQuarterList"
+                                (onDropDownClose)="onDropdownClose()"
+                                (click)="this.isDropdownOpen = true"
+                                (onSelect)="onItemSelect($event,true)"
+                                (onDeSelect)="onItemSelect($event,false)"
+                              >
+                              </ng-multiselect-dropdown>
+                              </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">Latitude:</label>
+                        <input (keypress)="numberOnly($event)" class="form-control" formControlName="latitude"
+                          placeholder="Enter Latitude" type="text" id="latitude" [(ngModel)]="siteData.latitude"
+                          maxlength="29" />
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-12">
+                      <div class="input-group">
+                        <label for="inputField1" class="input-group-text side-input-dia">Longitude:</label>
+                        <input (keypress)="numberOnly($event)" class="form-control" formControlName="longitude"
+                          placeholder="Enter Longitude" type="text" id="longitude" [(ngModel)]="siteData.longitude"
+                          maxlength="29" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- first-card -->
+
+                <div class="row">
+                  <!-- period durations -->
+                  <div class="col-md-12">
+                    <div class="accordion" id="accordionExample">
+                      <div class="card pt-3">
+                        <div class="card-head" id="headingOne">
+                          <h2 style="font-size: 15px" class="mb-0 collapsed" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Page Header:
+                          </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                          data-parent="#accordionExample">
+                          <div class="card-body">
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 1:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField1" required />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 2:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField2" required />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 3:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField3" required />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- period durations -->
+                  <!-- total values -->
+                  <div class="col-md-12 mb-3">
+                    <div class="accordion" id="accordionExample">
+                      <div class="card pt-3">
+                        <div class="card-head" id="headingTwo">
+                          <h2 style="font-size: 15px" class="mb-0 collapsed" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Page Footer:
+                          </h2>
+                        </div>
+
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                          data-parent="#accordionExample">
+                          <div class="card-body">
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 1:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField5" required />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 2:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField6" required />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <label class="input-group-text side-input-dia">Line 3:</label>
+                                <input class="form-control" placeholder="Enter" type="text" id="inputField7" required />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- total values -->
+                </div>
+                <!-- add-section -->
+                <div class="row">
+                  <div class="col-sm-12 col-md-4">
+                    Showing {{ calculateCurrentIndex(siteData.sno) }} of {{ siteAllData.length }} entries
+                  </div>
+                  <div class="col-sm-12 col-md-8 d-flex justify-content-end">
+                    <button class="btn" id="first" [disabled]="isNavigationActive"
+                      (click)="getRecord('first',siteData.sno)" tooltip="First">
+                      <i class="ri-skip-left-line pr-2"></i>
+                    </button>
+                    <button class="btn" id="previous" [disabled]="isNavigationActive"
+                      (click)="getRecord('prev',siteData.sno)" tooltip="Previous">
+                      <i class="ri-arrow-left-double-line pr-2"></i>
+                    </button>
+                    <button class="btn" id="next" [disabled]="isNavigationActive"
+                      (click)="getRecord('next',siteData.sno)" tooltip="Next">
+                      <i class="ri-arrow-right-double-line pl-2"></i>
+                    </button>
+                    <button class="btn" id="last" [disabled]="isNavigationActive"
+                      (click)="getRecord('last',siteData.sno)" tooltip="Last">
+                      <i class="ri-skip-right-line pl-2"></i>
+                    </button>
+                  </div>
+                  <div>
+                    <!-- <button class="next-button btn btn-outline-dark mx-1 py-2" style="width:15rem"><i class="ri-save-line pr-2"></i>Save</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>

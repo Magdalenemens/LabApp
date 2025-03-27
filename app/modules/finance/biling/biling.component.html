@@ -1,0 +1,34 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space">
+      <!-- <div class="d-flex">
+      <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+        <h6 class="py-1 mt-1 header-font">Finance</h6>
+      </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+      <a style="color: #000000" href="#">
+        <h6 class="py-1 mt-1 header-font">Biling </h6>
+      </a>
+    </div> -->
+    </div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="bills-generation" data-tab-target="tab-content-1" (click)="goToBilling('bills-generation')"
+            [class.is-active]="selected === 'bills-generation'">
+            Bills Generation
+          </button>
+          <button data-tab-target="tab-content-2" id="bills-listing" (click)="goToBilling('bills-listing')"
+            [class.is-active]="selected === 'bills-listing'">Bills Listing</button>
+          <button data-tab-target="tab-content-3" id="bills-checks" (click)="goToBilling('bills-checks')"
+            [class.is-active]="selected === 'bills-checks'">Bills Checks</button>
+            <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Billing</h6>
+
+        </nav>
+        <app-default></app-default>
+
+      </div>
+    </section>
+  </div>
+</div>

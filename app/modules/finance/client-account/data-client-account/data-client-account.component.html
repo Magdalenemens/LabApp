@@ -1,0 +1,280 @@
+<div class="app-body">
+  <div [formGroup]="form" class="d-flex">
+    <div class="d-flex flex-column">
+      <div class="custom-input" style="width: 10.8rem">
+        <div class="card d-flex flex-column vertical-center">
+
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2">
+            <i class="ri-restart-line"></i> Refresh
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2">
+            <i class="ri-computer-line"></i> Display
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2" *ngIf="isAddButton" (click)="addClick()">
+            <i class="ri-add-line"></i> Add
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2" *ngIf="!isAddButton" (click)="saveClick()">
+            <i class="ri-save-line"></i> Save
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2" *ngIf="isEditButton" (click)="editClick()">
+            <i class="ri-save-line"></i> Edit
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark" *ngIf="!isAddButton" (click)="cancelClick()">
+            <i class="ri-close-line"></i> Cancel
+          </button>
+        </div>
+        <div class="card mt-1">
+          <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+            <div class="d-flex flex-wrap justify-content-between navigation">
+              <button id="BtnFirst" class="btn page-btn btn-outline-paginate p-0" tooltip="First"
+                (click)="getclientAccountDetails(dataEntryDetails.firsT_ID)">
+                <i class="ri-skip-left-line px-1"></i>
+              </button>
+              <button id="BtnPrevious" class="btn page-btn btn-outline-paginate p-0 mx-1" tooltip="previous"
+                (click)="getclientAccountDetails(dataEntryDetails.previouS_ID)">
+                <i class="ri-arrow-left-double-line px-1"></i>
+              </button>
+              <button id="BtnNext" class="btn page-btn btn-outline-paginate p-0 mx-1" tooltip="next"
+                (click)="getclientAccountDetails(dataEntryDetails.nexT_ID)">
+                <i class="ri-arrow-right-double-line px-1"></i>
+              </button>
+              <button id="BtnLast" class="btn page-btn btn-outline-paginate p-0" tooltip="last"
+                (click)="getclientAccountDetails(dataEntryDetails.lasT_ID)">
+                <i class="ri-skip-right-line px-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- top-card -->
+    <div style="flex: 1 1 auto">
+
+      <div class="col-md-8">
+
+        <div class="pr-0">
+          <div class="input-group">
+            <label style="height: 33px;" class="input-group-text side-input-dia">Client No / Name:</label>
+            <ng-select #ngSelectInstance [tabIndex]="5" value="{{ dataEntryDetails.cn }}" 
+              placeholder="Select Source Code" class="form-select" id="cn" aria-label=""
+              (change)="change($event)" [readonly]="!isDisabled">
+              <ng-option [tabIndex]="5" selected="">Select Source Code
+              </ng-option>
+              <ng-option [tabIndex]="5" *ngFor="let obj of clientList" [value]="obj.clnT_FL_ID"
+                [ngValue]="obj.clnT_FL_ID" style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.cn }}">{{
+                obj.cn + ' - '+obj.client
+                }}</ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card mb-1">
+        <div class="card-body">
+          <div class="row">
+            <div class="custom-input" style="width: 16rem">
+              <div class="input-group">
+                <label for="CA_CL_NO" class="input-group-text side-input-dia">Client No / Name:</label>
+                <label class="form-control" id="CA_CL_NO" readonly="true">
+                  <span class="mx-1" id="PAT_ID">{{ dataEntryDetails.cn }}</span>
+                </label>
+              </div>
+            </div>
+            <div style="flex: 1 1 auto">
+              <div class="input-group">
+                <label class="form-control" id="CA_CL_NAME" readonly="true">
+                  <span class="mx-1" id="CA_CL_NAME">{{ dataEntryDetails.client }}</span>
+                </label>
+              </div>
+            </div>
+            <div class="custom-input" style="width: 18rem">
+              <div class="input-group">
+                <label for="CA_TR_TYPE" class="input-group-text">Transaction Type:</label>
+                <!-- <input
+                  type="text"
+                  class="form-control"
+                  id="CA_TR_TYPE"
+                  placeholder=""
+                  [tabIndex]="2"
+                  formControlName="tt"
+                /> -->
+                <label class="form-control" id="CA_TR_TYPE" readonly="true">
+                  <span class="mx-1" id="CA_TR_TYPE">{{dataEntryDetails.tt}}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- second-section -->
+      <div class="card mt-2">
+        <div class="d-flex flex-wrap">
+          <div class="col-md-2">
+            <div class="input-group">
+              <label class="input-group-text" for="CADate">Date:</label>
+              <input type="date" class="form-control" id="CADate" placeholder="" [readOnly]="isreadonly"
+                formControlName="date" />
+              <!-- <label class="form-control" id="CADate" readonly="true">
+                <span  class="mx-1" id="CADate">{{dataEntryDetails.date|date:'dd/MM/yyyy'}}</span>
+              </label> -->
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+              <label for="CA_DEBIT" class="input-group-text side-input-dia">Debit:</label>
+              <label class="form-control" id="CA_DEBIT" readonly="true">
+                <span class="mx-1" id="CA_DEBIT" *ngIf="dataEntryDetails.debit > 0">{{dataEntryDetails.debit}}</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="input-group">
+              <label for="CA_CREDIT" class="input-group-text side-input-dia">Credit:</label>
+              <label class="form-control" id="CA_CREDIT" readonly="true" *ngIf="dataEntryDetails.debit > 0">
+                <span class="mx-1" id="CA_CREDIT"></span>
+              </label>
+              <input *ngIf="dataEntryDetails.debit === 0" type="text" class="form-control" id="CADate"
+                [readOnly]="isreadonly" placeholder="" formControlName="credit" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <label for="CA_INVOICE" class="input-group-text side-input-dia">Invoice:</label>
+              <!-- <label class="form-control" id="CA_INVOICE" readonly="true">
+                <span class="mx-1" id="CA_INVOICE">{{dataEntryDetails.vC_NO}}</span>
+              </label> -->
+              <input type="text" readonly class="form-control" id="CADate" placeholder="" formControlName="vC_NO" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <label for="CA_RECEIPT_NO" class="input-group-text side-input-dia">Receipt No:</label>
+              <!-- <label class="form-control" id="CA_RECEIPT_NO" readonly="true">
+                <span class="mx-1" id="CA_RECEIPT_NO">{{dataEntryDetails.rcT_NO}}</span>
+              </label> -->
+              <input type="text" class="form-control" id="CADate" [readOnly]="isreadonly" placeholder=""
+                formControlName="rcT_NO" />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="CA_REMARKS" class="input-group-text side-input-dia">Remarks:</label>
+              <!-- <label class="form-control" id="CA_REMARKS" readonly="true">
+                <span class="mx-1" id="CA_REMARKS">{{record.remarks}}</span>
+              </label> -->
+              <input type="text" class="form-control" id="CADate" placeholder="" [readOnly]="isreadonly"
+                formControlName="remarks" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- second-section -->
+    </div>
+    <!-- top-card -->
+  </div>
+  <!-- table-section -->
+  <div class="d-flex mt-2">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="table-veritical-sm">
+          <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+            style="font-size: 11.5px" id="tableTestOrder">
+            <thead class="table-head-fix">
+              <tr>
+                <th width="7%">Cn</th>
+                <th width="10%">Date</th>
+                <th width="10%">Invoice</th>
+                <th width="40%">Receipt</th>
+                <th width="15%">Debit</th>
+                <th width="15%" class="text-left">Credit</th>
+              </tr>
+            </thead>
+            <tbody id="bodyList" class="bodyList">
+              <tr *ngFor="let item of list" (click)="getClientAccountDataEntryDetails(item.clntacnT_ID)">
+                <td>{{item.cn}}</td>
+                <td>{{item.date | date:'dd/MM/yyyy' }}</td>
+                <td>{{item.vC_NO}}</td>
+                <td> {{item.rcT_NO}}</td>
+                <td style="color: green;"><span *ngIf="item.debit > 0">{{item.debit}}</span> </td>
+                <td style="color: red;"><span *ngIf="item.credit > 0">{{item.credit}}</span></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card" style="background-color: #f8f9fc">
+        <div class="d-flex justify-content-center mb-4">
+          <div>
+            <h6 [tabIndex]="-1" class="card-title px-3" style="margin-bottom: 0.1rem; border-radius: 5px">
+              Total Values
+            </h6>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1">
+          <div>
+            <label class="input-group-text side-input-dia" for="inputField1">Invoice:</label>
+          </div>
+          <div class="float-right">
+            <!-- <input
+                [tabIndex]="36"
+                class="form-control"
+                style="font-weight: 500; width: 10rem"
+                placeholder=""
+                id="subtotal"
+              /> -->
+            <label class="form-control" id="subtotal" readonly="true"
+              style="font-weight: 500; width: 10rem;color:green">
+              <span class="mx-1" id="subtotal">{{dataEntryDetails.ytD_DEBIT}}</span>
+            </label>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text side-input-dia">Paid:</label>
+          </div>
+          <div class="float-right">
+            <!-- <input
+                [tabIndex]="39"
+                class="form-control"
+                style="font-weight: 500; width: 10rem"
+                placeholder=""
+                type="text"
+                id="discountedprice"
+              /> -->
+            <label class="form-control" id="discountedprice" readonly="true"
+              style="font-weight: 500; width: 10rem;color:red">
+              <span class="mx-1" id="discountedprice">{{dataEntryDetails.ytD_CREDIT}}</span>
+            </label>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mx-1 mt-1">
+          <div>
+            <label for="inputField1" class="input-group-text side-input-dia">Balance:</label>
+          </div>
+          <div class="float-right">
+            <!-- <input
+                [tabIndex]="39"
+                class="form-control"
+                style="font-weight: 500; width: 10rem"
+                placeholder=""
+                type="text"
+                id="discountedprice"
+              /> -->
+            <label class="form-control" id="discountedprice" readonly="true" style="font-weight: 500; width: 10rem">
+              <span *ngIf="dataEntryDetails.balance >= 0" style="color:green" class="mx-1"
+                id="discountedprice">{{dataEntryDetails.balance}}</span>
+              <span *ngIf="dataEntryDetails.balance < 0" style="color:red" class="mx-1"
+                id="discountedprice">{{dataEntryDetails.balance}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- table-section -->
+</div>

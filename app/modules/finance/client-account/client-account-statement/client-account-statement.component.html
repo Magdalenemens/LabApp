@@ -1,0 +1,296 @@
+<div class="app-body mt-1">
+  <div [formGroup]="" class="d-flex">
+    <div class="d-flex flex-column">
+      <div class="custom-input" style="width: 12.2rem">
+        <div class="card d-flex flex-column vertical-center">
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2" (click)="onPrint()">
+            <i class="ri-printer-line"></i> Print
+          </button>
+          <iframe #reportFrame width="0" height="0" style="display: none;"></iframe>
+
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2" (click)="onPrintCoverLetter()">
+            <i class="ri-file-line"></i> Cover L
+
+          </button>
+          <iframe #reportFrame width="0" height="0" style="display: none;"></iframe>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-2">
+            <i class="ri-send-plane-2-line"></i> Send
+          </button>
+          <button id="BtnBarcode" class="btn page-btn btn-outline-dark">
+            <i class="ri-file-copy-2-line"></i> Report All
+          </button>
+          <form class="mt-2" #userForm="ngForm">
+            <div>
+                <label>Statement By Date</label>
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label class="input-group-text" for="CADate">From:</label>
+                  <input type="date" class="form-control" id="CADate" placeholder="" [(ngModel)]="fromDate"
+                    (change)="getClientAccountStatement(currentId,cn)" />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <label class="input-group-text" for="CADate">To:</label>
+                  <input type="date" class="form-control" id="CADate" placeholder="" [(ngModel)]="toDate"
+                    (change)="getClientAccountStatement(currentId,cn)" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="card mt-1">
+ 
+          <div class="d-flex flex-wrap justify-content-between navigation">
+            <button id="BtnFirst" class="btn btn-outline-dark p-0" tooltip="First">
+ 
+              <i class="ri-skip-left-line px-1"></i>
+            </button>
+            <button id="BtnPrevious" class="btn btn-outline-dark p-0 mx-1" tooltip="previous">
+              <i class="ri-arrow-left-double-line px-1"></i>
+            </button>
+            <button id="BtnNext" class="btn btn-outline-dark p-0 mx-1" tooltip="next">
+              <i class="ri-arrow-right-double-line px-1"></i>
+            </button>
+            <button id="BtnLast" class="btn btn-outline-dark p-0" tooltip="last">
+              <i class="ri-skip-right-line px-1"></i>
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- top-card -->
+    <div style="flex: 1 1 auto">
+      <div class="d-flex justify-content-start">
+        <div class="col-md-4">
+          <div class="pr-0">
+            <div class="input-group">
+              <label style="height: 33px;" class="input-group-text side-input-dia">Client No / Name:</label>
+              <ng-select  #ngSelectInstance  [tabIndex]="5" [(ngModel)]="selectedClient" placeholder="Select Source Code"
+                class="form-select" id="cn" aria-label="" (change)="change($event)" [readonly]="!isDisabled">
+
+                <ng-option [tabIndex]="5" [value]="null" selected>Select Source Code</ng-option>
+                <ng-option [tabIndex]="5" *ngFor="let obj of clientList" [value]="obj" [ngValue]="obj"
+                  style="max-width: 5rem" class="tooltip-cell" appTooltip="{{ obj.cn }}">
+                  {{ obj.cn }} - {{ obj.client }}
+                </ng-option>
+              </ng-select>
+              <!-- <button class="btn btn-outline-secondary mr-0" data-toggle="modal" data-target="#myModal"  type="button"
+              style="height: 33px;padding: inherit;border-top-left-radius: 5px;border-bottom-left-radius: 5px;">
+              <i class="ri-search-line"></i></button>     
+            <ng-select #testSelect style="flex: 1 1 auto;" bindLabel="combinedLabel"
+            class="custom" [searchable]="true" placeholder="search">
+            <ng-template #noResults>
+              <div>No results found</div>
+            </ng-template>
+          </ng-select> -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- table-section -->
+      <div class="d-flex">
+        <div class="col-md-4">
+          <div class="card mt-1">
+            <div style="height: 62vh;overflow-y: scroll;">
+              <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid"
+                style="font-size: 11.5px" id="tableTestOrder">
+                <thead class="table-head-fix">
+                  <tr>
+                    <th>Cn No</th>
+                    <th class="text-left">Client Name</th>
+                    <!-- <th >P1</th>
+                    <th >P2</th>
+                    <th  class="text-left">P3</th> -->
+                  </tr>
+                </thead>
+                <tbody id="bodyList" class="bodyList">
+ 
+                  <tr *ngFor="let item of filteredClientList;let i=index" (click)="getClientAccountStatement(item.clnT_FL_ID,item.cn)" #rowRef>
+                    <td [ngClass]="{'highlighted-row': item.clnT_FL_ID == highLightedSelectedRow}">{{item.cn}}</td>
+                    <td [ngClass]="{'highlighted-row': item.clnT_FL_ID == highLightedSelectedRow}" class="tooltip-cell text-left"
+                    style="max-width: 24rem; cursor: pointer"
+                    appTooltip="{{item.client}}">{{item.client}}</td>
+                    <!-- <td [ngClass]="{'highlighted-row': item.clnT_FL_ID == highLightedSelectedRow}"><span *ngIf="item.totaL_DAYS <=30">{{item.balance}}</span></td>
+                    <td [ngClass]="{'highlighted-row': item.clnT_FL_ID == highLightedSelectedRow}"><span *ngIf="item.totaL_DAYS <=60 && item.totaL_DAYS >30">{{item.balance}}</span></td>
+                    <td [ngClass]="{'highlighted-row': item.clnT_FL_ID == highLightedSelectedRow}" class="text-left"><span *ngIf="item.totaL_DAYS >60">{{item.balance}}</span></td> -->
+ 
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+             <!-- second-section -->
+  <div class="card mt-1">
+    <div class="table-veritical-sm">
+      <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid table-fixed"
+        style="font-size: 11.5px" id="tableTestOrder">
+        <thead class="table-head-fix">
+          <tr>
+            <th width="10%">S.No</th>
+            <th width="15%">Date</th>
+            <th width="7%">Days</th>
+            <th width="25%">Remarks</th>
+            <th width="15%">Debit</th>
+            <th width="15%">Credit</th>
+            <th width="15%" style="width:15% !important" class="text-left">Balance</th>
+          </tr>
+        </thead>
+        <tbody id="bodyList" class="bodyList">
+          <tr *ngFor="let item of statementList">
+            <td>{{item.cn}}</td>
+            <td>{{item.date | date:'dd/MM/yyyy'}}</td>
+            <td>0</td>
+            <td>{{item.remarks}}</td>
+            <td style="color: green;"><span *ngIf="item.debit > 0">{{item.debit}}</span> </td>
+            <td style="color: red;"><span *ngIf="item.credit > 0">{{item.credit}}</span></td>
+            <td class="text-left">{{item.balance}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+    <div>
+      <table class="table table-bordered data table-hover table-striped truncate m-0 table-grid table-fixed"
+        style="font-size: 11.5px" id="tableTestOrder">
+        <tbody>
+          <tr>
+            <td colspan="4" class="text-right" style="
+              font-weight: 500;
+              font-size: 1rem;
+              padding-top: 1rem !important;
+            ">
+              Total
+            </td>
+            <td style="width:15%">
+              <div style="flex: 1 1 auto;">
+                <div class="input-group">
+                  <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+                    <span class="mx-1" id="discountedprice" style="font-weight: 500; color:green" class="mx-1"
+                      id="CA_CL_NAME">{{totalDebit | number:'1.2-2'}}</span>
+                  </label>
+                </div>
+              </div>
+            </td>
+            <td style="width:14% !important">
+              <div style="flex: 1 1 auto">
+                <div class="input-group">
+                  <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+                    <span style="font-weight: 500 ;color: red;" class="mx-1" id="CA_CL_NAME">{{totalCredit |
+                      number:'1.2-2'}}</span>
+                  </label>
+                </div>
+              </div>
+            </td>
+            <td class="text-left" style="width:16.4% !important">
+              <div style="flex: 1 1 auto">
+                <div class="input-group">
+                  <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+                    <span *ngIf="balance >= 0" style="font-weight: 500; color:green" class="mx-1"
+                      id="CA_CL_NAME">{{balance | number:'1.2-2'}}</span>
+                    <span *ngIf="balance < 0" style="font-weight: 500 ;color:red" class="mx-1" id="CA_CL_NAME">{{balance
+                      | number:'1.2-2'}}</span>
+
+                  </label>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- second-section -->
+        <!-- <div class="col-md-4">
+          <div class="card" style="background-color: #f8f9fc;margin-top:2.5rem">
+            <div class="d-flex justify-content-center mx-1">
+              <div class="mx-3">
+                <input [tabIndex]="40" type="checkbox" id="chkVAT" [checked]="true" />
+                <label for="inputField1">Customers With Transactions Only</label>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center mx-1 mt-1">
+              <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-1">
+                <i class="ri-restart-line"></i> Refresh All Clients
+              </button>
+              <button id="BtnBarcode" class="btn page-btn btn-outline-dark mb-1">
+                <i class="ri-printer-line"></i> Print
+              </button>
+            </div>
+          </div>
+          <div class="card mt-2" style="background-color: #f8f9fc">
+            <form #userForm="ngForm">
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="mx-3">
+                  <label class="mr-2" for="inputField1">Statement By Date</label>
+                  <input [tabIndex]="40" type="checkbox" id="chkVAT" [checked]="true" />
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <label class="input-group-text" for="CADate">From:</label>
+                    <input type="date" class="form-control" id="CADate" placeholder="" [(ngModel)]="fromDate"
+                      (change)="getClientAccountStatement(currentId,cn)" />
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mx-1 mt-1">
+                <div class="col-md-8">
+                  <div class="input-group">
+                    <label class="input-group-text" for="CADate">To:</label>
+                    <input type="date" class="form-control" id="CADate" placeholder="" [(ngModel)]="toDate"
+                      (change)="getClientAccountStatement(currentId,cn)" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div> -->
+      </div>
+      <!-- table-section -->
+    
+    <!-- top-card -->
+  
+  <!-- last-section -->
+  <div class="card mt-2">
+    <div class="d-flex justify-content-between">
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for="CA_CL_NO" class="input-group-text side-input-dia">(<) 30 Days:</label>
+              <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+                <span class="mx-1" id="CA_CL_NAME" *ngIf="total_days <=30"> {{balance| number:'1.2-2'}}</span>
+              </label>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for="CA_CL_NO" class="input-group-text side-input-dia">30 - 90 Days:</label>
+          <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+            <span class="mx-1" id="CA_CL_NAME" *ngIf="total_days >30 && total_days <=90">{{balance|
+              number:'1.2-2'}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for="CA_CL_NO" class="input-group-text side-input-dia">(>) 90 Days:</label>
+          <label class="form-control" id="CA_CL_NAME" readonly="true" aria-disabled="true">
+            <span class="mx-1" id="CA_CL_NAME" *ngIf="total_days >90">{{balance| number:'1.2-2'}}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- last-section -->
+</div>
+  </div>
+
+</div>

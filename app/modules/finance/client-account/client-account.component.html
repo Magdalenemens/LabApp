@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12 col-xl-12">
+    <div class="d-flex section-top-space">
+    </div>
+    <!-- back-link -->
+    <!-- tabs -->
+    <section class="section-wrapper">
+      <div>
+        <nav class="tab-nav">
+          <button id="addclientAccount" data-tab-target="tab-content-1" (click)="goToClientAccounts('addclientAccount')"
+            [class.is-active]="selected === 'addclientAccount'">
+            Data Entry
+          </button>
+          <button data-tab-target="tab-content-2" id="clientAccountStatement"
+            (click)="goToClientAccounts('clientAccountStatement')"
+            [class.is-active]="selected === 'clientAccountStatement'">Statement</button>
+          <button data-tab-target="tab-content-2" id="crossCheck" (click)="goToClientAccounts('crossCheck')"
+            [class.is-active]="selected === 'crossCheck'">Cross Check</button>
+          <button data-tab-target="tab-content-2" id="currentStatus" (click)="goToClientAccounts('currentStatus')"
+            [class.is-active]="selected === 'currentStatus'">Current Status</button>
+            <h6 class="ml-auto mr-1 pt-1 specific-header-naming">Client Account</h6>
+
+        </nav>
+        <app-default></app-default>
+
+      </div>
+    </section>
+  </div>
+</div>

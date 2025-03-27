@@ -1,0 +1,32 @@
+<div class="d-flex section-top-space pt-3">
+  <!-- <div class="d-flex">
+    <a style="color: #000000" href="http://127.0.0.1:5500/Master/accession-prefix.html">
+      <h6 class="py-1 mt-1 header-font">Clinical Modules</h6>
+    </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+    <a style="color: #000000" href="#">
+      <h6 class="py-1 mt-1 header-font">GeneralResults</h6>
+    </a>
+  </div> -->
+</div>
+<!-- back-link -->
+<!-- tabs -->
+<section class="section-wrapper">
+  <div>
+    <nav class="tab-nav">
+      <button id="btnaddresults" data-tab-target="tab-content-1" (click)="goToGeneralLab('addgeneralresults')"
+        [class.is-active]="selected === 'addgeneralresults'">
+        Data Entry
+      </button>
+      <button data-tab-target="tab-content-2" id="btnlist" (click)="goToGeneralLab('listgeneralresults')"
+        [class.is-active]="selected === 'listgeneralresults'">List</button>
+      <button data-tab-target="tab-content-3" id="btnptr" (click)="goToGeneralLab('ptr')"
+        [class.is-active]="selected === 'ptr'">PTR</button>
+      <button data-tab-target="tab-content-4" id="btnaudit" (click)="goToGeneralLab('audit')"
+        [class.is-active]="selected === 'audit'">Audit</button>
+        <h6 class="ml-auto mr-1 pt-1 specific-header-naming">General Lab Results</h6>
+
+    </nav>
+    <app-default></app-default>
+
+  </div>
+</section>

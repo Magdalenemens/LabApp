@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+  <div class="col-md-10 col-lg-10 col-xl-10">
+<div class="d-flex section-top-space">
+  <!-- <div class="d-flex">
+    <a style="color:#000000">
+      <h6 class=" py-1 mt-1 header-font">Master</h6>
+    </a><span class="pt-1"><i class="ri-arrow-right-s-line icon"></i></span>
+    <a style="color:#000000">
+      <h6 class=" py-1 mt-1 header-font">Report Sub Header</h6>
+    </a>
+  </div> -->
+</div>
+<!-- back-link -->
+
+<div class="col-md-3 float-right">
+
+  <div>
+    <div class="input-group">
+      <div class="w-100">
+        <div class="search-container">
+    <input type="text" class="form-control search-input-icon" placeholder="Search..." [(ngModel)]="searchText" (input)="onSearch()">
+    <span class="search-icon"></span>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+<!-- Add-Report sub header -->
+<button class="add-btn add-row mb-2" type="button" (click)="addTable()"><i class="ri-add-line"></i>&nbsp;&nbsp;Add
+  Record</button>
+<!-- Add-Report sub header -->
+<!-- Table -->
+<div class="card table-responsive-lg">
+  <table class="table table-bordered data" id="editableTable">
+    <thead class="table-head-fix">
+      <tr>
+        <th style="width:14rem" (click)="sortData('shn')">Report Sub Header No<i class="material-icons sort-icon" [ngClass]="getSortIconClass('shn')">{{ getSortIcon('shn') }}</i></th>
+        <th (click)="sortData('mhn')">Report Main Header No/Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('mhn')">{{ getSortIcon('mhn') }}</i></th>
+        <th (click)="sortData('shdR_NAME')">Report Sub Header Name<i class="material-icons sort-icon" [ngClass]="getSortIconClass('shdR_NAME')">{{ getSortIcon('shdR_NAME') }}</i></th>     
+        <th>Actions </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of reportSubHeaderList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage); let i = index">
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.shn }}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{item.mhn}}</span></td>
+        <td *ngIf="!item.IsEdit&&!item.IsAdd"><span>{{ item.shdR_NAME }}</span></td>
+       
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" required disabled="{{item.IsEdit?true:false}}"
+            class="form-control {{required_rsh_no}}" (keypress)="numberOnly($event)"
+            (blur)="checkAlreadyExisting($event)" minlength="3" maxlength="3" id="txt_{{ item.shn }}"
+            [(ngModel)]="item.shn" value="{{item.shn}}" />
+        </td>
+        <td *ngIf="item.IsEdit || item.IsAdd">
+          <span>
+            <ng-select #selectedValue="ngModel" required class="editable-dropdown {{required__rmh_NO}}"
+              placeholder="select" [(ngModel)]="item.mhn"
+              [ngClass]="(selectedValue.invalid && (selectedValue.dirty || selectedValue.touched))?'is-invalid':''">
+              <ng-option [value]="obj.mhn + ' - ' + obj.mhdR_NAME" *ngFor="let obj of reportMainHeaderDropDown">
+                {{ obj.mhn + ' - ' + obj.mhdR_NAME}}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="selectedValue.invalid" class="invalid-feedback">
+              Dropdown selection is required.
+            </div>
+          </span>
+        </td>
+
+        <td *ngIf="item.IsEdit||item.IsAdd"><input type="text" maxlength="30" required
+            class="form-control {{required_div_desc}}" id="txt_{{ item.shdR_NAME }}" [(ngModel)]="item.shdR_NAME"
+            value="{{item.shdR_NAME}}" /> </td>
+      
+        <td>
+          <button *ngIf="item.IsAdd&&!item.IsEdit" class="add edit" (click)="AddData(item)"><i
+              class="ri-save-line pr-1"></i>Save</button>
+              <button *ngIf="item.IsEdit" class="cancel" (click)=" CancelAddRow(item.rpT_SHDR_ID)"><i
+                class="ri-close-line pr-1"></i>cancel</button>
+
+          <button *ngIf="item.IsEdit" class="save" (click)="Update(item)"><i
+              class="ri-check-double-line pr-1"></i>Update</button>
+          <button *ngIf="item.IsEdit" class="cancel" (click)="CancelEditRow(item.rpT_SHDR_ID)"><i
+              class="ri-close-line pr-1"></i>cancel</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="edit" (click)="Edit(item.rpT_SHDR_ID)"><i
+              class="ri-pencil-line pr-1"></i>Edit</button>
+          <button *ngIf="!item.IsEdit&&!item.IsAdd" class="delete" (click)="deleteRow(item.rpT_SHDR_ID)"><i
+              class="ri-delete-bin-line pr-1"></i>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination Component -->
+  <app-pagination [totalItems]="reportSubHeaderList.length" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+    (pageChange)="goToPage($event)" (pageSizeChange)="onPageSizeChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-pagination>
+</div>
+</div>
+</div>

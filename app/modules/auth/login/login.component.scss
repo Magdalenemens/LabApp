@@ -1,0 +1,483 @@
+.auth-one-bg-position {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 380px;
+}
+
+
+.bg-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    opacity: 0.7;
+    background-color: #000;
+}
+
+.auth-one-bg .shape {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.auth-one-bg .shape>svg {
+    width: 100%;
+    height: auto;
+    fill: #ecf0fa;
+}
+
+.particles-js-canvas-el {
+    position: relative;
+}
+
+.auth-page-wrapper .auth-page-content {
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.login-bg {
+    background-color: #ffffff;
+    backdrop-filter: saturate(180%) blur(1px);
+    border: 2px solid rgb(0 246 253 / 0%);
+    box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+}
+
+.card-body {
+    padding: 1.5rem 0rem 1rem 0rem
+}
+
+.form-label {
+    font-size: 17px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+body {
+    background: #F2F7FF !important;
+}
+
+select option {
+    color: #7A7983 !important;
+}
+
+.form-control {
+    color: #7A7983 !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    border: 2px solid #aaa;
+}
+
+.submit-btn {
+    background-color: #51459E;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.cancel-btn {
+    background-color: #fff;
+    border-radius: 5px;
+    color: #58555E;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border: 2px solid #aaa;
+}
+
+input[type="password"]:focus,
+input[type="text"]:focus,
+.form-control:focus {
+    border-color: dodgerBlue;
+    box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+.inputWithIcon input[type="password"],
+.inputWithIcon input[type="text"] {
+    padding-left: 15px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 0px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+.inputWithIcon i {
+    position: absolute;
+    right: 0;
+    padding: 9px 12px;
+    color: #797979;
+    transition: 0.3s;
+    font-size: 1.2rem;
+}
+
+.ri-eye-off-line:before {
+    content: "\ecb7";
+}
+
+img {
+    max-width: none;
+    height: revert-layer;
+}
+
+.ng-dropdown-panel.ng-select-top {
+    top: 100% !important;
+    bottom: 0% !important;
+}
+
+.custom {
+    margin-top: 4%;
+    width: 40%;
+    margin-left: 33%
+}
+
+.custom-model {
+    height: 13rem;
+}
+// .modal-dialog-bottom {
+//     position: fixed;
+//     width: 39%;
+//     bottom: 5%;
+//     margin: 0;
+// }
+
+// .modal-content {
+//     border-radius: 10px 10px 0 0;
+// }
+
+.disabled-input {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.disabled-button {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #7f73d0;
+    cursor: not-allowed;
+}
+
+// dashboard
+
+.tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .tile img {
+    width: 80%;
+    transition: transform 0.3s ease;
+  }
+
+  .tile:hover {
+    transform: scale(1.05);
+  }
+
+  .tile:hover img {
+    transform: scale(1.1);
+  }
+
+  .tile label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .description-card {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+
+  .description-card:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dashboard-bg{
+    background-image: url(./../../../../assets/images/Dashboard-3.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width:auto;
+    height: 93.5vh;
+  }
+  .card {
+    overflow-x: clip;
+    padding: 0rem;
+    display: block;
+}
+  .card-header {
+    padding: .5rem 1rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    font-weight: 500;
+    font-size: 1.1rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.cards-width{
+  width:auto;
+  text-align: center;
+  flex: 1 1 auto;
+  margin: 0.15rem 0.25rem;
+  cursor: pointer;
+}
+.logo-dia-cards{
+  width: 33px;
+  height: 30px;
+}
+.cards-text{
+  font-size: 0.87rem;
+  color: #51459E;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--container-color);
+  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1) !important;
+  padding: 0.5rem 1rem;
+}
+.footer h6{
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+}
+// cards-effect
+.cards-width:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+  top: -4px;
+  border: 1px solid #cccccc;
+  background-color: white;
+}
+.cards-width:hover:before {
+  transform: scale(2.15);
+}
+// cards-effect
+
+
+
+.auth-one-bg-position {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 380px;
+}
+
+
+.bg-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  opacity: 0.7;
+  background-color: #000;
+}
+
+.auth-one-bg .shape {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.auth-one-bg .shape>svg {
+  width: 100%;
+  height: auto;
+  fill: #ecf0fa;
+}
+
+.particles-js-canvas-el {
+  position: relative;
+}
+
+.auth-page-wrapper .auth-page-content {
+  padding-bottom: 60px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.login-bg {
+  background-color: #ffffff;
+  backdrop-filter: saturate(180%) blur(1px);
+  border: 2px solid rgb(0 246 253 / 0%);
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+}
+
+.form-label {
+  font-size: 17px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+select option {
+  color: #7A7983 !important;
+}
+
+.form-control {
+  color: #7A7983 !important;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  border: 2px solid #aaa;
+}
+
+.submit-btn {
+  background-color: #51459E;
+  border-radius: 5px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+.cancel-btn {
+  background-color: #fff;
+  border-radius: 5px;
+  color: #58555E;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  border: 2px solid #aaa;
+}
+
+input[type="password"]:focus,
+input[type="text"]:focus,
+.form-control:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon input[type="password"],
+.inputWithIcon input[type="text"] {
+  padding-left: 15px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 0px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  right: 0;
+  padding: 9px 12px;
+  color: #797979;
+  transition: 0.3s;
+  font-size: 1.2rem;
+}
+
+.ri-eye-off-line:before {
+  content: "\ecb7";
+}
+
+img {
+  max-width: none;
+  height: revert-layer;
+}
+
+.ng-dropdown-panel.ng-select-top {
+  top: 100% !important;
+  bottom: 0% !important;
+}
+
+.custom {
+  margin-top: 4%;
+  width: 40%;
+  margin-left: 33%
+}
+
+.custom-model {
+  height: 13rem;
+}
+// .modal-dialog-bottom {
+//     position: fixed;
+//     width: 39%;
+//     bottom: 5%;
+//     margin: 0;
+// }
+
+// .modal-content {
+//     border-radius: 10px 10px 0 0;
+// }
+
+.disabled-input {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.disabled-button {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #7f73d0;
+  cursor: not-allowed;
+  color: #fff;
+}
+.img-dia{
+  width: -webkit-fill-available;
+}
+.data-names .data-label{
+  color: #9B9B9B
+}
+.data-names .data-value{
+  color: #3B3B3B
+}
+
+.not-clickable {
+    pointer-events: none;
+    opacity: 0.5; /* or any other style to indicate it's disabled */
+  }
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #6c757d;
+  }
+  
+  .eye-icon:hover {
+    color: #495057;
+  }
+  

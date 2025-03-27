@@ -1,0 +1,63 @@
+.sort-icon {
+	font-size: 16px;
+	vertical-align: middle;
+	width: 20px;
+	display: inline-block;
+	text-align: center;
+	margin-top: -4px;
+	cursor: pointer;
+}
+
+.material-icons {
+	font-size: 16px;
+	margin-left: 5px;
+}
+
+.expand-less {
+	margin-top: -0.01px;
+}
+
+.expand-more {
+	margin-top: 11px;
+}
+
+.search-container {
+	position: relative;
+	width: 100%;
+	/* Adjust width as needed */
+}
+
+.search-input-icon {
+	text-align: left;
+	border: 1px solid #ced4da;
+	background-color: #fff;
+	padding-right: 35px;
+	/* Create space for the icon */
+}
+
+.search-icon {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	/* Adjust distance from the right */
+	transform: translateY(-50%);
+	width: 16px;
+	/* Icon size */
+	height: 16px;
+	background-image: url('./../../../../assets/icons/search.png');
+	/* Replace with the search icon path */
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.table-head-fix {
+	top: -10px;
+}
+
+:host ::ng-deep .angular-editor-textarea {
+	height: 56vh !important
+}
+
+::ng-deep .highlighted-row {
+	color: #10a504 !important;
+}

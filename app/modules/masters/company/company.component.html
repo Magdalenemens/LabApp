@@ -1,0 +1,206 @@
+<main>
+    <section class="mt-5 pt-4">
+  
+  
+      <div class="row justify-content-center">
+        <div class="col-md-12 col-lg-12 col-xl-12"><!-- back-link -->
+  
+          <section class="section-wrapper mt-2">
+            <form>
+              <div class="tab-target is-active" id="tab-content-1">
+               
+                <!-- add-section -->
+                <div class="add-content">
+                  <div class="d-flex mt-0">
+  
+                    <div class="d-flex flex-column">
+                      <div class="custom-input m-auto" style="width: 11.2rem">
+                        <div class="card d-flex flex-column vertical-center">
+  
+                          <button class="btn btn-outline-dark add-section mb-2">
+                            <i class="ri-add-line pr-1"></i>Add Record
+                          </button>
+                          <button class="btn btn-outline-dark add-section mb-2">
+                            <i class="ri-save-line pr-1"></i>Save
+                          </button>
+                          <button class="btn btn-outline-dark order-section mb-2">
+                            <i class="ri-pencil-line pr-1"></i>Edit
+                          </button>
+                          <button class="btn btn-outline-dark cancelation mb-2">
+                            <i class="ri-close-line pr-1"></i>Cancel
+                          </button>
+        
+                          <button class="btn btn-outline-dark cancelation mb-2">
+                            <i class="ri-delete-bin-6-line pr-1"></i>Delete
+                          </button>
+                          <button class="btn btn-outline-dark cancelation mb-0">
+                            <i class="ri-close-line pr-1"></i>Close
+                          </button>
+  
+                        </div>
+                        <div class="card mt-1">
+                          <div style="border: 1px solid #bff5bb;border-radius: .25rem;padding: 0.25rem 0.25rem;">
+                          <div class="d-flex flex-wrap justify-content-between navigation">
+  
+                         <button class="btn page-btn btn-outline-paginate px-1" id="first" tooltip="First">
+                         <i class="ri-skip-left-line"></i>
+                       </button>
+                       <button class="btn page-btn btn-outline-paginate px-1" id="previous" tooltip="previous">
+                         <i class="ri-arrow-left-double-line"></i>
+                       </button>
+                       <button class="btn page-btn btn-outline-paginate px-1" id="next" tooltip="next">
+                         <i class="ri-arrow-right-double-line"></i>
+                       </button>
+                       <button class="btn page-btn btn-outline-paginate px-1" id="last" tooltip="last">
+                         <i class="ri-skip-right-line"></i>
+                       </button>
+                      </div>
+                       </div>
+                       <!-- <div class="d-flex justify-content-center">
+                      {{ calculateCurrentIndex(siteData.sno) }} / {{ siteAllData.length }} 
+                    </div> -->
+                       </div>
+                      </div>
+
+                      <div class="card mt-1">
+                        <!-- Single Image Upload Section -->
+                        <div>
+                          <input #inputFile type="file" (change)="onFileChange($event)" style="display: none;" accept="image/*">
+                          <img class="uploaded-img" #previewImage [src]="''" alt="">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                          <button style="font-size: 15px !important;" class="btn btn-outline-dark mx-1 my-1 px-2" type="button" (click)="onSelectImage()">Insert Logo</button>
+                          <button *ngIf="imageSelected" class="btn btn-outline-dark cancelation mx-1 my-1 px-1" type="button" (click)="onRemoveImage()">
+                            <i class="ri-delete-bin-6-line"></i>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                  <!-- first-card -->
+                   <div>
+
+                    <div class="d-flex justify-content-start">
+
+                        <div class="col-md-3">
+        
+                          <div>
+                            <div class="input-group">
+                            <label
+                            style="height: 33px;"
+                            class="input-group-text side-input-dia"
+                            >Company:</label>
+                            <ng-select #siteSelect bindLabel="sitE_NAME" class="custom mb-2"
+                            [searchable]="true" placeholder="Search...">
+                            <!-- Template for no search results -->
+                            <ng-template #noResults>
+                              <div>No results found</div>
+                            </ng-template>
+                          </ng-select>
+                            </div>
+                          </div>
+                  
+                        </div>
+        
+                      </div>
+  
+                  <div class="card mt-0">
+                    
+                    <div class="d-flex flex-wrap">
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Company No / Name:</label>
+                          <input type="text" appAutofocus required class="form-control"
+                             placeholder="Enter Company No"
+                            />
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-lg-4 col-12">
+                        <div class="input-group">
+                          <input class="form-control" formControlName="sitE_NAME" required
+                             placeholder="Enter Company name"
+                            type="text" />
+                        </div>
+                      </div>
+                      <div class="col-md-5 col-lg-5 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Address:</label>
+                          <input class="form-control" formControlName="abrv" placeholder="Enter Address" type="text"
+                            id="abrv" />
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Telephone:</label>
+                          <input class="form-control" formControlName="shortname" placeholder="Enter Telephone"
+                            type="text" id="shortName" />
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">VAT No:</label>
+                          <input class="form-control" formControlName="shortname" placeholder="Enter VAT No"
+                            type="text" id="shortName" />
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Page Header:</label>
+                          <input class="form-control" formControlName="shortname" placeholder="Enter Page Header"
+                            type="text" id="shortName" />
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">Page Footer:</label>
+                          <input class="form-control" formControlName="shortname" placeholder="Enter Page Footer"
+                            type="text" id="shortName" />
+                        </div>
+                      </div>
+                   
+                      <!-- <div class="col-md-3 col-lg-3 col-12">
+                        <div class="input-group">
+                          <label class="input-group-text side-input-dia">TLT_01:</label>
+                          <select id="type" class="form-control" formControlName="sitE_TP">
+                            <option value="CS">Collection Site </option>
+                            <option value="FS">Franchise Site</option>
+                            <option value="LS">Lab Site</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-lg-4 col-12">
+                        <div class="dropdown-container">
+  
+                          <div class="input-group">
+                            <label class="input-group-text side-input-dia">Primary Ref Lab:</label>
+                            <span class="w-50">
+                              <ng-select
+                                formControlName="reF_SITE" class="editable-dropdown" placeholder="select"
+                                >
+                                <ng-option>
+                                  option
+                                </ng-option>
+                              </ng-select>
+                            </span>
+                          </div>
+                        </div>
+  
+                      </div> -->
+  
+  
+                    </div>
+                  </div>
+                  <!-- first-card -->
+  
+                </div>
+                </div>
+              </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+  

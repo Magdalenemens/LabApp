@@ -1,0 +1,74 @@
+.sort-icon {
+    font-size: 16px;
+    vertical-align: middle;
+    width: 20px; 
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .material-icons {
+    font-size: 16px;
+    margin-left: 5px;
+    float: inline-end;
+    margin-top: 5.5px;
+  }
+  .expand-less {
+    margin-top: -0.01px;
+  }
+  
+  .expand-more {
+    margin-top: 11px;
+  }
+  .search-container {
+	  position: relative;
+	  width: 100%; /* Adjust width as needed */
+	}
+
+	.search-input-icon {
+	  text-align: left;
+	  border: 1px solid #ced4da;
+	  background-color: #fff;
+	  padding-right: 35px; /* Create space for the icon */
+	}
+
+	.search-icon {
+	  position: absolute;
+	  top: 50%;
+	  right: 10px; /* Adjust distance from the right */
+	  transform: translateY(-50%);
+	  width: 16px; /* Icon size */
+	  height: 16px;
+	  background-image: url('./../../../../assets/icons/search.png'); /* Replace with the search icon path */
+	  background-repeat: no-repeat;
+	  background-size: contain;
+	}
+
+	.edit {
+		color: #fff;
+		background-color: #0366D6;
+		border: 1.5px solid #0366D6;
+		/* padding: 3px; */
+		font-weight: 500;
+	}
+
+	.delete {
+		color: #fff;
+		background-color: #FC3A10;
+		border: 1.5px solid #FC3A10;
+		/* padding: 3px; */
+		font-weight: 500;
+	}
+
+	.add-btn {
+		color: #fff !important;
+		border-color: #0366D6 !important;
+		background: #0366D6;
+		padding: 5px 20px;
+		border-radius: 5px;
+		border: 0px;
+		border: 1.2px solid #656565;
+	}
+
+	.table-head-fix{
+		top: -10px;
+	  }
